@@ -1,0 +1,55 @@
+<header>
+  <div class="button-group-container">
+    <mat-button-toggle-group [hideMultipleSelectionIndicator]="true"
+                             multiple>
+      <mat-button-toggle value="ldrawer"
+                         aria-hidden="false"
+                         (change)="ldrawer.toggle()">
+        <mat-icon class="ldrawer-toggle-icon">
+          menu_open
+        </mat-icon>
+      </mat-button-toggle>
+
+      <mat-button-toggle value="sheet"
+                         aria-hidden="false"
+                         (click)="toggleSheet()">
+        <mat-icon class="sheet-toggle-icon">
+          menu_open
+        </mat-icon>
+      </mat-button-toggle>
+
+      <mat-button-toggle value="rdrawer"
+                         aria-hidden="false"
+                         (click)="rdrawer.toggle()">
+        <mat-icon class="rdrawer-toggle-icon">
+          menu_open
+        </mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</header>
+
+<mat-drawer-container class="app-container"
+                      [hasBackdrop]="false"
+                      autosize>
+  <mat-drawer #ldrawer
+              class="side-panel left-side-panel"
+              mode="over"
+              position="start">
+    <p>Auto-resizing sidenav</p>
+  </mat-drawer>
+
+  <mat-drawer #rdrawer
+              class="side-panel right-side-panel"
+              mode="over"
+              position="end">
+    <p>Auto-resizing sidenav</p>
+  </mat-drawer>
+
+  <div class="app-content">
+    <app-map>
+
+    </app-map>
+  </div>
+
+</mat-drawer-container>

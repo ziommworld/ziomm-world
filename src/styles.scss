@@ -1,4 +1,130 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@include mat.core();
+
+// $palette: mat.$red-palette;
+// $palette: mat.$green-palette;
+// $palette: mat.$blue-palette;
+// $palette: mat.$yellow-palette;
+// $palette: mat.$cyan-palette;
+// $palette: mat.$magenta-palette;
+// $palette: mat.$orange-palette;
+// $palette: mat.$chartreuse-palette;
+// $palette: mat.$spring-green-palette;
+// $palette: mat.$azure-palette;
+$palette: mat.$violet-palette;
+// $palette: mat.$rose-palette;
+
+$typography: (
+  brand-family: "Comic Sans",
+  bold-weight: 900,
+);
+
+$density: (
+  scale: -1,
+);
+
+$light-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: $palette,
+    ),
+    typography: $typography,
+    density: $density,
+  )
+);
+
+@mixin define-theme-vars($theme) {
+  // dynamic primary/secondary/tertiary
+  --primary: #{mat.get-theme-color($theme, primary)};
+  --on-primary: #{mat.get-theme-color($theme, on-primary)};
+  --primary-container: #{mat.get-theme-color($theme, primary-container)};
+  --on-primary-container: #{mat.get-theme-color($theme, on-primary-container)};
+
+  --secondary: #{mat.get-theme-color($theme, secondary)};
+  --on-secondary: #{mat.get-theme-color($theme, on-secondary)};
+  --secondary-container: #{mat.get-theme-color($theme, secondary-container)};
+  --on-secondary-container: #{mat.get-theme-color(
+      $theme,
+      on-secondary-container
+    )};
+
+  --tertiary: #{mat.get-theme-color($theme, tertiary)};
+  --on-tertiary: #{mat.get-theme-color($theme, on-tertiary)};
+  --tertiary-container: #{mat.get-theme-color($theme, tertiary-container)};
+  --on-tertiary-container: #{mat.get-theme-color($theme, on-tertiary-container)};
+
+  // static primary/secondary/tertiary
+  --primary-fixed: #{mat.get-theme-color($theme, primary-fixed)};
+  --on-primary-fixed: #{mat.get-theme-color($theme, on-primary-fixed)};
+  --primary-fixed-dim: #{mat.get-theme-color($theme, primary-fixed)};
+  --on-primary-fixed-variant: #{mat.get-theme-color($theme, on-primary-fixed)};
+
+  --secondary-fixed: #{mat.get-theme-color($theme, secondary-fixed)};
+  --on-secondary-fixed: #{mat.get-theme-color($theme, on-secondary-fixed)};
+  --secondary-fixed-dim: #{mat.get-theme-color($theme, secondary-fixed)};
+  --on-secondary-fixed-variant: #{mat.get-theme-color(
+      $theme,
+      on-secondary-fixed
+    )};
+
+  --tertiary-fixed: #{mat.get-theme-color($theme, tertiary-fixed)};
+  --on-tertiary-fixed: #{mat.get-theme-color($theme, on-tertiary-fixed)};
+  --tertiary-fixed-dim: #{mat.get-theme-color($theme, tertiary-fixed)};
+  --on-tertiary-fixed-variant: #{mat.get-theme-color($theme, on-tertiary-fixed)};
+
+  // error
+  --error: #{mat.get-theme-color($theme, error)};
+  --on-error: #{mat.get-theme-color($theme, on-error)};
+  --error-container: #{mat.get-theme-color($theme, error-container)};
+  --on-error-container: #{mat.get-theme-color($theme, on-error-container)};
+
+  // surface
+  --surface: #{mat.get-theme-color($theme, surface)};
+  --on-surface: #{mat.get-theme-color($theme, on-surface)};
+  --surface-dim: #{mat.get-theme-color($theme, surface-dim)};
+  --surface-bright: #{mat.get-theme-color($theme, surface-bright)};
+  --surface-variant: #{mat.get-theme-color($theme, surface-variant)};
+  --on-surface-variant: #{mat.get-theme-color($theme, on-surface-variant)};
+  --surface-container: #{mat.get-theme-color($theme, surface-container)};
+  --surface-container-low: #{mat.get-theme-color($theme, surface-container-low)};
+  --surface-container-lowest: #{mat.get-theme-color(
+      $theme,
+      surface-container-lowest
+    )};
+  --surface-container-high: #{mat.get-theme-color(
+      $theme,
+      surface-container-high
+    )};
+  --surface-container-highest: #{mat.get-theme-color(
+      $theme,
+      surface-container-highest
+    )};
+
+  // outline
+  --outline: #{mat.get-theme-color($theme, outline)};
+  --outline-variant: #{mat.get-theme-color($theme, outline-variant)};
+
+  // inverse
+  --inverse-surface: #{mat.get-theme-color($theme, inverse-surface)};
+  --inverse-on-surface: #{mat.get-theme-color($theme, inverse-on-surface)};
+  --inverse-primary: #{mat.get-theme-color($theme, inverse-primary)};
+}
+
+html {
+  @include mat.all-component-themes($light-theme);
+  @include define-theme-vars($light-theme);
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

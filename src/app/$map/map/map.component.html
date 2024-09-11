@@ -1,0 +1,24 @@
+<div class="map-container">
+  @for (row of map.rows; track row.id)
+  {
+  <div class="map-row">
+    @for (cell of row.cells; track cell.id)
+    {
+    <div class="map-cell">
+      <div class="cell-content cell-component">
+        <!-- <mat-icon>
+          {{cell.component}}
+        </mat-icon> -->
+        <!-- <img src="assets/checkbox.png" /> -->
+      </div>
+
+      <div class="cell-content cell-character">
+        <mat-icon color="accent">
+          {{cell.character}}
+        </mat-icon>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>

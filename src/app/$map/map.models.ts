@@ -1,5 +1,5 @@
-import { Character } from "../character";
-import { GameComponent } from "../component";
+import { Character } from "../$character";
+import { GameComponent } from "../$component";
 
 export interface MapConfig {
 
@@ -19,8 +19,8 @@ export enum TerrainType {
   // natural
   Plains = 'plains',
   Desert = 'desert',
-  Fissures = 'fissures',
-  Rock = 'rock',
+  // Fissures = 'fissures',
+  // Rock = 'rock',
 
   // artificial
   Concrete = 'concrete',

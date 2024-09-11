@@ -1,6 +1,7 @@
-import { ActionModality, DamageType } from "../mechanics";
+import { ActionModality, DamageType } from "../$mechanics";
 
 export interface CharacterConfig {
+  name: string;
   npc: boolean;
   powerLvl: number;
 
@@ -36,7 +37,7 @@ export interface CharacterResistances {
 
 export interface CharacterState {
   isCrouching: boolean;
-
+  // isMounted: boolean;
 
   bolsterCounter: number;
   bleedCounter: number;
@@ -52,6 +53,10 @@ export interface CharacterAction {
   description: string;
   costAP: number;
 
+  usageCount?: number;
+  cooldown?: number;
+  duration?: number;
+
   targets?: number;
   range?: number;
   accuracy?: number;
@@ -62,7 +67,7 @@ export interface CharacterAction {
   distance?: number;
 
   reactive?: boolean;
-  interactive?: boolean;
+  // interactive?: boolean;
 
   bleeding?: boolean;
   concussive?: boolean;

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { CharacterConfig, CharacterState, CharacterStats } from './character.models';
-import { ActionModality } from '../mechanics';
+import { CharacterConfig, CharacterState, CharacterStats } from '.';
+import { ActionModality } from '../$mechanics';
 
 export class Character {
   private _id: string;
@@ -13,7 +13,7 @@ export class Character {
   }
 
   constructor (
-    private name: string,
+    private key: string,
     private config: CharacterConfig,
   ) {
     this._id = uuidv4();

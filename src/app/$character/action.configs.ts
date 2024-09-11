@@ -1,7 +1,7 @@
-import { CharacterAction } from "./character.models";
+import { CharacterAction } from ".";
 
 /**
- * basic abilities
+ * basic actions
  */
 export const actions: CharacterAction[] = [
   {
@@ -18,7 +18,7 @@ export const actions: CharacterAction[] = [
   },
   {
     key: 'stand',
-    name: 'Stand-up',
+    name: 'Stand up',
     description: 'Usable only when crouching or after being paralyzed to return to normal state.',
     costAP: 1,
   },
@@ -30,7 +30,7 @@ export const actions: CharacterAction[] = [
   },
   {
     key: 'free',
-    name: 'Free-up',
+    name: 'Free up',
     description: 'NAT 0+ check to remove 1 stack of Immobilizing or Hindering or Paralysis',
     costAP: 2,
   },
@@ -55,15 +55,8 @@ export const actions: CharacterAction[] = [
 ];
 
 /**
- * custom actions
+ * custom actions (item related, etc)
  */
 export const abilities: CharacterAction[] = [
-
-];
-
-/**
- * environmental interactions
- */
-export const interactions: CharacterAction[] = [
 
 ];

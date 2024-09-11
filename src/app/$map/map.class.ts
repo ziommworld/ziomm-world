@@ -1,6 +1,6 @@
-import { GameComponent } from "../component";
+import { GameComponent } from "../$component";
 import { MicroTile } from "./map.models";
-import { testMap } from '@lib/maps/index';
+import { testMap } from '../$library/maps/index';
 
 /**
  * ? NOTES

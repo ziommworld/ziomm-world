@@ -1,4 +1,4 @@
-import { GameMap } from "../map";
+import { GameMap } from "../$map";
 
 export class GameEngine {
 

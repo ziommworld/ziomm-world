@@ -1,0 +1,84 @@
+@use "@angular/material" as mat;
+
+$theme: mat.define-theme(
+
+);
+
+.map-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50vw;
+  height: 50vh;
+
+  .map-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    .map-cell {
+      @include mat.badge-color($theme, $color-variant: primary);
+
+      margin: 1px;
+      // padding: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 42px;
+      height: 42px;
+
+      box-sizing: border-box;
+      border-top: medium dashed green;
+
+      // background-color: #e5e5f7;
+      // opacity: 1;
+      background-color: #e5e5f7;
+      opacity: 0.4;
+      background-color: #e5e5f7;
+      opacity: 0.4;
+      // background-image: linear-gradient(135deg, #f74592 25%, transparent 25%),
+      //   linear-gradient(225deg, #f74592 25%, transparent 25%),
+      //   linear-gradient(45deg, #f74592 25%, transparent 25%),
+      //   linear-gradient(315deg, #f74592 25%, #e5e5f7 25%);
+      // background-position: 4px 0, 4px 0, 0 0, 0 0;
+      // background-size: 4px 4px;
+      // background-repeat: repeat;
+
+      &:hover {
+        background-color: aliceblue;
+        background-blend-mode: hard-light;
+      }
+
+      .cell-content {
+        background-image: url("/assets/checkbox.png"); /* Path to your PNG */
+        background-repeat: space; /* Repeat the image */
+        background-size: 6px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .mat-icon {
+          // font-size: 42px;
+          width: 100%;
+          height: 100%;
+        }
+
+        &.cell-component {
+          opacity: 0.2;
+        }
+
+        &.cell-character {
+          // opacity: 0.5;
+
+          .mat-icon {
+            font-size: 30px;
+            @include mat.icon-color($theme, $color-variant: primary);
+          }
+        }
+      }
+    }
+  }
+}
