@@ -52,7 +52,7 @@ $theme: mat.define-theme(
       }
 
       .cell-content {
-        background-image: url("/assets/checkbox.png"); /* Path to your PNG */
+        background-image: url("public/assets/checkbox.png"); /* Path to your PNG */
         background-repeat: space; /* Repeat the image */
         background-size: 6px;
 

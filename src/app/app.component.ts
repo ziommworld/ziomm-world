@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBottomSheet, MatBottomSheetConfig } from '@angular/material/bottom-sheet';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -12,6 +13,7 @@ import { MapComponent } from './$map/map/map.component';
 import { ActionPanelComponent } from './core/components/action-panel/action-panel.component';
 import { GuiService } from './core/services/gui.service';
 import { StateService } from './core/services/state.service';
+import { GameModalComponent } from './core/components/game-modal/game-modal.component';
 
 
 @Component({
@@ -37,11 +39,14 @@ export class AppComponent {
   handleKeyDown(event: KeyboardEvent) {
     if (event.key === 'Tab') {
       event.preventDefault(); // Prevent the default tab behavior (like focusing on next element)
+      event.stopPropagation(); // Prevent the event from bubbling up to parent elements
       this.gui.toggleGUI();
     }
 
     if (event.key === 'Escape') {
       event.preventDefault(); // Prevent the default escape behavior (like closing modals)
+      event.stopPropagation(); // Prevent the event from bubbling up to parent elements
+      this.gui.toggleGDialog();
     }
   }
 
@@ -50,12 +55,17 @@ export class AppComponent {
   public rdrawerOpened = this.gui.rdrawerOpened;
 
   constructor(
-    private bsheet: MatBottomSheet,
     private gui: GuiService,
+    private bsheet: MatBottomSheet,
+    private gdialog: MatDialog,
     private state: StateService,
   ) {
     // const map = new GameMap();
 
+    this.initEffects();
+  }
+
+  public initEffects() {
     effect(() => {
       const ldrawerOpened = this.gui.ldrawerOpened();
 
@@ -76,9 +86,25 @@ export class AppComponent {
       } else {
         const config: MatBottomSheetConfig = {
           hasBackdrop: false,
+          disableClose: true,
         };
 
         this.bsheet.open(ActionPanelComponent, config);
+      }
+    });
+
+    effect(() => {
+      const gdialogOpened = this.gui.gdialogOpened();
+
+      if (gdialogOpened) {
+          this.gdialog.closeAll();
+      } else {
+        const config: MatDialogConfig = {
+          id: 'game-modal',
+          // hasBackdrop: false,
+        };
+
+        this.gdialog.open(GameModalComponent, config);
       }
     });
 

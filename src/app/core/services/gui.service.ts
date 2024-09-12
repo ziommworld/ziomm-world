@@ -11,7 +11,8 @@ export class GuiService {
   private guiState = signalState<GUI>({
     rdrawerOpened: true,
     ldrawerOpened: true,
-    bsheetOpened: true
+    bsheetOpened: true,
+    gdialogOpened: true,
   });
 
   public get ldrawerOpened() {
@@ -24,6 +25,10 @@ export class GuiService {
 
   public get bsheetOpened() {
     return this.guiState.bsheetOpened;
+  }
+
+  public get gdialogOpened() {
+    return this.guiState.gdialogOpened;
   }
 
   constructor() { }
@@ -51,6 +56,15 @@ export class GuiService {
       this.guiState,
       {
         bsheetOpened: !this.guiState.bsheetOpened()
+      }
+    );
+  }
+
+  public toggleGDialog() {
+    patchState(
+      this.guiState,
+      {
+        gdialogOpened: !this.guiState.gdialogOpened()
       }
     );
   }

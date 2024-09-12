@@ -35,14 +35,16 @@
   <mat-drawer #ldrawer
               class="side-panel left-side-panel"
               mode="over"
-              position="start">
+              position="start"
+              [disableClose]="true">
     <p>Auto-resizing sidenav</p>
   </mat-drawer>
 
   <mat-drawer #rdrawer
               class="side-panel right-side-panel"
               mode="over"
-              position="end">
+              position="end"
+              [disableClose]="true">
     <p>Auto-resizing sidenav</p>
   </mat-drawer>
 
