@@ -3,24 +3,24 @@
     <mat-button-toggle-group [hideMultipleSelectionIndicator]="true"
                              multiple>
       <mat-button-toggle value="ldrawer"
-                         aria-hidden="false"
-                         (change)="ldrawer.toggle()">
+                         [checked]="!ldrawerOpened()"
+                         (click)="toggleLDrawer()">
         <mat-icon class="ldrawer-toggle-icon">
           menu_open
         </mat-icon>
       </mat-button-toggle>
 
       <mat-button-toggle value="sheet"
-                         aria-hidden="false"
-                         (click)="toggleSheet()">
+                         [checked]="!bsheetOpened()"
+                         (click)="toggleBSheet()">
         <mat-icon class="sheet-toggle-icon">
           menu_open
         </mat-icon>
       </mat-button-toggle>
 
       <mat-button-toggle value="rdrawer"
-                         aria-hidden="false"
-                         (click)="rdrawer.toggle()">
+                         [checked]="!rdrawerOpened()"
+                         (click)="toggleRDrawer()">
         <mat-icon class="rdrawer-toggle-icon">
           menu_open
         </mat-icon>

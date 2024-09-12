@@ -1,27 +1,45 @@
 # ZiommWorld
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.5.
+- modal: open/close with esc
+  - start game: horizontal stepper
+    - pick characters
+    - pick scenario
+    - choose difficulty (slider)
+    - number of rounds (slider)
+    - go
+    - 
+  - save/load game
+  - show game ended - maybe modal?
+  - in-game settings
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- game phases
+  - pre-game
+    - roll for initiative
+    - pick starting positions
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- displays
+  - left
+    - show round
+    - initiative
+  - right
+    - inspect characters/components
+  - bottom
+    - on select target: show calculations
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- context menu
+  - actions (attack/etc)
+    - attack
+      - nesting for modality
+  - move = drag&drop
+    - on drag: show possible positions
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- scenarios
+  - 1v1 arena
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- game engine
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
