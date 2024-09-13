@@ -17,6 +17,7 @@ import { GuiService } from './core/services/gui.service';
 import { AppService } from './core/services/app.service';
 import { GameModalComponent } from './core/components/game-modal/game-modal.component';
 import { NgClass } from '@angular/common';
+import { GameViewComponent } from "./core/components/game-view/game-view.component";
 
 
 @Component({
@@ -33,6 +34,7 @@ import { NgClass } from '@angular/common';
     MatListModule,
     MatCardModule,
     NgClass,
+    GameViewComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -83,95 +85,86 @@ export class AppComponent {
     private gdialog: MatDialog,
     private snackbar: MatSnackBar,
     private appService: AppService,
-    private router: Router
   ) {
     this.initEffects();
   }
 
   public initEffects() {
     effect(() => {
-    const ldrawerOpened = this.gui.$ldrawerOpened();
+      const ldrawerOpened = this.gui.$ldrawerOpened();
 
-    if(ldrawerOpened) {
-      this.ldrawer.close();
-    } else {
-      this.ldrawer.open();
-    }
-  });
-
-  effect(() => {
-    const bsheetOpened = this.gui.$bsheetOpened();
-
-    if (bsheetOpened) {
-      if (this.bsheet._openedBottomSheetRef) {
-        this.bsheet._openedBottomSheetRef.dismiss();
+      if (ldrawerOpened) {
+        this.ldrawer.close();
+      } else {
+        this.ldrawer.open();
       }
-    } else {
-      const config: MatBottomSheetConfig = {
-        hasBackdrop: false,
-        disableClose: true,
-      };
+    });
 
-      this.bsheet.open(ActionPanelComponent, config);
-    }
-  });
+    effect(() => {
+      const bsheetOpened = this.gui.$bsheetOpened();
 
-effect(() => {
-  const gdialogOpened = this.gui.$gdialogOpened();
+      if (bsheetOpened) {
+        if (this.bsheet._openedBottomSheetRef) {
+          this.bsheet._openedBottomSheetRef.dismiss();
+        }
+      } else {
+        const config: MatBottomSheetConfig = {
+          hasBackdrop: false,
+          disableClose: true,
+        };
 
-  if (gdialogOpened) {
-    this.gdialog.closeAll();
-  } else {
-    const config: MatDialogConfig = {
-      id: 'game-modal',
-      autoFocus: false,
-      disableClose: true,
-      width: '60vw',
-      maxWidth: '80vw',
-      height: '60vh',
-      maxHeight: '80vh',
-    };
+        this.bsheet.open(ActionPanelComponent, config);
+      }
+    });
 
-    this.gdialog.open(GameModalComponent, config);
-  }
-});
+    effect(() => {
+      const gdialogOpened = this.gui.$gdialogOpened();
 
-effect(() => {
-  const rdrawerOpened = this.gui.$rdrawerOpened();
+      if (gdialogOpened) {
+        this.gdialog.closeAll();
+      } else {
+        const config: MatDialogConfig = {
+          id: 'game-modal',
+          autoFocus: false,
+          disableClose: true,
+          width: '60vw',
+          maxWidth: '80vw',
+          height: '60vh',
+          maxHeight: '80vh',
+        };
 
-  if (rdrawerOpened) {
-    this.rdrawer.close();
-  } else {
-    this.rdrawer.open();
-  }
-});
+        this.gdialog.open(GameModalComponent, config);
+      }
+    });
 
-effect(() => {
-  const inGame = this.appService.$inGame();
+    effect(() => {
+      const rdrawerOpened = this.gui.$rdrawerOpened();
 
-  if (inGame) {
-    this.router.navigate(['game']);
-  }
-});
+      if (rdrawerOpened) {
+        this.rdrawer.close();
+      } else {
+        this.rdrawer.open();
+      }
+    });
   }
 
   public newGame() {
-  this.appService.toggleInGame();
-}
+    this.appService.toggleInGame();
+  }
 
   public loadGame() {
-  this.snackbar.open('Load game not implemented', 'Dismiss');
-}
+    this.snackbar.open('Load game not implemented', 'Dismiss');
+  }
 
   public toggleBSheet() {
-  this.gui.toggleBSheet();
-}
+    this.gui.toggleBSheet();
+  }
 
   public toggleLDrawer() {
-  this.gui.toggleLDrawer();
-}
+    this.gui.toggleLDrawer();
+  }
 
   public toggleRDrawer() {
-  this.gui.toggleRDrawer();
-}
+    this.gui.toggleRDrawer();
+  }
 }

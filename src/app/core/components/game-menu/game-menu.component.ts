@@ -27,7 +27,6 @@ export class GameMenuComponent {
   constructor(
     private appService: AppService,
     private gui: GuiService,
-    private router: Router,
     private dialog: MatDialog,
     private snackbar: MatSnackBar,
   ) {
@@ -35,13 +34,6 @@ export class GameMenuComponent {
   }
 
   public initEffects() {
-    effect(() => {
-      const inGame = this.appService.$inGame();
-
-      if (!inGame) {
-        this.router.navigate(['..']);
-      }
-    });
   }
 
   public saveGame() {
