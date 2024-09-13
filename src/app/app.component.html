@@ -1,9 +1,10 @@
 <header>
-  <div class="button-group-container">
+  <div class="button-group-container"
+       [ngClass]="$buttonGroupContainerClass()">
     <mat-button-toggle-group [hideMultipleSelectionIndicator]="true"
                              multiple>
       <mat-button-toggle value="ldrawer"
-                         [checked]="!ldrawerOpened()"
+                         [checked]="!$ldrawerOpened()"
                          (click)="toggleLDrawer()">
         <mat-icon class="ldrawer-toggle-icon">
           menu_open
@@ -11,7 +12,7 @@
       </mat-button-toggle>
 
       <mat-button-toggle value="sheet"
-                         [checked]="!bsheetOpened()"
+                         [checked]="!$bsheetOpened()"
                          (click)="toggleBSheet()">
         <mat-icon class="sheet-toggle-icon">
           menu_open
@@ -19,7 +20,7 @@
       </mat-button-toggle>
 
       <mat-button-toggle value="rdrawer"
-                         [checked]="!rdrawerOpened()"
+                         [checked]="!$rdrawerOpened()"
                          (click)="toggleRDrawer()">
         <mat-icon class="rdrawer-toggle-icon">
           menu_open
@@ -49,9 +50,42 @@
   </mat-drawer>
 
   <div class="app-content">
-    <app-map>
+    @if(!$inGame()) {
+    <mat-card appearance="outlined"
+              class="main-menu">
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <div class="main-menu-item-container">
+              <h3>
+                ZiomM World
+              </h3>
+            </div>
+          </mat-list-item>
 
-    </app-map>
+          <mat-list-item>
+            <div class="main-menu-item-container">
+              <button mat-stroked-button
+                      (click)="newGame()">
+                New Game
+              </button>
+            </div>
+          </mat-list-item>
+
+          <mat-list-item>
+            <div class="main-menu-item-container">
+              <button mat-stroked-button
+                      (click)="loadGame()">
+                Load Game
+              </button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+    } @else {
+    <router-outlet>
+    </router-outlet>
+    }
   </div>
-
 </mat-drawer-container>

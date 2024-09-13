@@ -1,0 +1,14 @@
+.game-menu {
+  width: 420px;
+
+  .game-menu-item-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    [mat-stroked-button] {
+      width: 75%;
+    }
+  }
+}

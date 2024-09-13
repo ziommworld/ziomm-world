@@ -8,72 +8,72 @@ import { GUI } from '../models/gui.models';
 })
 export class GuiService {
 
-  private guiState = signalState<GUI>({
+  private $guiState = signalState<GUI>({
     rdrawerOpened: true,
     ldrawerOpened: true,
     bsheetOpened: true,
     gdialogOpened: true,
   });
 
-  public get ldrawerOpened() {
-    return this.guiState.ldrawerOpened;
+  public get $ldrawerOpened() {
+    return this.$guiState.ldrawerOpened;
   }
 
-  public get rdrawerOpened() {
-    return this.guiState.rdrawerOpened;
+  public get $rdrawerOpened() {
+    return this.$guiState.rdrawerOpened;
   }
 
-  public get bsheetOpened() {
-    return this.guiState.bsheetOpened;
+  public get $bsheetOpened() {
+    return this.$guiState.bsheetOpened;
   }
 
-  public get gdialogOpened() {
-    return this.guiState.gdialogOpened;
+  public get $gdialogOpened() {
+    return this.$guiState.gdialogOpened;
   }
 
   constructor() { }
 
   public toggleLDrawer() {
     patchState(
-      this.guiState,
+      this.$guiState,
       {
-        ldrawerOpened: !this.guiState.ldrawerOpened()
+        ldrawerOpened: !this.$guiState.ldrawerOpened()
       }
     );
   }
 
   public toggleRDrawer() {
     patchState(
-      this.guiState,
+      this.$guiState,
       {
-        rdrawerOpened: !this.guiState.rdrawerOpened()
+        rdrawerOpened: !this.$guiState.rdrawerOpened()
       }
     );
   }
 
   public toggleBSheet() {
     patchState(
-      this.guiState,
+      this.$guiState,
       {
-        bsheetOpened: !this.guiState.bsheetOpened()
+        bsheetOpened: !this.$guiState.bsheetOpened()
       }
     );
   }
 
   public toggleGDialog() {
     patchState(
-      this.guiState,
+      this.$guiState,
       {
-        gdialogOpened: !this.guiState.gdialogOpened()
+        gdialogOpened: !this.$guiState.gdialogOpened()
       }
     );
   }
 
   public toggleGUI() {
-    const shouldClose = this.guiState.ldrawerOpened() || this.guiState.rdrawerOpened() || this.guiState.bsheetOpened();
+    const shouldClose = this.$guiState.ldrawerOpened() || this.$guiState.rdrawerOpened() || this.$guiState.bsheetOpened();
 
     patchState(
-      this.guiState,
+      this.$guiState,
       {
         ldrawerOpened: !shouldClose,
         rdrawerOpened: !shouldClose,

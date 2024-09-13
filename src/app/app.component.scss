@@ -14,6 +14,10 @@ header {
 
   .button-group-container {
     margin-top: 10px;
+
+    &.button-group-container-hidden {
+      display: none;
+    }
   }
 
   .sheet-toggle-icon {
@@ -37,6 +41,21 @@ header {
   justify-content: center;
 
   overflow: scroll;
+
+  .main-menu {
+    width: 420px;
+
+    .main-menu-item-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      [mat-stroked-button] {
+        width: 75%
+      }
+    }
+  }
 }
 
 .side-panel {

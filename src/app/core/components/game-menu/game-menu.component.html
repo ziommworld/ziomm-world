@@ -1,0 +1,32 @@
+<mat-card appearance="outlined"
+          class="game-menu">
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <div class="game-menu-item-container">
+          <h3>
+            Game Paused
+          </h3>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="game-menu-item-container">
+          <button mat-stroked-button
+                  (click)="saveGame()">
+            Save Game
+          </button>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="game-menu-item-container">
+          <button mat-stroked-button
+                  (click)="quitGame()">
+            Quit Game
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
