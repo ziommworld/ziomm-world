@@ -1,0 +1,37 @@
+<h1>
+  Round {{ round }}
+</h1>
+
+<mat-stepper orientation="vertical"
+             [linear]="true"
+             #stepper>
+  <mat-step>
+    <ng-template matStepLabel>
+      Step1Label
+    </ng-template>
+
+    <div class="step-content">
+      Step1Content
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>
+      Step2Label
+    </ng-template>
+
+    <div class="step-content">
+      Step2Content
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>
+      Step3Label
+    </ng-template>
+
+    <div class="step-content">
+      Step3Content
+    </div>
+  </mat-step>
+</mat-stepper>

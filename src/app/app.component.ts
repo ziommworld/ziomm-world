@@ -10,14 +10,16 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { NgClass } from '@angular/common';
 
 import { MapComponent } from './$map/map/map.component';
 import { ActionPanelComponent } from './core/components/action-panel/action-panel.component';
 import { GuiService } from './core/services/gui.service';
 import { AppService } from './core/services/app.service';
 import { GameModalComponent } from './core/components/game-modal/game-modal.component';
-import { NgClass } from '@angular/common';
 import { GameViewComponent } from "./core/components/game-view/game-view.component";
+import { InitiativeTrackerComponent } from "./core/components/initiative-tracker/initiative-tracker.component";
+import { ReferenceSheetComponent } from "./core/components/reference-sheet/reference-sheet.component";
 
 
 @Component({
@@ -34,8 +36,10 @@ import { GameViewComponent } from "./core/components/game-view/game-view.compone
     MatListModule,
     MatCardModule,
     NgClass,
-    GameViewComponent
-  ],
+    GameViewComponent,
+    InitiativeTrackerComponent,
+    ReferenceSheetComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
