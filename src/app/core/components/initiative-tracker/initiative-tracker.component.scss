@@ -1,3 +1,16 @@
+@use "@angular/material" as mat;
+@use "styles.scss" as *;
+
 .step-content {
-  padding: 20px;
+}
+
+.character-label {
+  display: flex;
+  flex-direction: row;
+  // justify-content: space-between;
+  align-items: center;
+
+  .ap-counter {
+    margin-left: 18px;
+  }
 }

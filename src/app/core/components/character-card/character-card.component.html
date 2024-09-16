@@ -1,1 +1,448 @@
-<p>character-card works!</p>
+<mat-card appearance="outlined"
+          class="character-card">
+  <mat-card-header>
+    <div mat-card-avatar
+         matTooltip="Icon">
+      <mat-icon>
+        category
+      </mat-icon>
+    </div>
+
+    <div class="character-header-attributes">
+      <mat-chip matTooltip="Tech LVL"
+                class="tech-lvl-value"
+                highlighted>
+        <mat-icon [fontSet]="fontSet"
+                  matChipAvatar>
+          settings
+        </mat-icon>
+
+        {{ character.techLvl }}
+      </mat-chip>
+
+      <mat-chip matTooltip="MS"
+                class="ms-value"
+                highlighted>
+        <mat-icon [fontSet]="fontSet"
+                  matChipAvatar>
+          directions_run
+        </mat-icon>
+
+        {{ character.defaultMS }}
+      </mat-chip>
+    </div>
+
+
+    <!-- <mat-card-subtitle>
+      <mat-chip matTooltip="STR"
+                class="ap-counter"
+                highlighted>
+        <mat-icon [fontSet]="fontSet"
+                  matChipAvatar>
+          play_circle
+        </mat-icon>
+
+        4
+      </mat-chip>
+    </mat-card-subtitle> -->
+
+    <div class="health-indicator-container"
+         matTooltip="HP">
+      <mat-progress-spinner class="health-indicator"
+                            [diameter]="56"
+                            [value]="charHP">
+      </mat-progress-spinner>
+
+      <div class="health-indicator-value">
+        {{ character.currentHP }}
+      </div>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <div class="list-item-container">
+          <mat-icon [fontSet]="fontSet"
+                    class="buff-value"
+                    matTooltip="Bolstered"
+                    matBadge="2"
+                    [matBadgeOverlap]="false"
+                    [matBadgePosition]="'below'">
+            add_reaction
+          </mat-icon>
+
+          <mat-icon [fontSet]="fontSet"
+                    matTooltip="Crouched"
+                    class="state-value"
+                    matBadge="0"
+                    matBadgeDisabled
+                    matBadgeSize="small"
+                    [matBadgeOverlap]="false"
+                    [matBadgePosition]="'below'">
+            self_improvement
+          </mat-icon>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="list-item-container">
+          <mat-icon [fontSet]="fontSet"
+                    class="debuff-value"
+                    matTooltip="Concussed"
+                    matBadge="0"
+                    matBadgeDisabled
+                    [matBadgeOverlap]="false"
+                    [matBadgePosition]="'below'">
+            sentiment_very_dissatisfied
+          </mat-icon>
+
+          <mat-icon [fontSet]="fontSet"
+                    class="debuff-value"
+                    matTooltip="Bleeding"
+                    matBadge="0"
+                    matBadgeDisabled
+                    [matBadgeOverlap]="false"
+                    [matBadgePosition]="'below'">
+            invert_colors
+          </mat-icon>
+
+          <mat-icon [fontSet]="fontSet"
+                    class="debuff-value"
+                    matTooltip="Poisoned"
+                    matBadge="0"
+                    matBadgeDisabled
+                    [matBadgeOverlap]="false"
+                    [matBadgePosition]="'below'">
+            coronavirus
+          </mat-icon>
+
+          <mat-icon [fontSet]="fontSet"
+                    class="debuff-value"
+                    matTooltip="Hindered"
+                    matBadge="0"
+                    matBadgeDisabled
+                    [matBadgeOverlap]="false"
+                    [matBadgePosition]="'below'">
+            do_not_touch
+          </mat-icon>
+
+          <mat-icon [fontSet]="fontSet"
+                    class="debuff-value"
+                    matTooltip="Immobilized"
+                    matBadge="0"
+                    matBadgeDisabled
+                    [matBadgeOverlap]="false"
+                    [matBadgePosition]="'below'">
+            do_not_step
+          </mat-icon>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <!-- TODO disabled when hindered? -->
+    <!-- TODO move with drag/drop on map -->
+    <button class="offensive-action"
+            mat-stroked-button>
+      Action 1
+    </button>
+
+    <button class="defensive-action"
+            matBadge="2"
+            mat-stroked-button>
+      Action 2
+
+      <mat-icon [fontSet]="fontSet"
+                matTooltip="Reactive">
+        sync
+      </mat-icon>
+    </button>
+
+    <button mat-stroked-button
+            cdkOverlayOrigin
+            #trigger="cdkOverlayOrigin"
+            (click)="isOpen = !isOpen">
+      Action 3
+    </button>
+
+    <ng-template cdkConnectedOverlay
+                 [cdkConnectedOverlayOrigin]="trigger"
+                 [cdkConnectedOverlayOpen]="isOpen"
+                 [cdkConnectedOverlayHasBackdrop]="true"
+                 [cdkConnectedOverlayBackdropClass]="'transparent-backdrop'"
+                 (backdropClick)="test()">
+      <mat-card class="test">
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <div class="list-item-container">
+                <mat-chip-set>
+                  <mat-chip matTooltip="Damage"
+                            highlighted>
+                    <mat-icon matChipAvatar>
+                      gavel
+                    </mat-icon>
+
+                    {{ character.resistance.nuclear }}
+                  </mat-chip>
+
+                  <mat-chip matTooltip="Accuracy">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      games
+                    </mat-icon>
+
+                    {{ character.resistance.physical }}
+                  </mat-chip>
+
+                  <mat-chip matTooltip="Armor penetration">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      remove_moderator
+                    </mat-icon>
+
+                    {{ character.resistance.physical }}
+                  </mat-chip>
+                </mat-chip-set>
+              </div>
+            </mat-list-item>
+
+            <mat-list-item>
+              <div class="list-item-container">
+                <mat-chip-set>
+                  <mat-chip matTooltip="Range">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      open_in_full
+                    </mat-icon>
+
+                    {{ character.resistance.physical }}
+                  </mat-chip>
+
+                  <mat-chip matTooltip="AoE">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      crisis_alert
+                    </mat-icon>
+
+                    {{ character.resistance.physical }}
+                  </mat-chip>
+
+                  <mat-chip matTooltip="Targets">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      people
+                    </mat-icon>
+
+                    {{ character.resistance.physical }}
+                  </mat-chip>
+                </mat-chip-set>
+              </div>
+            </mat-list-item>
+
+            <mat-list-item>
+              <div class="list-item-container">
+                <mat-chip-set>
+                  <mat-chip matTooltip="Evasion">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      sports_gymnastics
+                    </mat-icon>
+
+                    {{ character.resistance.physical }}
+                  </mat-chip>
+
+                  <mat-chip matTooltip="Distance">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      directions_walk
+                    </mat-icon>
+
+                    {{ character.resistance.nuclear }}
+                  </mat-chip>
+                </mat-chip-set>
+              </div>
+            </mat-list-item>
+
+            <mat-list-item>
+              <div class="list-item-container">
+                <mat-chip-set>
+                  <mat-chip matTooltip="Concussion">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      sentiment_very_dissatisfied
+                    </mat-icon>
+
+                    {{ character.resistance.physical }}
+                  </mat-chip>
+
+                  <mat-chip matTooltip="Bolster">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      add_reaction
+                    </mat-icon>
+
+                    {{ character.resistance.nuclear }}
+                  </mat-chip>
+                </mat-chip-set>
+              </div>
+            </mat-list-item>
+
+            <mat-list-item>
+              <div class="list-item-container">
+                <mat-chip-set>
+                  <mat-chip matTooltip="Bleed">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      invert_colors
+                    </mat-icon>
+
+                    {{ character.resistance.nuclear }}
+                  </mat-chip>
+
+                  <mat-chip matTooltip="Poison">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      coronavirus
+                    </mat-icon>
+
+                    {{ character.resistance.physical }}
+                  </mat-chip>
+
+                  <mat-chip matTooltip="Heal"
+                            disabled>
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      add_circle_outline
+                    </mat-icon>
+
+                    {{ character.resistance.physical }}
+                  </mat-chip>
+                </mat-chip-set>
+              </div>
+            </mat-list-item>
+
+            <mat-list-item>
+              <div class="list-item-container">
+                <mat-chip-set>
+                  <mat-chip matTooltip="Hinder">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      do_not_touch
+                    </mat-icon>
+
+                    {{ character.resistance.nuclear }}
+                  </mat-chip>
+
+                  <mat-chip matTooltip="Immobilize">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      do_not_step
+                    </mat-icon>
+
+                    {{ character.resistance.physical }}
+                  </mat-chip>
+
+                  <mat-chip matTooltip="Free-up">
+                    <mat-icon [fontSet]="fontSet"
+                              matChipAvatar>
+                      accessibility_new
+                    </mat-icon>
+
+                    {{ character.resistance.physical }}
+                  </mat-chip>
+                </mat-chip-set>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </ng-template>
+  </mat-card-actions>
+
+  <mat-card-footer>
+    <mat-list>
+      <mat-list-item>
+        <div class="list-item-container">
+          <mat-chip-set>
+            <mat-chip matTooltip="P-RES"
+                      class="p-res"
+                      highlighted>
+              <mat-icon [fontSet]="fontSet"
+                        matChipAvatar>
+                construction
+              </mat-icon>
+
+              {{ character.resistance.physical }}
+            </mat-chip>
+
+            <mat-chip matTooltip="E-RES"
+                      class="e-res"
+                      highlighted>
+              <mat-icon matChipAvatar>
+                local_fire_department
+              </mat-icon>
+
+              {{ character.resistance.elemental }}
+            </mat-chip>
+
+            <mat-chip matTooltip="N-RES"
+                      class="n-res"
+                      highlighted>
+              <mat-icon [fontSet]="fontSet"
+                        matChipAvatar>
+                webhook
+              </mat-icon>
+
+              {{ character.resistance.nuclear }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="list-item-container">
+          <mat-chip-set>
+            <mat-chip matTooltip="STR">
+              <mat-icon [fontSet]="fontSet"
+                        matChipAvatar>
+                fitness_center
+              </mat-icon>
+
+              {{ character.proficiency.strength }}
+            </mat-chip>
+
+            <mat-chip matTooltip="TGH">
+              <mat-icon [fontSet]="fontSet"
+                        matChipAvatar>
+                terrain
+              </mat-icon>
+
+              {{ character.proficiency.toughness }}
+            </mat-chip>
+
+            <mat-chip matTooltip="INT">
+              <mat-icon [fontSet]="fontSet"
+                        matChipAvatar>
+                psychology
+              </mat-icon>
+
+              {{ character.proficiency.intelligence }}
+            </mat-chip>
+
+            <mat-chip matTooltip="PER">
+              <mat-icon [fontSet]="fontSet"
+                        matChipAvatar>
+                visibility
+              </mat-icon>
+
+              {{ character.proficiency.perception }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-footer>
+</mat-card>

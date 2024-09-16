@@ -2,36 +2,47 @@
   Round {{ round }}
 </h1>
 
+<button mat-raised-button
+        (click)="resetStepper()">
+  Next Round
+</button>
+
 <mat-stepper orientation="vertical"
              [linear]="true"
              #stepper>
+  <ng-template matStepperIcon="edit">
+    <mat-icon>
+      how_to_reg
+    </mat-icon>
+  </ng-template>
+
+  @for (char of characters; track char.id) {
   <mat-step>
     <ng-template matStepLabel>
-      Step1Label
+      <div class="character-label">
+        <div>
+          {{ char.name }} {{ $index }}
+        </div>
+
+        <div>
+          <mat-chip matTooltip="AP"
+                    class="ap-counter"
+                    highlighted>
+            <mat-icon [fontSet]="fontSet"
+                      matChipAvatar>
+              play_circle
+            </mat-icon>
+
+            {{ char.currentAP }}
+          </mat-chip>
+        </div>
+      </div>
     </ng-template>
 
     <div class="step-content">
-      Step1Content
+      <app-character-card [character]="char">
+      </app-character-card>
     </div>
   </mat-step>
-
-  <mat-step>
-    <ng-template matStepLabel>
-      Step2Label
-    </ng-template>
-
-    <div class="step-content">
-      Step2Content
-    </div>
-  </mat-step>
-
-  <mat-step>
-    <ng-template matStepLabel>
-      Step3Label
-    </ng-template>
-
-    <div class="step-content">
-      Step3Content
-    </div>
-  </mat-step>
+  }
 </mat-stepper>

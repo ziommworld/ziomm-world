@@ -1,0 +1,126 @@
+@use "@angular/material" as mat;
+@use "styles.scss" as *;
+
+.character-card {
+  mat-card-header {
+    display: flex;
+    align-items: center;
+
+    .mat-mdc-card-avatar {
+      margin-bottom: 0; // override
+    }
+
+    [mat-card-avatar] {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      mat-icon {
+        transform: scale(1.5);
+      }
+    }
+
+    .character-header-attributes {
+      mat-chip {
+        margin-left: 16px;
+
+        &.tech-lvl-value {
+          @include mat.chips-color($light-theme, $color-variant: tertiary);
+        }
+
+        &.ms-value {
+          @include mat.chips-color($light-theme, $color-variant: error);
+        }
+      }
+    }
+
+    position: relative;
+
+    .health-indicator-container {
+      position: absolute;
+      right: 16px;
+
+      .health-indicator {
+        @include mat.progress-spinner-color(
+          $light-theme,
+          $color-variant: error
+        );
+      }
+
+      .health-indicator-value {
+        position: absolute;
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%);
+
+        user-select: none;
+        font-weight: bolder;
+      }
+    }
+  }
+
+  mat-card-content {
+    .list-item-container {
+      display: flex;
+      align-items: center;
+      min-height: 36px;
+
+      mat-icon {
+        margin-right: 24px;
+
+        &.state-value {
+          @include mat.badge-color($light-theme, $color-variant: primary);
+        }
+
+        &.buff-value {
+          @include mat.badge-color($light-theme, $color-variant: tertiary);
+        }
+
+        &.debuff-value {
+          @include mat.badge-color($light-theme, $color-variant: error);
+        }
+      }
+    }
+  }
+
+  mat-card-actions {
+    button {
+      margin-right: 8px;
+      @include mat.badge-color($light-theme, $color-variant: primary);
+
+      &.offensive-action {
+        @include mat.button-color($light-theme, $color-variant: error);
+      }
+
+      &.defensive-action {
+        @include mat.button-color($light-theme, $color-variant: tertiary);
+      }
+    }
+  }
+
+  mat-card-footer {
+    .list-item-container {
+      mat-chip {
+        &.p-res {
+          @include mat.chips-color($light-theme, $color-variant: tertiary);
+        }
+
+        &.e-res {
+          @include mat.chips-color($light-theme, $color-variant: error);
+        }
+
+        &.n-res {
+          @include mat.chips-color($light-theme, $color-variant: primary);
+        }
+      }
+    }
+  }
+
+  [matChipAvatar] {
+    transform: scale(1.2);
+  }
+}
+
+.transparent-backdrop {
+  background: transparent;
+}

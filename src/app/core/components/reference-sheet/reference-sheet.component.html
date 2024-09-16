@@ -7,9 +7,27 @@
     </ng-template>
 
     <div class="tab-content">
-      Tab1Content - characters
+      <mat-accordion>
+        @for(char of characters; track char.id) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ char.name }} {{ $index }}
+            </mat-panel-title>
+
+            <mat-panel-description>
+              <!-- {{ char.id }}   -->
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <app-character-card [character]="char">
+          </app-character-card>
+        </mat-expansion-panel>
+        }
+      </mat-accordion>
     </div>
   </mat-tab>
+
   <mat-tab>
     <ng-template matTabLabel>
       <mat-icon [fontSet]="fontSet">
@@ -25,7 +43,7 @@
   <mat-tab>
     <ng-template matTabLabel>
       <mat-icon [fontSet]="fontSet">
-        grid_view
+        grid_on
       </mat-icon>
     </ng-template>
 

@@ -12,7 +12,39 @@ export class Character {
     return this._id;
   }
 
-  constructor (
+  public get name() {
+    return this.config.name;
+  }
+
+  public get proficiency() {
+    return this.config.proficiency;
+  }
+
+  public get resistance() {
+    return this.config.resistance;
+  }
+
+  public get currentHP() {
+    return this.stats.currentHP;
+  }
+
+  public get currentAP() {
+    return this.stats.currentAP;
+  }
+
+  public get maxHP() {
+    return this.config.maxHP;
+  }
+
+  public get defaultMS() {
+    return this.config.defaultMS;
+  }
+
+  public get techLvl() {
+    return this.config.techLvl;
+  }
+
+  constructor(
     private key: string,
     private config: CharacterConfig,
   ) {

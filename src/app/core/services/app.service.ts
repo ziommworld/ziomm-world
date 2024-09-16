@@ -10,7 +10,7 @@ export class AppService {
   public readonly version = '0.0.1';
 
   private $appState = signalState<AppState>({
-    inGame: false,
+    inGame: true, // TODO revert to false
   });
 
   public get $inGame() {

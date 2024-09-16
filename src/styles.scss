@@ -11,9 +11,9 @@
 // $palette: mat.$orange-palette;
 // $palette: mat.$chartreuse-palette;
 // $palette: mat.$spring-green-palette;
-// $palette: mat.$azure-palette;
-$palette: mat.$violet-palette;
-// $palette: mat.$rose-palette;
+$azure-palette: mat.$azure-palette;
+$violet-palette: mat.$violet-palette;
+// $rose-palette: mat.$rose-palette;
 
 $typography: (
   brand-family: "Comic Sans",
@@ -28,7 +28,8 @@ $light-theme: mat.define-theme(
   (
     color: (
       theme-type: light,
-      primary: $palette,
+      primary: $violet-palette,
+      tertiary: $azure-palette,
     ),
     typography: $typography,
     density: $density,

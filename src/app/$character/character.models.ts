@@ -23,7 +23,6 @@ export interface CharacterStats {
 
 export interface CharacterProficiencies {
   strength: number;
-  dexterity: number;
   toughness: number;
   intelligence: number;
   perception: number;
