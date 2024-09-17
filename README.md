@@ -2,6 +2,7 @@
 
 - modal: open/close with esc
   - start game: horizontal stepper
+    - register players
     - pick characters
     - pick scenario
     - choose difficulty (slider)

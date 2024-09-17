@@ -1,5 +1,5 @@
 export {
-  Character
+  Character,
 } from './character.class';
 
 export {
@@ -7,11 +7,17 @@ export {
   CharacterConfig,
   CharacterProficiencies,
   CharacterResistances,
-  CharacterStats,
   CharacterState,
+  CharacterLibrary,
+  CharacterIcon,
+  ActionMap,
+  ActionKey,
+  CharacterKey,
 } from './character.models';
 
 export {
-
+  getDefaultCharacterState,
+  roundAP,
+  actionMap,
 } from './character.configs';
 

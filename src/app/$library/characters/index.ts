@@ -1,44 +1,57 @@
-import { Character, CharacterConfig } from "src/app/$character"
+import { CharacterIcon, CharacterLibrary } from "../../$character"
 
 
-const config: CharacterConfig = {
-  maxHP: 10,
-  actions: [
-    {
-      key: 'attack',
-      name: 'Attack',
-      range: 1,
-      damage: 2,
-      costAP: 2,
-      description: 'Deal 2 damage to an enemy',
+export const characters: CharacterLibrary = {
+  neo: {
+    name: 'Neo',
+    icon: CharacterIcon.Neo,
+    npc: false,
+
+    maxHP: 10,
+    baseMS: 10,
+
+    techLvl: 1,
+    powerLvl: 14,
+
+    proficiency: {
+      intelligence: 1,
+      perception: 2,
+      strength: 3,
+      toughness: 4
     },
-    {
-      key: 'heal',
-      name: 'Heal',
-      costAP: 2,
-      description: 'Heal an ally for 2 HP',
-      range: 1,
+
+    resistance: {
+      physical: 3,
+      elemental: 1,
+      nuclear: 2,
     },
-  ],
-  defaultMS: 6,
-  name: 'Gandalf',
-  npc: true,
-  powerLvl: 10,
-  proficiency: {
-    strength: 10,
-    intelligence: 10,
-    perception: 10,
-    toughness: 10,
+
+    actions: [],
   },
-  resistance: {
-    elemental: 0,
-    physical: 0,
-    nuclear: 0,
-  },
-  techLvl: 10,
+  beetle: {
+    name: 'Ganjalf',
+    icon: CharacterIcon.Beetle,
+    npc: false,
+
+    maxHP: 10,
+    baseMS: 10,
+
+    techLvl: 1,
+    powerLvl: 14,
+
+    proficiency: {
+      intelligence: 1,
+      perception: 2,
+      strength: 3,
+      toughness: 4
+    },
+
+    resistance: {
+      physical: 3,
+      elemental: 1,
+      nuclear: 2,
+    },
+
+    actions: [],
+  }
 };
-
-export const gandalf = new Character('Gandalf', config);
-export const frodo = new Character('Frodo', config);
-export const sam = new Character('Sam', config);
-export const aragorn = new Character('Aragorn', config);

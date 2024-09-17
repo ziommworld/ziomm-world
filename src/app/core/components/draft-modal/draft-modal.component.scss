@@ -1,0 +1,38 @@
+.step-content {
+  padding: 24px;
+
+  display: flex;
+  justify-content: center;
+
+  position: relative;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    [mat-mini-fab] {
+      margin: 10px;
+    }
+
+    [matSuffix] {
+      margin-right: 10px;
+    }
+  }
+}
+
+.stepper-next {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 24px;
+}
+
+.stepper-prev {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 24px;
+}

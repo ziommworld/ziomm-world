@@ -1,25 +1,5 @@
 import { ActionModality, DamageType } from "../$mechanics";
 
-export interface CharacterConfig {
-  name: string;
-  npc: boolean;
-  powerLvl: number;
-
-  maxHP: number;
-  defaultMS: number;
-  techLvl: number;
-
-  proficiency: CharacterProficiencies;
-  resistance: CharacterResistances;
-
-  actions: CharacterAction[];
-}
-
-export interface CharacterStats {
-  currentAP: number;
-  currentHP: number;
-  initiative: number;
-}
 
 export interface CharacterProficiencies {
   strength: number;
@@ -34,46 +14,132 @@ export interface CharacterResistances {
   nuclear: number;
 }
 
+export interface CharacterAction {
+  name: string;
+  description?: string;
+  baseAP: number;
+  modalities?: ActionModality[];
+
+  reactive?: boolean;
+  // interactive?: boolean; -> deployed_code_account
+
+  // usageCount?: number;
+  // cooldown?: number;
+  // duration?: number;
+
+  damage?: number;
+  damageType?: DamageType;
+  accuracy?: number;
+  armorPenetration?: number;
+
+  range?: number;
+  aoe?: number;
+  targets?: number;
+
+  evasion?: number;
+  distance?: number;
+
+  concussive?: number;
+  boosting?: number;
+
+  bleeding?: number;
+  poisonous?: number;
+  healing?: number;
+
+  hindering?: number;
+  immobilizing?: number;
+  freeing?: number;
+}
+
+export enum CharacterIcon {
+  Goblin = 'surfing',
+  Spiderman = 'sports_handball',
+  Legolas = 'snowboarding',
+  Frodo = 'taunt',
+  Hitler = 'hail',
+  Xavier = 'accessible_forward',
+  Gandalf = 'elderly',
+  Yoda = 'hiking',
+  Neo = 'sports_martial_arts',
+  Flash = 'sprint',
+  MaxMax = 'directions_bike',
+
+  Bug = 'bug_report',
+  Beetle = 'pest_control',
+  Rabbit = 'cruelty_free',
+  Raven = 'raven',
+  R2D2 = 'adb',
+  C3PO = 'android',
+}
+
+export interface CharacterConfig {
+  name: string;
+  icon: string;
+  npc: boolean;
+
+  maxHP: number;
+  baseMS: number;
+
+  techLvl: number;
+  powerLvl: number;
+
+  proficiency: CharacterProficiencies;
+  resistance: CharacterResistances;
+
+  actions: string[]; // keys
+}
+
 export interface CharacterState {
+  initiative: number | null;
+  player: string | null;
+
+  currentAP: number;
+  currentHP: number;
+
   isCrouching: boolean;
-  // isMounted: boolean;
+  isDead: boolean; // -> skull
+  isMounted: boolean; // -> body_system
 
   bolsterCounter: number;
+  concussionCounter: number;
+
   bleedCounter: number;
   poisonCounter: number;
-  concussionCounter: number;
+
   immobilizeCounter: number;
   hinderCounter: number;
 }
 
-export interface CharacterAction {
-  key: string;
-  name: string;
-  description: string;
-  costAP: number;
+export type CharacterKey =
+  'goblin' |
+  'spiderman' |
+  'legolas' |
+  'frodo' |
+  'hitler' |
+  'xavier' |
+  'gandalf' |
+  'yoda' |
+  'neo' |
+  'flash' |
+  'madmax' |
 
-  usageCount?: number;
-  cooldown?: number;
-  duration?: number;
+  'bug' |
+  'beetle' |
+  'rabbit' |
+  'raven' |
+  'r2d2' |
+  'c3po';
 
-  targets?: number;
-  range?: number;
-  accuracy?: number;
-  damage?: number;
-  damageType?: DamageType;
-  modalities?: ActionModality[];
-  evasion?: number;
-  distance?: number;
+export type ActionKey =
+  'move' |
+  'crouch' |
+  'stand' |
+  'free' |
+  'bandage' |
+  'wait' |
+  'pass';
 
-  reactive?: boolean;
-  // interactive?: boolean;
+export type ActionMap = Record<ActionKey, CharacterAction>;
 
-  bleeding?: boolean;
-  concussive?: boolean;
-  poisonous?: boolean;
-  immobilizing?: boolean;
-  hindering?: boolean;
-  boosting?: boolean;
-  healing?: boolean;
-  freeing?: boolean;
-}
+// key -> character config
+export type CharacterLibrary = Partial<Record<CharacterKey, CharacterConfig>>;

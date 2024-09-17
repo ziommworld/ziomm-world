@@ -1,1 +1,109 @@
-<p>draft-modal works!</p>
+<mat-stepper [linear]="true"
+             #stepper>
+  <mat-step [stepControl]="playersFormGroup">
+    <ng-template matStepLabel>
+      Players
+    </ng-template>
+
+    <div class="step-content">
+      <form [formGroup]="playersFormGroup">
+        <ng-container formArrayName="players">
+          @for(control of playersFormArray.controls; track $index) {
+          <mat-form-field appearance="outline">
+            <mat-label>
+              Name
+            </mat-label>
+
+            <input matInput
+                   [formControl]="control"
+                   required>
+
+            @if (control.value) {
+            <button matSuffix
+                    mat-icon-button
+                    (click)="control.reset()">
+              <mat-icon>
+                close
+              </mat-icon>
+            </button>
+            }
+          </mat-form-field>
+          }
+
+          <div>
+            <button mat-mini-fab
+                    [disabled]="playersFormArray.length === 4"
+                    (click)="addPlayer()">
+              <mat-icon [fontSet]="fontSet">
+                add
+              </mat-icon>
+            </button>
+
+            <button mat-mini-fab
+                    [disabled]="playersFormArray.length === 1"
+                    (click)="removePlayer()">
+              <mat-icon [fontSet]="fontSet">
+                remove
+              </mat-icon>
+            </button>
+          </div>
+        </ng-container>
+      </form>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup"
+            label="Fill out your address">
+    <form [formGroup]="secondFormGroup">
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <input matInput
+               formControlName="secondCtrl"
+               placeholder="Ex. 1 Main St, New York, NY"
+               required>
+      </mat-form-field>
+      <div>
+        <button mat-button
+                matStepperPrevious>Back</button>
+        <button mat-button
+                matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button
+              matStepperPrevious>Back</button>
+      <button mat-button
+              (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>
+
+
+@if (stepper.selectedIndex !== 0) {
+<div class="stepper-prev">
+  <button mat-stroked-button
+          (click)="prevStep()">
+    Prev
+    <mat-icon [fontSet]="fontSet">
+      chevron_left
+    </mat-icon>
+  </button>
+</div>
+}
+
+@if (stepper.selectedIndex !== stepper.steps.length - 1) {
+<div class="stepper-next">
+  <button mat-stroked-button
+          [disabled]="isNextDisabled"
+          (click)="nextStep()">
+    Next
+    <mat-icon [fontSet]="fontSet">
+      chevron_right
+    </mat-icon>
+  </button>
+</div>
+}

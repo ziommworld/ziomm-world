@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { patchState, signalState } from '@ngrx/signals';
+import { effect, Injectable, signal } from '@angular/core';
+import { patchState, SignalState, signalState } from '@ngrx/signals';
 
 import { AppState } from '../models';
 import { initialAppState } from '../configs';
@@ -15,7 +15,8 @@ export class AppService {
     return this.$appState.inGame;
   }
 
-  constructor() { }
+  constructor() {
+  }
 
   public toggleInGame() {
     patchState(

@@ -5,7 +5,7 @@ import { Character } from 'src/app/$character';
 import { MatIcon } from '@angular/material/icon';
 
 
-import { aragorn, frodo, gandalf, sam } from '@lib/characters';
+import { characters } from '@lib/characters';
 import { NgFor } from '@angular/common';
 import { CharacterCardComponent } from "../character-card/character-card.component";
 import { MatChipsModule } from '@angular/material/chips';
@@ -42,12 +42,7 @@ export class InitiativeTrackerComponent {
   }
 
   public initCharacters() {
-    this.characters = [
-      gandalf,
-      frodo,
-      sam,
-      aragorn,
-    ];
+    this.characters = [];
   }
 
   public resetStepper() {

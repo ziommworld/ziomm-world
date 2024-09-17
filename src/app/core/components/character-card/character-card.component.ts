@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
@@ -39,9 +39,10 @@ export class CharacterCardComponent {
   @Input()
   public character!: Character;
 
-  public get charHP(): number {
-    return Math.floor(this.character.currentHP / this.character.maxHP * 100);
-  }
+  public charHP = computed(() => {
+    return Math.floor(this.character.currentHP() / this.character.maxHP * 100);
+
+  });
 
   constructor(
     private overlay: Overlay

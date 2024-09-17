@@ -20,6 +20,7 @@ import { GameModalComponent } from './core/components/game-modal/game-modal.comp
 import { GameViewComponent } from "./core/components/game-view/game-view.component";
 import { InitiativeTrackerComponent } from "./core/components/initiative-tracker/initiative-tracker.component";
 import { ReferenceSheetComponent } from "./core/components/reference-sheet/reference-sheet.component";
+import { GameService } from './core/services/game.service';
 
 
 @Component({
@@ -89,6 +90,7 @@ export class AppComponent {
     private gdialog: MatDialog,
     private snackbar: MatSnackBar,
     private appService: AppService,
+    private gameService: GameService,
   ) {
     this.initEffects();
   }
@@ -153,7 +155,8 @@ export class AppComponent {
   }
 
   public newGame() {
-    this.appService.toggleInGame();
+    // this.appService.toggleInGame();
+    this.gameService.initGame();
   }
 
   public loadGame() {
