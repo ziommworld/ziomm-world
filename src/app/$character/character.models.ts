@@ -111,24 +111,24 @@ export interface CharacterState {
 }
 
 export type CharacterKey =
-  'goblin' |
-  'spiderman' |
-  'legolas' |
-  'frodo' |
-  'hitler' |
-  'xavier' |
-  'gandalf' |
-  'yoda' |
+  // 'goblin' |
+  // 'spiderman' |
+  // 'legolas' |
+  // 'frodo' |
+  // 'hitler' |
+  // 'xavier' |
+  // 'gandalf' |
+  // 'yoda' |
   'neo' |
-  'flash' |
-  'madmax' |
+  // 'flash' |
+  // 'madmax' |
 
-  'bug' |
-  'beetle' |
-  'rabbit' |
-  'raven' |
-  'r2d2' |
-  'c3po';
+  // 'bug' |
+  'beetle';
+  // 'rabbit' |
+  // 'raven' |
+  // 'r2d2' |
+  // 'c3po';
 
 export type ActionKey =
   'move' |
@@ -142,4 +142,4 @@ export type ActionKey =
 export type ActionMap = Record<ActionKey, CharacterAction>;
 
 // key -> character config
-export type CharacterLibrary = Partial<Record<CharacterKey, CharacterConfig>>;
+export type CharacterLibrary = Record<CharacterKey, CharacterConfig>;

@@ -4,7 +4,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NgFor } from '@angular/common';
 
-import { characters } from '@lib/characters';
+import { characters } from 'src/app/shared/configs/characters';
 import { Character } from 'src/app/$character';
 import { CharacterCardComponent } from '../character-card/character-card.component';
 

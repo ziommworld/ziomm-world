@@ -5,7 +5,7 @@ import { Character } from 'src/app/$character';
 import { MatIcon } from '@angular/material/icon';
 
 
-import { characters } from '@lib/characters';
+import { characters } from 'src/app/shared/configs/characters';
 import { NgFor } from '@angular/common';
 import { CharacterCardComponent } from "../character-card/character-card.component";
 import { MatChipsModule } from '@angular/material/chips';

@@ -1,4 +1,4 @@
-import { GameComponentConfig, GameComponentType } from "../../../$component";
+import { GameComponentConfig, GameComponentType } from "../../../../$component";
 
 export const rockConfig: GameComponentConfig = {
   name: 'Rock',

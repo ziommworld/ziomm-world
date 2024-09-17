@@ -1,4 +1,4 @@
-import { CharacterIcon, CharacterLibrary } from "../../$character"
+import { CharacterIcon, CharacterLibrary } from "../../../$character"
 
 
 export const characters: CharacterLibrary = {
@@ -29,7 +29,7 @@ export const characters: CharacterLibrary = {
     actions: [],
   },
   beetle: {
-    name: 'Ganjalf',
+    name: 'Beetle',
     icon: CharacterIcon.Beetle,
     npc: false,
 
