@@ -1,7 +1,7 @@
 import { Character } from "../$character";
 import { GameComponent } from "../$component";
 
-export interface MapConfig {
+export interface GameMapConfig {
 
 }
 
@@ -26,4 +26,8 @@ export enum TerrainType {
   Concrete = 'concrete',
   Platform = 'platform', // metal
   Interior = 'interior', // inside a building
+}
+
+export interface GameMapState {
+  layer: number;
 }

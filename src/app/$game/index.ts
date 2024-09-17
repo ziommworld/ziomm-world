@@ -1,5 +1,5 @@
 export {
-
+  Game
 } from './game.class';
 
 export {

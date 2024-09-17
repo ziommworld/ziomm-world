@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { patchState, signalState } from '@ngrx/signals';
-import { AppState } from '../models/app.models';
+
+import { AppState } from '../models';
+import { initialAppState } from '../configs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
-  public readonly version = '0.0.1';
-
-  private $appState = signalState<AppState>({
-    inGame: true, // TODO revert to false
-  });
+  private $appState = signalState<AppState>(initialAppState);
 
   public get $inGame() {
     return this.$appState.inGame;

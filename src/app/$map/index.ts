@@ -3,7 +3,8 @@ export {
 } from './map.class';
 
 export {
-  MapConfig,
+  GameMapConfig,
   MicroTile,
   TerrainType,
+  GameMapState,
 } from './map.models';

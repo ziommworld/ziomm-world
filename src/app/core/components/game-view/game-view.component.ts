@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { MapComponent } from 'src/app/$map/map/map.component';
+import { GameMapComponent } from 'src/app/core/components/game-map/game-map.component';
 
 @Component({
   selector: 'app-game-view',
   standalone: true,
   imports: [
-    MapComponent
+    GameMapComponent
   ],
   templateUrl: './game-view.component.html',
   styleUrl: './game-view.component.scss'

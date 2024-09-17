@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MicroTile } from '../map.models';
+import { MicroTile } from '../../../$map/map.models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 
@@ -20,16 +20,16 @@ interface MapCell {
 }
 
 @Component({
-  selector: 'app-map',
+  selector: 'app-game-map',
   standalone: true,
   imports: [
     MatIconModule,
     MatBadgeModule
   ],
-  templateUrl: './map.component.html',
-  styleUrl: './map.component.scss'
+  templateUrl: './game-map.component.html',
+  styleUrl: './game-map.component.scss'
 })
-export class MapComponent {
+export class GameMapComponent {
   public map: GameMap = {
     rows: [
       {

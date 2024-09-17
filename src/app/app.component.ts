@@ -12,7 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { NgClass } from '@angular/common';
 
-import { MapComponent } from './$map/map/map.component';
+import { GameMapComponent } from './core/components/game-map/game-map.component';
 import { ActionPanelComponent } from './core/components/action-panel/action-panel.component';
 import { GuiService } from './core/services/gui.service';
 import { AppService } from './core/services/app.service';
@@ -27,7 +27,7 @@ import { ReferenceSheetComponent } from "./core/components/reference-sheet/refer
   standalone: true,
   imports: [
     RouterOutlet,
-    MapComponent,
+    GameMapComponent,
     MatSidenavModule,
     MatButtonModule,
     MatIcon,

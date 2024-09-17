@@ -86,7 +86,7 @@
   mat-card-actions {
     button {
       margin-right: 8px;
-      @include mat.badge-color($light-theme, $color-variant: primary);
+      @include mat.badge-color($light-theme, $color-variant: secondary);
 
       &.offensive-action {
         @include mat.button-color($light-theme, $color-variant: error);

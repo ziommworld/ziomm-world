@@ -1,5 +1,5 @@
 export {
-
+  AppState,
 } from './app.models';
 
 export {

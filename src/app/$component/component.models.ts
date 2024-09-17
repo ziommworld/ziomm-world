@@ -21,3 +21,7 @@ export enum GameComponentType {
   Terrain = 'terrain',
   Ambient = 'ambient',
 }
+
+export interface GameComponentState {
+  durability?: number;
+}

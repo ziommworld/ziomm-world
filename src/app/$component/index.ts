@@ -5,4 +5,5 @@ export {
 export {
   GameComponentConfig,
   GameComponentType,
+  GameComponentState,
 } from './component.models';
