@@ -1,15 +1,14 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
-import { Character } from 'src/app/$character';
 import { MatIcon } from '@angular/material/icon';
 
 
-import { characters } from 'src/app/shared/configs/characters';
 import { NgFor } from '@angular/common';
 import { CharacterCardComponent } from "../character-card/character-card.component";
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Character } from 'src/app/$character';
 
 
 @Component({

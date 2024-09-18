@@ -1,4 +1,4 @@
-import { CharacterIcon, CharacterLibrary } from "../../../$character"
+import { CharacterIcon, CharacterLibrary } from "src/app/$character";
 
 
 export const characters: CharacterLibrary = {

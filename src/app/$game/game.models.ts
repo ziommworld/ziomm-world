@@ -4,7 +4,6 @@ import { GameMapConfig, GameMapState } from "../$map";
 
 
 export enum GamePhase {
-  Draft,
   Setup,
   Active,
   Pause,

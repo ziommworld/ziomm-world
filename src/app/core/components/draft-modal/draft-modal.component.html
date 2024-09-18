@@ -5,83 +5,247 @@
       Players
     </ng-template>
 
-    <div class="step-content">
-      <form [formGroup]="playersFormGroup">
-        <ng-container formArrayName="players">
-          @for(control of playersFormArray.controls; track $index) {
-          <mat-form-field appearance="outline">
-            <mat-label>
-              Name
-            </mat-label>
+    <ng-template matStepContent>
+      <div class="step-content">
+        <form [formGroup]="playersFormGroup">
+          <ng-container formArrayName="players">
+            @for(control of playersFormArray.controls; track $index) {
+            <mat-form-field appearance="outline">
+              <mat-label>
+                Name
+              </mat-label>
 
-            <input matInput
-                   [formControl]="control"
-                   required>
+              <input matInput
+                     [formControl]="control">
 
-            @if (control.value) {
-            <button matSuffix
-                    mat-icon-button
-                    (click)="control.reset()">
-              <mat-icon>
-                close
-              </mat-icon>
-            </button>
+              <button matSuffix
+                      mat-icon-button
+                      [ngClass]="{'remove-hidden': !control.value}"
+                      (click)="control.reset()">
+                <mat-icon>
+                  close
+                </mat-icon>
+              </button>
+            </mat-form-field>
             }
-          </mat-form-field>
-          }
 
-          <div>
-            <button mat-mini-fab
-                    [disabled]="playersFormArray.length === 4"
-                    (click)="addPlayer()">
-              <mat-icon [fontSet]="fontSet">
-                add
-              </mat-icon>
-            </button>
+            <div>
+              <button mat-mini-fab
+                      [disabled]="playersFormArray.length === 4"
+                      (click)="addPlayer()">
+                <mat-icon [fontSet]="fontSet">
+                  add
+                </mat-icon>
+              </button>
 
-            <button mat-mini-fab
-                    [disabled]="playersFormArray.length === 1"
-                    (click)="removePlayer()">
-              <mat-icon [fontSet]="fontSet">
-                remove
-              </mat-icon>
-            </button>
-          </div>
-        </ng-container>
-      </form>
-    </div>
-  </mat-step>
-
-  <mat-step [stepControl]="secondFormGroup"
-            label="Fill out your address">
-    <form [formGroup]="secondFormGroup">
-      <mat-form-field appearance="outline">
-        <mat-label>Address</mat-label>
-        <input matInput
-               formControlName="secondCtrl"
-               placeholder="Ex. 1 Main St, New York, NY"
-               required>
-      </mat-form-field>
-      <div>
-        <button mat-button
-                matStepperPrevious>Back</button>
-        <button mat-button
-                matStepperNext>Next</button>
+              <button mat-mini-fab
+                      [disabled]="playersFormArray.length === 1"
+                      (click)="removePlayer()">
+                <mat-icon [fontSet]="fontSet">
+                  remove
+                </mat-icon>
+              </button>
+            </div>
+          </ng-container>
+        </form>
       </div>
-    </form>
+    </ng-template>
   </mat-step>
+
+  <mat-step [stepControl]="scenarioFormGroup">
+    <ng-template matStepLabel>
+      Scenario
+    </ng-template>
+
+    <ng-template matStepContent>
+      <div class="step-content">
+        <form [formGroup]="scenarioFormGroup">
+          <mat-radio-group formControlName="scenario"
+                           (change)="onSelectScenario()">
+            @for(key of scenarioKeys; track key) {
+            <mat-radio-button [value]="key">
+              {{ getScenarioNameByKey(key) }}
+            </mat-radio-button>
+            }
+          </mat-radio-group>
+        </form>
+      </div>
+    </ng-template>
+  </mat-step>
+
+  <mat-step [stepControl]="charactersFormGroup">
+    <ng-template matStepLabel>
+      Characters
+    </ng-template>
+
+    <ng-template matStepContent>
+      <div class="step-content">
+        <form [formGroup]="charactersFormGroup">
+          <ng-container formArrayName="characters">
+            @for(group of charactersFormArray.controls; track $index) {
+            <div [formGroup]="group">
+              <mat-form-field class="select-field"
+                              appearance="outline">
+                <mat-label>
+                  Character
+                </mat-label>
+
+                <mat-select formControlName="character"
+                            required>
+                  <mat-option>∅</mat-option>
+                  @for (key of characterKeys; track key) {
+                  <mat-option [value]="key">
+                    {{ getCharacterNameByKey(key) }}
+                  </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>
+                  Player
+                </mat-label>
+
+                <mat-select formControlName="player"
+                            required>
+                  <mat-option>∅</mat-option>
+                  @for (control of playersFormArray.controls; track $index) {
+                  <mat-option [value]="control.value">
+                    {{ control.value }}
+                  </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            }
+
+            <div>
+              <button mat-mini-fab
+                      [disabled]="charactersFormArray.length === maxCharacters"
+                      (click)="addCharacter()">
+                <mat-icon [fontSet]="fontSet">
+                  add
+                </mat-icon>
+              </button>
+
+              <button mat-mini-fab
+                      [disabled]="charactersFormArray.length === 1"
+                      (click)="removeCharacter()">
+                <mat-icon [fontSet]="fontSet">
+                  remove
+                </mat-icon>
+              </button>
+            </div>
+          </ng-container>
+        </form>
+      </div>
+    </ng-template>
+  </mat-step>
+
+  <mat-step [stepControl]="settingsFormGroup">
+    <ng-template matStepLabel>
+      Settings
+    </ng-template>
+
+    <ng-template matStepContent>
+      <div class="step-content">
+        <form [formGroup]="settingsFormGroup">
+          <label>
+            Difficulty: {{ difficultySlider.value }}%
+          </label>
+
+          <div class="slider-container">
+            <label>
+              {{ minDifficulty }}%
+            </label>
+
+            <mat-slider [max]="maxDifficulty"
+                        [min]="minDifficulty"
+                        [step]="5"
+                        [discrete]="true"
+                        [showTickMarks]="true">
+              <input matSliderThumb
+                     formControlName="difficulty"
+                     #difficultySlider>
+            </mat-slider>
+
+            <label>
+              {{ maxDifficulty }}%
+            </label>
+          </div>
+
+          <label>
+            Max turns: {{ turnsSlider.value }}
+          </label>
+
+          <div class="slider-container">
+            <label>
+              {{ minTurns }}
+            </label>
+
+            <mat-slider [max]="maxTurns"
+                        [min]="minTurns"
+                        [step]="1"
+                        [discrete]="true"
+                        [showTickMarks]="true">
+              <input matSliderThumb
+                     formControlName="turns"
+                     #turnsSlider>
+            </mat-slider>
+
+            <label>
+              {{ maxTurns }}
+            </label>
+          </div>
+
+          <label>
+            Max time [min]: {{ timeSlider.value }}
+          </label>
+
+          <div class="slider-container">
+            <label>
+              {{ minTime }}
+            </label>
+
+            <mat-slider [max]="maxTime"
+                        [min]="minTime"
+                        [step]="5"
+                        [discrete]="true"
+                        [showTickMarks]="true">
+              <input matSliderThumb
+                     formControlName="time"
+                     #timeSlider>
+            </mat-slider>
+
+            <label>
+              {{ maxTime }}
+            </label>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </mat-step>
+
   <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-button
-              matStepperPrevious>Back</button>
-      <button mat-button
-              (click)="stepper.reset()">Reset</button>
-    </div>
+    <ng-template matStepLabel>
+      Done
+    </ng-template>
+
+    <ng-template matStepContent>
+      <div class="step-content">
+        <div class="start-button">
+          Start game
+          <button mat-fab
+                  (click)="startGame()">
+            <mat-icon>
+              start
+            </mat-icon>
+          </button>
+        </div>
+      </div>
+    </ng-template>
   </mat-step>
 </mat-stepper>
-
 
 @if (stepper.selectedIndex !== 0) {
 <div class="stepper-prev">

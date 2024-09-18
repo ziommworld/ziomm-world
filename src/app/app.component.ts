@@ -155,7 +155,6 @@ export class AppComponent {
   }
 
   public newGame() {
-    // this.appService.toggleInGame();
     this.gameService.initGame();
   }
 

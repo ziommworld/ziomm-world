@@ -4,3 +4,10 @@ export {
   ScenarioKey,
   ScenarioLibrary,
 } from './scenario.models';
+
+export {
+  maxTime,
+  minTime,
+  maxDifficulty,
+  minDifficulty,
+} from './scenario.configs';

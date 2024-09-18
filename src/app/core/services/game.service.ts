@@ -39,14 +39,24 @@ export class GameService {
       maxHeight: '80vh',
     };
 
-    this.dialog.open(DraftModalComponent, config);
+    const dialogRef = this.dialog.open(DraftModalComponent, config);
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          console.warn(result)
+          this.startGame();
+          this.appService.toggleInGame();
+        }
+      }
+    );
   }
 
-  public addCharacter(key: string, player: string) {
-
+  public startGame() {
+    this.engine = new GameEngine();
   }
 
-  public removeCharacter() {
-
+  public endGame() {
+    this.engine = null;
   }
 }

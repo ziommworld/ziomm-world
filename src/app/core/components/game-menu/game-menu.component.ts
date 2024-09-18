@@ -9,6 +9,7 @@ import { GuiService } from '../../services/gui.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GameService } from '../../services/game.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class GameMenuComponent {
 
   constructor(
     private appService: AppService,
+    private gameService: GameService,
     private gui: GuiService,
     private dialog: MatDialog,
     private snackbar: MatSnackBar,
@@ -55,6 +57,7 @@ export class GameMenuComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.gui.toggleGDialog();
+        this.gameService.endGame();
         this.appService.toggleInGame();
       }
     });
