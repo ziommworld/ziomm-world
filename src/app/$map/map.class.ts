@@ -1,6 +1,5 @@
 import { GameComponent } from "../$component";
 import { MicroTile } from "./map.models";
-import { testMap } from '../shared/configs/maps/index';
 
 /**
  * ? NOTES
@@ -12,7 +11,6 @@ export class GameMap {
   private components!: GameComponent[];
 
   constructor() {
-    console.warn(this.loadMap(testMap));
   }
 
   private convertMap(): string {

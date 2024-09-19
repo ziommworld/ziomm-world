@@ -7,4 +7,6 @@ export {
   MicroTile,
   TerrainType,
   GameMapState,
+  GameMapKey,
+  GameMapLibrary,
 } from './map.models';

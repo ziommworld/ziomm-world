@@ -146,7 +146,7 @@ export class DraftModalComponent {
 
   // private
 
-  private getGameConfig() {
+  private getDraftConfig() {
     return {
       players: this.playersFormArray.value,
       scenario: this.scenarioFormControl.value,
@@ -207,6 +207,6 @@ export class DraftModalComponent {
   }
 
   public startGame() {
-    this.dialogRef.close(this.getGameConfig());
+    this.dialogRef.close(this.getDraftConfig());
   }
 }

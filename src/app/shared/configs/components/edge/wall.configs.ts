@@ -1,13 +1,14 @@
 import { GameComponentConfig, GameComponentType } from "../../../../$component";
 
-export const wallConfig: GameComponentConfig = {
+
+export const wall: GameComponentConfig = {
   name: 'Wall',
   type: GameComponentType.Edge,
 
   interactions: [],
 }
 
-export const damagedWallConfig: GameComponentConfig = {
+export const damagedWall: GameComponentConfig = {
   name: 'Damaged wall',
   type: GameComponentType.Edge,
   penaltyMS: 2,
@@ -15,7 +16,7 @@ export const damagedWallConfig: GameComponentConfig = {
   interactions: [],
 }
 
-export const reinforcedWallConfig: GameComponentConfig = {
+export const reinforcedWall: GameComponentConfig = {
   name: 'Reinforced wall',
   type: GameComponentType.Edge,
 

@@ -1,6 +1,6 @@
 import { GameComponentConfig, GameComponentType } from "../../../../$component";
 
-export const windowConfig: GameComponentConfig = {
+export const basicWindow: GameComponentConfig = {
   name: 'Window',
   type: GameComponentType.Edge,
   transparent: true,
@@ -8,7 +8,7 @@ export const windowConfig: GameComponentConfig = {
   interactions: [],
 }
 
-export const reinforcedWindowConfig: GameComponentConfig = {
+export const reinforcedWindow: GameComponentConfig = {
   name: 'Reinforced wall',
   type: GameComponentType.Edge,
   transparent: true,

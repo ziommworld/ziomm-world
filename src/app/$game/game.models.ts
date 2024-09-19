@@ -1,5 +1,5 @@
-import { CharacterConfig, CharacterState } from "../$character";
-import { GameComponentConfig, GameComponentState } from "../$component";
+import { CharacterConfig, CharacterKey, CharacterState } from "../$character";
+import { GameComponentConfig, GameComponentKey, GameComponentState } from "../$component";
 import { GameMapConfig, GameMapState } from "../$map";
 
 
@@ -13,8 +13,8 @@ export enum GamePhase {
 export interface GameState {
   phase: GamePhase;
 
-  characters: Record<string, CharacterState>;
-  components: Record<string, GameComponentState>;
+  characters: Record<CharacterKey, CharacterState>;
+  components: Record<GameComponentKey, GameComponentState>;
   map: GameMapState;
 
   turn: number;

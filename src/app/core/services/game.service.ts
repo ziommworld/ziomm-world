@@ -26,7 +26,7 @@ export class GameService {
     private appService: AppService,
   ) { }
 
-  public initGame() {
+  public draftGame() {
     // this.engine = new GameEngine();
 
     const config: MatDialogConfig = {

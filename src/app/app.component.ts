@@ -155,7 +155,7 @@ export class AppComponent {
   }
 
   public newGame() {
-    this.gameService.initGame();
+    this.gameService.draftGame();
   }
 
   public loadGame() {

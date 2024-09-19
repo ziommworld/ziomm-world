@@ -6,4 +6,6 @@ export {
   GameComponentConfig,
   GameComponentType,
   GameComponentState,
+  GameComponentLibrary,
+  GameComponentKey,
 } from './component.models';

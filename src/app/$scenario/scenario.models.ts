@@ -1,5 +1,8 @@
-export interface ScenarioState {
+import { GameMapKey } from "../$map";
 
+
+export interface ScenarioState {
+  currentMap: GameMapKey;
 }
 
 export interface ScenarioConfig {
@@ -7,6 +10,9 @@ export interface ScenarioConfig {
   minCharacters: number;
   maxCharacters: number;
   defaultTurns: number;
+
+  maps: string[]; // map keys
+  npcs: string[]; // character keys
 }
 
 export type ScenarioKey =

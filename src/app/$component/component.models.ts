@@ -25,3 +25,15 @@ export enum GameComponentType {
 export interface GameComponentState {
   durability?: number;
 }
+
+export type GameComponentKey =
+  'wall' |
+  'damagedWall' |
+  'reinforcedWall' |
+  'basicWindow' |
+  'reinforcedWindow' |
+  'door' |
+  'rock' |
+  'jaggedRock';
+
+export type GameComponentLibrary = Record<GameComponentKey, GameComponentConfig>;
