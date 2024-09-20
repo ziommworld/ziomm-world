@@ -54,7 +54,7 @@ export class Character {
 
   constructor(
     private config: CharacterConfig,
-    private state: SignalState<CharacterState>
+    private state: SignalState<Partial<CharacterState>>
   ) {
     this._id = uuidv4();
   }

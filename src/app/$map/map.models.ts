@@ -28,8 +28,12 @@ export interface GameMapConfig {
   tiles: MicroTile[][];
 }
 
-export interface GameMapState {
+export interface GameMapStats {
 
+}
+
+export interface GameMapState {
+  stats: GameMapStats;
 }
 
 export type GameMapKey =

@@ -1,27 +1,29 @@
 import { CharacterConfig, CharacterKey, CharacterState } from "../$character";
 import { GameComponentConfig, GameComponentKey, GameComponentState } from "../$component";
 import { GameMapConfig, GameMapState } from "../$map";
+import { ScenarioState } from "../$scenario";
 
 
 export enum GamePhase {
-  Setup,
-  Active,
-  Pause,
-  End,
+  PreGame,
+  InGame,
+  PostGame,
+}
+
+export interface GameStats {
+  totalTime: number; // ms
 }
 
 export interface GameState {
   phase: GamePhase;
+  isPaused: boolean;
 
-  characters: Record<CharacterKey, CharacterState>;
-  components: Record<GameComponentKey, GameComponentState>;
-  map: GameMapState;
+  scenario: ScenarioState;
 
-  turn: number;
-  round: number; // corresponds to initiative
+  stats: GameStats;
 
+  updatedOn: number; // timestamp
   endedOn?: number; // timestamp
-  gameTime: number; // ms
 }
 
 export interface GameConfig {

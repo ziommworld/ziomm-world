@@ -39,8 +39,9 @@ export class CharacterCardComponent {
   @Input()
   public character!: Character;
 
+  // TODO remove ? from currentHP
   public charHP = computed(() => {
-    return Math.floor(this.character.currentHP() / this.character.maxHP * 100);
+    return Math.floor(this.character.currentHP?.() ?? 10 / this.character.maxHP * 100);
 
   });
 

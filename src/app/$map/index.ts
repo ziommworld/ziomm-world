@@ -9,4 +9,5 @@ export {
   GameMapState,
   GameMapKey,
   GameMapLibrary,
+  GameMapStats,
 } from './map.models';

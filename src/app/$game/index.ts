@@ -5,6 +5,8 @@ export {
 export {
   GamePhase,
   GameState,
+  GameConfig,
+  GameStats,
 } from './game.models';
 
 export {

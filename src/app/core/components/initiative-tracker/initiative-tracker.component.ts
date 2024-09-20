@@ -8,7 +8,9 @@ import { NgFor } from '@angular/common';
 import { CharacterCardComponent } from "../character-card/character-card.component";
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Character } from 'src/app/$character';
+import { Character, CharacterState } from 'src/app/$character';
+import { neo } from '@lib/characters/player/neo.config';
+import { signalState } from '@ngrx/signals';
 
 
 @Component({
@@ -29,7 +31,12 @@ import { Character } from 'src/app/$character';
 export class InitiativeTrackerComponent {
   public readonly fontSet = 'material-icons-outlined';
 
-  public characters: Character[] = [];
+  public characters: Character[] = [
+    new Character(neo, signalState({
+      currentHP: 100,
+      currentAP: 100,
+    }))
+  ];
 
   @ViewChild('stepper')
   private stepper!: MatStepper;
@@ -37,7 +44,7 @@ export class InitiativeTrackerComponent {
   public round = 1;
 
   constructor() {
-    this.initCharacters();
+    // this.initCharacters();
   }
 
   public initCharacters() {

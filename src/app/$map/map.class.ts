@@ -1,10 +1,7 @@
 import { GameComponent } from "../$component";
 import { MicroTile } from "./map.models";
 
-/**
- * ? NOTES
- *
- */
+
 export class GameMap {
   private grid!: MicroTile[][];
 

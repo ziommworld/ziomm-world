@@ -14,6 +14,7 @@ export interface CharacterResistances {
   nuclear: number;
 }
 
+// TODO extract to dedicated entity as soon as we start tracking action state
 export interface CharacterAction {
   name: string;
   description?: string;
@@ -89,9 +90,16 @@ export interface CharacterConfig {
   actions: string[]; // keys
 }
 
+export interface CharacterStats {
+  playedAP: number;
+  healedHP: number;
+}
+
 export interface CharacterState {
   initiative: number | null;
   player: string | null;
+
+  stats: CharacterStats;
 
   currentAP: number;
   currentHP: number;

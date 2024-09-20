@@ -7,6 +7,8 @@ export const arena: ScenarioConfig = {
   maxCharacters: 4,
   defaultTurns: 20,
 
+  initialMap: 'small',
+
   maps: [],
   npcs: [],
 }

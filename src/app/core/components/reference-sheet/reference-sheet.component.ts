@@ -6,6 +6,8 @@ import { NgFor } from '@angular/common';
 
 import { Character } from 'src/app/$character';
 import { CharacterCardComponent } from '../character-card/character-card.component';
+import { neo } from '@lib/characters/player/neo.config';
+import { signalState } from '@ngrx/signals';
 
 
 @Component({
@@ -24,8 +26,12 @@ import { CharacterCardComponent } from '../character-card/character-card.compone
 export class ReferenceSheetComponent {
   public readonly fontSet = 'material-icons-outlined';
 
-  public characters: Character[] = [];
-
+  public characters: Character[] = [
+    new Character(neo, signalState({
+      currentHP: 100,
+      currentAP: 100,
+    }))
+  ]
 
   constructor() {
     this.initCharacters();

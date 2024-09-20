@@ -8,12 +8,17 @@ export function getDefaultCharacterState(config: CharacterConfig): CharacterStat
     initiative: null,
     player: null,
 
+    stats: {
+      playedAP: 0,
+      healedHP: 0,
+    },
+
     currentAP: roundAP,
     currentHP: config.maxHP,
 
     isCrouching: false,
-    isDead: false,
     isMounted: false,
+    isDead: false,
 
     bolsterCounter: 0,
     concussionCounter: 0,

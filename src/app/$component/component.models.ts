@@ -22,8 +22,14 @@ export enum GameComponentType {
   Ambient = 'ambient',
 }
 
+export interface GameComponentStats {
+
+}
+
 export interface GameComponentState {
   durability?: number;
+
+  stats: GameComponentStats;
 }
 
 export type GameComponentKey =

@@ -50,11 +50,11 @@
          matTooltip="HP">
       <mat-progress-spinner class="health-indicator"
                             [diameter]="56"
-                            [value]="charHP">
+                            [value]="charHP()">
       </mat-progress-spinner>
 
       <div class="health-indicator-value">
-        {{ character.currentHP }}
+        {{ character.currentHP?.() }}
       </div>
     </div>
   </mat-card-header>

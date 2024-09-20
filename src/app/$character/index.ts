@@ -13,6 +13,7 @@ export {
   ActionMap,
   ActionKey,
   CharacterKey,
+  CharacterStats,
 } from './character.models';
 
 export {

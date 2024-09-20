@@ -8,4 +8,5 @@ export {
   GameComponentState,
   GameComponentLibrary,
   GameComponentKey,
+  GameComponentStats,
 } from './component.models';

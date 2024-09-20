@@ -7,6 +7,8 @@ export const test: ScenarioConfig = {
   maxCharacters: 2,
   defaultTurns: 10,
 
+  initialMap: 'small',
+
   maps: [],
   npcs: [],
 }

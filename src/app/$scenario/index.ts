@@ -3,6 +3,7 @@ export {
   ScenarioState,
   ScenarioKey,
   ScenarioLibrary,
+  ScenarioStats,
 } from './scenario.models';
 
 export {
