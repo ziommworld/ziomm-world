@@ -4,10 +4,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NgFor } from '@angular/common';
 
-import { Character } from 'src/app/$character';
 import { CharacterCardComponent } from '../character-card/character-card.component';
-import { neo } from '@lib/characters/player/neo.config';
-import { signalState } from '@ngrx/signals';
+import { GameService } from '../../services/game.service';
 
 
 @Component({
@@ -26,18 +24,13 @@ import { signalState } from '@ngrx/signals';
 export class ReferenceSheetComponent {
   public readonly fontSet = 'material-icons-outlined';
 
-  public characters: Character[] = [
-    new Character(neo, signalState({
-      currentHP: 100,
-      currentAP: 100,
-    }))
-  ]
-
-  constructor() {
-    this.initCharacters();
+  public get characters() {
+    return this.gameService.characters;
   }
 
-  public initCharacters() {
-    // this.characters =
+  constructor(
+    private gameService: GameService,
+  ) {
   }
+
 }

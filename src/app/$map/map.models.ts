@@ -1,13 +1,11 @@
-import { Character } from "../$character";
-import { GameComponent } from "../$component";
+import { GameComponentConfig, GameComponentKey, GameComponentState } from "../$component";
+import { GameEventConfig, GameEventKey, GameEventState, GameMapCoordinate, GameMapDirection } from "../$mechanics";
 
+// ===================== CONFIG =====================
 
-export interface MicroTile {
-  x: number;
-  y: number;
-
-  terrain: TerrainType;
-}
+// BOTTOM LEFT CORNER is (0, 0)
+// X-AXIS shows east
+// Y-AXIS shows north
 
 export enum TerrainType {
   // natural
@@ -23,21 +21,53 @@ export enum TerrainType {
   Interior = 'interior', // inside a building
 }
 
-export interface GameMapConfig {
-  name: string;
-  tiles: MicroTile[][];
+export interface GameComponentLayout {
+  anchor: GameMapCoordinate;
+  direction: GameMapDirection;
 }
+
+export type GameComponentDef = [GameComponentKey, GameComponentLayout];
+
+export interface MicroTile {
+  coord: GameMapCoordinate;
+  terrain: TerrainType;
+}
+
+export interface BaseMapConfig {
+  name: string;
+
+  terrain: TerrainType[][];
+
+  components: GameComponentDef[];
+  events: GameEventKey[];
+}
+
+export interface GameMapConfig extends Omit<BaseMapConfig, 'components' | 'events' | 'terrain'> {
+  id: string;
+  key: GameMapKey;
+
+  tiles: MicroTile[][];
+  components: GameComponentConfig[];
+  events: GameEventConfig[];
+}
+
+// ===================== STATE =====================
 
 export interface GameMapStats {
 
 }
 
 export interface GameMapState {
+  components: Record<string, GameComponentState>;
+  events: Record<string, GameEventState>;
+
   stats: GameMapStats;
 }
+
+// ===================== LIBRARY =====================
 
 export type GameMapKey =
   'small' |
   'medium';
 
-export type GameMapLibrary = Record<GameMapKey, GameMapConfig>;
+export type GameMapLib = Record<GameMapKey, BaseMapConfig>;

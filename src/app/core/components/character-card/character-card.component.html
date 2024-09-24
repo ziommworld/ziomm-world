@@ -50,11 +50,11 @@
          matTooltip="HP">
       <mat-progress-spinner class="health-indicator"
                             [diameter]="56"
-                            [value]="charHP()">
+                            [value]="$percentageHP()">
       </mat-progress-spinner>
 
       <div class="health-indicator-value">
-        {{ character.currentHP?.() }}
+        {{ character.$currentHP() }}
       </div>
     </div>
   </mat-card-header>
@@ -81,6 +81,28 @@
                     [matBadgeOverlap]="false"
                     [matBadgePosition]="'below'">
             self_improvement
+          </mat-icon>
+
+          <mat-icon [fontSet]="fontSet"
+                    matTooltip="Mounted"
+                    class="state-value"
+                    matBadge="0"
+                    matBadgeDisabled
+                    matBadgeSize="small"
+                    [matBadgeOverlap]="false"
+                    [matBadgePosition]="'below'">
+            layers
+          </mat-icon>
+
+          <mat-icon [fontSet]="fontSet"
+                    matTooltip="Dead"
+                    class="state-value"
+                    matBadge="0"
+                    matBadgeDisabled
+                    matBadgeSize="small"
+                    [matBadgeOverlap]="false"
+                    [matBadgePosition]="'below'">
+            power_settings_new
           </mat-icon>
         </div>
       </mat-list-item>
@@ -147,6 +169,11 @@
     <button class="offensive-action"
             mat-stroked-button>
       Action 1
+
+      <mat-icon [fontSet]="fontSet"
+                matTooltip="Interactive">
+        view_in_ar
+      </mat-icon>
     </button>
 
     <button class="defensive-action"
@@ -192,7 +219,7 @@
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       <!-- games -->
-                      point_scan
+                      crisis_alert
                     </mat-icon>
 
                     {{ character.resistance.physical }}

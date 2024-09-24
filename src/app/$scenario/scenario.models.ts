@@ -1,9 +1,18 @@
-import { CharacterKey, CharacterState } from "../$character";
+import { GameCharacterConfig, GameCharacterKey, GameCharacterState } from "../$character";
 import { GameComponentKey, GameComponentState } from "../$component";
-import { GameMapKey, GameMapState } from "../$map";
+import { GameMapConfig, GameMapKey, GameMapState } from "../$map";
 
+// ===================== DRAFT =====================
 
-export interface ScenarioConfig {
+export interface GameScenarioDraft {
+  difficulty: number;
+  time: number;
+  turns: number;
+}
+
+// ===================== CONFIG =====================
+
+export interface BaseScenarioConfig {
   name: string;
 
   minCharacters: number;
@@ -12,29 +21,46 @@ export interface ScenarioConfig {
   initialMap: GameMapKey;
   defaultTurns: number;
 
-  maps: string[]; // map keys
-  npcs: string[]; // character keys
+  npcs: GameCharacterKey[];
+  maps: GameMapKey[];
 }
 
-export interface ScenarioStats {
+export interface GameScenarioConfig extends Omit<BaseScenarioConfig, 'npcs' | 'maps'> {
+  id: string;
+  key: GameScenarioKey;
+
+  maxTurns: number;
+  maxTime: number;
+  difficulty: number;
+
+  characters: GameCharacterConfig[];
+  npcs: GameCharacterConfig[];
+  maps: GameMapConfig[];
+}
+
+// ===================== STATE =====================
+
+export interface GameScenarioStats {
   totalRounds: number;
   avgRoundTime: number; // ms
 }
 
-export interface ScenarioState {
+export interface GameScenarioState {
   currentTurn: number;
   currentRound: number; // corresponds to initiative
   activeMap: GameMapKey;
 
-  characters: Record<CharacterKey, CharacterState>;
-  components: Record<GameComponentKey, GameComponentState>;
-  maps: Record<GameMapKey, GameMapState>;
+  characters: Record<string, GameCharacterState>;
+  npcs: Record<string, GameCharacterState>;
+  maps: Record<string, GameMapState>;
 
-  stats: ScenarioStats;
+  stats: GameScenarioStats;
 }
 
-export type ScenarioKey =
+// ===================== LIBRARY =====================
+
+export type GameScenarioKey =
   'test' |
   'arena';
 
-export type ScenarioLibrary = Record<ScenarioKey, ScenarioConfig>;
+export type GameScenarioLib = Record<GameScenarioKey, BaseScenarioConfig>;

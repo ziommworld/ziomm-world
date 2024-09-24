@@ -1,19 +1,29 @@
-import { CharacterAction } from "../$character";
+import { GameActionConfig, GameActionKey, GameActionState, GameEventConfig, GameEventKey, GameEventState, GameMapCoordinate, GameMapDirection } from "../$mechanics";
 
-export interface GameComponentConfig {
-  name: string;
-  type: GameComponentType;
+// ===================== GLOBAL =====================
 
-  mountable?: boolean;
-  impassable?: boolean;
+export interface CellDefinition {
+  x: number;
+  y: number;
+
   destructible?: boolean;
+  impassable?: boolean;
   transparent?: boolean;
-  climbable?: boolean;
 
-  penaltyMS?: number; // only when not impassable
-
-  interactions: CharacterAction[];
+  climbable?: GameMapDirection;
+  mountable?: GameMapDirection;
 }
+
+export interface ComponentLayoutConfig {
+  cells: CellDefinition[];
+}
+
+export interface ComponentLayoutState {
+  anchor: GameMapCoordinate;
+  direction: GameMapDirection;
+}
+
+// ===================== CONFIG =====================
 
 export enum GameComponentType {
   Block = 'block',
@@ -22,6 +32,28 @@ export enum GameComponentType {
   Ambient = 'ambient',
 }
 
+export interface BaseComponentConfig {
+  name: string;
+  type: GameComponentType;
+
+  penaltyMS?: number; // only when not impassable
+
+  interactions: GameActionKey[];
+  events: GameEventKey[];
+}
+
+export interface GameComponentConfig extends Omit<BaseComponentConfig, 'interactions' | 'events'> {
+  id: string;
+  key: string;
+
+  durability?: number;
+
+  interactions: GameActionConfig[];
+  events: GameEventConfig[];
+}
+
+// ===================== STATE =====================
+
 export interface GameComponentStats {
 
 }
@@ -29,8 +61,13 @@ export interface GameComponentStats {
 export interface GameComponentState {
   durability?: number;
 
+  interactions: Record<string, GameActionState>;
+  events: Record<string, GameEventState>;
+
   stats: GameComponentStats;
 }
+
+// ===================== LIBRARY =====================
 
 export type GameComponentKey =
   'wall' |
@@ -42,4 +79,4 @@ export type GameComponentKey =
   'rock' |
   'jaggedRock';
 
-export type GameComponentLibrary = Record<GameComponentKey, GameComponentConfig>;
+export type GameComponentLib = Record<GameComponentKey, BaseComponentConfig>;

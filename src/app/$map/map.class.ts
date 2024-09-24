@@ -1,57 +1,137 @@
-import { GameComponent } from "../$component";
-import { MicroTile } from "./map.models";
+import { v4 as uuidv4 } from 'uuid';
+
+import { GameMapConfig, GameMapKey, GameMapState, MicroTile } from ".";
+import { maps } from "./lib";
+import { GameComponent, GameComponentState } from "../$component";
+import { GameEvent, GameEventState } from "../$mechanics";
+import { computed, Signal } from "@angular/core";
 
 
 export class GameMap {
-  private grid!: MicroTile[][];
+  public components: GameComponent[];
+  public events: GameEvent[];
 
-  private components!: GameComponent[];
+  constructor(
+    public config: GameMapConfig,
+    public $state: Signal<GameMapState>,
+  ) {
+    this.components = config.components.map(
+      (config) => {
+        const $state = computed(() => {
+          const stateMap = this.$state().components;
+          return stateMap[config.id];
+        });
 
-  constructor() {
+        return new GameComponent(config, $state);
+      });
+
+    this.events = config.events.map(
+      (config) => {
+        const $state = computed(() => {
+          const stateMap = this.$state().events;
+          return stateMap[config.id];
+        });
+
+        return new GameEvent(config, $state);
+      });
   }
 
-  private convertMap(): string {
-    return this.grid.map(row => row.map(tile => 'test').join(' ')).join('\n');
+  static initConfig(key: GameMapKey): GameMapConfig {
+    const config = maps[key];
+
+    return {
+      ...config,
+
+      id: uuidv4(),
+      key,
+
+      tiles: config.terrain.map(
+        (row, y) => row.map(
+          (terrain, x) => ({
+            coord: {
+              x,
+              y
+            },
+            terrain,
+          } as MicroTile)
+        )
+      ),
+
+      components: config.components.map(
+        ([key, layout]) => GameComponent.initConfig(key, layout)
+      ),
+      events: config.events.map(
+        (key) => GameEvent.initConfig(key)
+      ),
+    }
   }
 
-  public loadMap(mapData: string): string[][] {
-    const rows = mapData.split('\n'); // Split by new lines
-    return rows.map(row => row.trim().split(/\s+/)); // Split each row by spaces
+  public static initState(config: GameMapConfig): GameMapState {
+
+    return {
+      components: config.components.reduce(
+        (map, config) => {
+          const state = GameComponent.initState(config);
+          map[config.id] = state;
+          return map
+        },
+        {} as Record<string, GameComponentState>
+      ),
+      events: config.events.reduce(
+        (map, config) => {
+          const state = GameEvent.initState(config);
+          map[config.id] = state;
+          return map
+        },
+        {} as Record<string, GameEventState>
+      ),
+
+      stats: {
+
+      }
+    };
   }
 
-  public downloadMap(mapData: string, mapName: string): void {
-    const blob = new Blob([mapData], { type: 'text/plain' });
+  // // TODO change to JSON
+  // public loadMap(mapData: string): string[][] {
+  //   const rows = mapData.split('\n'); // Split by new lines
+  //   return rows.map(row => row.trim().split(/\s+/)); // Split each row by spaces
+  // }
 
-    const link = document.createElement('a');
-    const url = window.URL.createObjectURL(blob);
+  // // TODO change to JSON
+  // public downloadMap(mapData: string, mapName: string): void {
+  //   const blob = new Blob([mapData], { type: 'text/plain' });
 
-    link.href = url;
-    link.download = `${mapName}.txt`;
+  //   const link = document.createElement('a');
+  //   const url = window.URL.createObjectURL(blob);
 
-    document.body.appendChild(link);
+  //   link.href = url;
+  //   link.download = `${mapName}.txt`;
 
-    link.click();
+  //   document.body.appendChild(link);
 
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
-  }
+  //   link.click();
 
-  // TODO complete implementation
-  public uploadMap(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
+  //   document.body.removeChild(link);
+  //   window.URL.revokeObjectURL(url);
+  // }
 
-      reader.onload = (event) => {
-        if (event.target) {
-          resolve(event.target.result as string);
-        }
-      };
+  // // TODO complete implementation
+  // public uploadMap(file: File): Promise<string> {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
 
-      reader.onerror = (event) => {
-        reject(event);
-      };
+  //     reader.onload = (event) => {
+  //       if (event.target) {
+  //         resolve(event.target.result as string);
+  //       }
+  //     };
 
-      reader.readAsText(file);
-    });
-  }
+  //     reader.onerror = (event) => {
+  //       reject(event);
+  //     };
+
+  //     reader.readAsText(file);
+  //   });
+  // }
 }

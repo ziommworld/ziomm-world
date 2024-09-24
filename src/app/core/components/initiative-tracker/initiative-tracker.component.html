@@ -20,12 +20,12 @@
   <mat-step>
     <ng-template matStepLabel>
       <div class="character-label">
-        <div matTooltip="Played by Kris">
-          {{ char.name }} {{ $index }}
+        <div [matTooltip]="getPlayedBy(char)">
+          {{ char.name }}
         </div>
 
         <div>
-          <mat-chip matTooltip="AP"
+          <mat-chip matTooltip="Current AP"
                     class="ap-counter"
                     highlighted>
             <mat-icon [fontSet]="fontSet"
@@ -33,7 +33,7 @@
               play_circle
             </mat-icon>
 
-            {{ char.currentAP?.() }}
+            {{ char.$currentAP() }}
           </mat-chip>
         </div>
       </div>

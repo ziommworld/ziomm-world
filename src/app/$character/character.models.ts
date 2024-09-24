@@ -1,58 +1,28 @@
-import { ActionModality, DamageType } from "../$mechanics";
+import { GameActionConfig, GameActionKey, GameActionState } from "../$mechanics";
 
+// ===================== DRAFT =====================
 
-export interface CharacterProficiencies {
+export interface GameCharacterDraft {
+  character: GameCharacterKey;
+  player: string;
+}
+
+// ===================== CONFIG =====================
+
+export interface GameCharacterProficiencies {
   strength: number;
   toughness: number;
   intelligence: number;
   perception: number;
 }
 
-export interface CharacterResistances {
+export interface GameCharacterResistances {
   physical: number;
   elemental: number;
   nuclear: number;
 }
 
-// TODO extract to dedicated entity as soon as we start tracking action state
-export interface CharacterAction {
-  name: string;
-  description?: string;
-  baseAP: number;
-  modalities?: ActionModality[];
-
-  reactive?: boolean;
-  // interactive?: boolean; -> deployed_code_account
-
-  // usageCount?: number;
-  // cooldown?: number;
-  // duration?: number;
-
-  damage?: number;
-  damageType?: DamageType;
-  accuracy?: number;
-  armorPenetration?: number;
-
-  range?: number;
-  aoe?: number;
-  targets?: number;
-
-  evasion?: number;
-  distance?: number;
-
-  concussive?: number;
-  boosting?: number;
-
-  bleeding?: number;
-  poisonous?: number;
-  healing?: number;
-
-  hindering?: number;
-  immobilizing?: number;
-  freeing?: number;
-}
-
-export enum CharacterIcon {
+export enum GameCharacterIcon {
   Goblin = 'surfing',
   Spiderman = 'sports_handball',
   Legolas = 'snowboarding',
@@ -73,10 +43,10 @@ export enum CharacterIcon {
   C3PO = 'android',
 }
 
-export interface CharacterConfig {
+export interface BaseCharacterConfig {
   name: string;
-  icon: string;
-  npc: boolean;
+  icon: GameCharacterIcon;
+  player?: string; // npc if undefined
 
   maxHP: number;
   baseMS: number;
@@ -84,29 +54,40 @@ export interface CharacterConfig {
   techLvl: number;
   powerLvl: number;
 
-  proficiency: CharacterProficiencies;
-  resistance: CharacterResistances;
+  proficiency: GameCharacterProficiencies;
+  resistance: GameCharacterResistances;
 
-  actions: string[]; // keys
+  abilities: GameActionKey[];
+  actions: GameActionKey[];
+  interactions: GameActionKey[];
 }
 
-export interface CharacterStats {
+export interface GameCharacterConfig extends Omit<BaseCharacterConfig, 'abilities' | 'actions' | 'interactions'> {
+  id: string;
+  key: string;
+
+  abilities: GameActionConfig[];
+  actions: GameActionConfig[];
+  interactions: GameActionConfig[];
+}
+
+// ===================== STATE =====================
+
+export interface GameCharacterStats {
   playedAP: number;
   healedHP: number;
 }
 
-export interface CharacterState {
-  initiative: number | null;
-  player: string | null;
-
-  stats: CharacterStats;
+export interface GameCharacterState {
+  initiative: number;
+  player?: string;
 
   currentAP: number;
   currentHP: number;
 
   isCrouching: boolean;
-  isDead: boolean; // -> skull
-  isMounted: boolean; // -> body_system
+  isDead: boolean;
+  isMounted: boolean;
 
   bolsterCounter: number;
   concussionCounter: number;
@@ -116,9 +97,17 @@ export interface CharacterState {
 
   immobilizeCounter: number;
   hinderCounter: number;
+
+  actions: Record<string, GameActionState>;
+  abilities: Record<string, GameActionState>;
+  interactions: Record<string, GameActionState>;
+
+  stats: GameCharacterStats;
 }
 
-export type CharacterKey =
+// ===================== LIBRARY =====================
+
+export type GameCharacterKey =
   // 'goblin' |
   // 'spiderman' |
   // 'legolas' |
@@ -133,21 +122,10 @@ export type CharacterKey =
 
   // 'bug' |
   'beetle';
-  // 'rabbit' |
-  // 'raven' |
-  // 'r2d2' |
-  // 'c3po';
-
-export type ActionKey =
-  'move' |
-  'crouch' |
-  'stand' |
-  'free' |
-  'bandage' |
-  'wait' |
-  'pass';
-
-export type ActionMap = Record<ActionKey, CharacterAction>;
+// 'rabbit' |
+// 'raven' |
+// 'r2d2' |
+// 'c3po';
 
 // key -> character config
-export type CharacterLibrary = Record<CharacterKey, CharacterConfig>;
+export type GameCharacterLib = Record<GameCharacterKey, BaseCharacterConfig>;

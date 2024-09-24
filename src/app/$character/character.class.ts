@@ -1,21 +1,25 @@
 import { v4 as uuidv4 } from 'uuid';
-import { SignalState } from '@ngrx/signals';
 
-import { CharacterConfig, CharacterState } from '.';
-import { ActionModality } from '../$mechanics';
+import { GameCharacterConfig, GameCharacterKey, GameCharacterState, roundAP } from '.';
+import { computed, Signal } from '@angular/core';
+import { characters } from './lib';
+import { GameAction, GameActionState } from '../$mechanics';
 
 
-export class Character {
-  private _id: string;
+export class GameCharacter {
+
+  // ===================== CONFIG =====================
 
   public get id() {
-    return this._id;
+    return this.config.id;
   }
-
-  // config
 
   public get name() {
     return this.config.name;
+  }
+
+  public get player() {
+    return this.config.player;
   }
 
   public get icon() {
@@ -42,47 +46,99 @@ export class Character {
     return this.config.techLvl;
   }
 
-  // state
+  // ===================== STATE =====================
 
-  public get currentHP() {
-    return this.state.currentHP;
-  }
+  public $currentHP = computed(() => {
+    return this.$state().currentHP;
+  });
 
-  public get currentAP() {
-    return this.state.currentAP;
-  }
+  public $currentAP = computed(() => {
+    return this.$state().currentAP;
+  });
 
   constructor(
-    private config: CharacterConfig,
-    private state: SignalState<Partial<CharacterState>>
+    public config: GameCharacterConfig,
+    public $state: Signal<GameCharacterState>,
   ) {
-    this._id = uuidv4();
   }
 
-  // private charCheck() {
-  //   if (this.stats.initiative === 0) {
-  //     throw new Error('Character has no initiative');
-  //   }
-  // }
+  public static initConfig(
+    key: GameCharacterKey,
+    player?: string
+  ): GameCharacterConfig {
+    const config = characters[key];
 
-  // public setInitiative(initiative?: number) {
-  //   // TODO init all initiatives with a static var/function
-  //   if (initiative) {
-  //     this.stats.initiative = initiative;
-  //   }
-  // }
+    return {
+      ...config,
 
-  // public doAction(actionKey: string, modality?: ActionModality) {
-  //   this.charCheck();
-  //   const action = this.config.actions.find(ability => ability.key === actionKey);
-  //   if (!action) {
-  //     throw new Error('Action not found');
-  //   }
+      id: uuidv4(),
+      key,
+      player,
 
-  //   if (this.stats.currentAP < action.baseAP) {
-  //     throw new Error('Not enough AP');
-  //   }
+      abilities: config.abilities.map(
+        key => GameAction.initConfig(key)
+      ),
+      actions: config.actions.map(
+        key => GameAction.initConfig(key)
+      ),
+      interactions: config.interactions.map(
+        key => GameAction.initConfig(key)
+      ),
+    }
+  }
 
-  //   this.stats.currentAP -= action.baseAP;
-  // }
+  public static initState(
+    config: GameCharacterConfig
+  ): GameCharacterState {
+    return {
+      initiative: -1,
+      player: config.player,
+
+      currentAP: roundAP,
+      currentHP: config.maxHP,
+
+      isCrouching: false,
+      isMounted: false,
+      isDead: false,
+
+      bolsterCounter: 0,
+      concussionCounter: 0,
+
+      bleedCounter: 0,
+      poisonCounter: 0,
+
+      immobilizeCounter: 0,
+      hinderCounter: 0,
+
+      actions: config.actions.reduce(
+        (rec, config) => {
+          const state = GameAction.initState(config);
+          rec[config.id] = state;
+          return rec;
+        },
+        {} as Record<string, GameActionState>
+      ),
+      abilities: config.abilities.reduce(
+        (rec, config) => {
+          const state = GameAction.initState(config);
+          rec[config.id] = state;
+          return rec;
+        },
+        {} as Record<string, GameActionState>
+      ),
+      interactions: config.interactions.reduce(
+        (rec, config) => {
+          const state = GameAction.initState(config);
+          rec[config.id] = state;
+          return rec;
+        },
+        {} as Record<string, GameActionState>
+      ),
+
+      stats: {
+        playedAP: 0,
+        healedHP: 0,
+      },
+    }
+  }
 }

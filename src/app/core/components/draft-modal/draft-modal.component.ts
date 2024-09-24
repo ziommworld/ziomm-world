@@ -13,11 +13,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 
 
 import {
-  maxTime, minTime, ScenarioKey, minDifficulty, maxDifficulty
+  maxTime, minTime, GameScenarioKey, minDifficulty, maxDifficulty
 } from 'src/app/$scenario';
-import { CharacterKey } from 'src/app/$character';
+import { GameCharacterKey } from 'src/app/$character';
 import { characters } from '@lib/characters/index';
-import { scenarios } from '@lib/scenarios/index';
+import { scenarios } from 'src/app/$scenario/lib/index';
 import { AppService } from '../../services/app.service';
 
 @Component({
@@ -93,16 +93,16 @@ export class DraftModalComponent {
   }
 
   public get scenarioKeys() {
-    return Object.keys(scenarios) as ScenarioKey[];
+    return Object.keys(scenarios) as GameScenarioKey[];
   }
 
   public get selectedScenario() {
-    const scenarioKey = this.scenarioFormControl.value as ScenarioKey;
+    const scenarioKey = this.scenarioFormControl.value as GameScenarioKey;
     return scenarios[scenarioKey];
   }
 
   public get characterKeys() {
-    return Object.keys(characters) as CharacterKey[];
+    return Object.keys(characters) as GameCharacterKey[];
   }
 
   public get minCharacters() {
@@ -151,7 +151,7 @@ export class DraftModalComponent {
       players: this.playersFormArray.value,
       scenario: this.scenarioFormControl.value,
       characters: this.charactersFormArray.value,
-      serttings: this.settingsFormGroup.value,
+      settings: this.settingsFormGroup.value,
     }
   }
 
@@ -198,11 +198,11 @@ export class DraftModalComponent {
     this.charactersFormArray.removeAt(-1);
   }
 
-  public getScenarioNameByKey(key: ScenarioKey) {
+  public getScenarioNameByKey(key: GameScenarioKey) {
     return scenarios[key].name;
   }
 
-  public getCharacterNameByKey(key: CharacterKey) {
+  public getCharacterNameByKey(key: GameCharacterKey) {
     return characters[key].name;
   }
 

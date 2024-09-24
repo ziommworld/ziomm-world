@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 
+import { GameService } from '../../services/game.service';
+
 
 @Component({
   selector: 'app-action-panel',
@@ -14,5 +16,15 @@ import { MatListModule } from '@angular/material/list';
   styleUrl: './action-panel.component.scss'
 })
 export class ActionPanelComponent {
+
+  constructor(
+    private gameService: GameService,
+  ) {
+
+  }
+
+  public test() {
+    this.gameService.doAction();
+  }
 
 }

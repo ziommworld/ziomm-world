@@ -1,6 +1,5 @@
 export {
-  GameMap,
-} from './map.class';
+} from './map.configs';
 
 export {
   GameMapConfig,
@@ -8,6 +7,13 @@ export {
   TerrainType,
   GameMapState,
   GameMapKey,
-  GameMapLibrary,
+  GameMapLib,
   GameMapStats,
+  BaseMapConfig,
+  GameComponentDef,
+  GameComponentLayout,
 } from './map.models';
+
+export {
+  GameMap,
+} from './map.class';

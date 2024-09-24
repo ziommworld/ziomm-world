@@ -1,16 +1,14 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-
-
 import { NgFor } from '@angular/common';
-import { CharacterCardComponent } from "../character-card/character-card.component";
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Character, CharacterState } from 'src/app/$character';
-import { neo } from '@lib/characters/player/neo.config';
-import { signalState } from '@ngrx/signals';
+
+import { GameService } from '../../services/game.service';
+import { CharacterCardComponent } from "../character-card/character-card.component";
+import { GameCharacter } from 'src/app/$character';
 
 
 @Component({
@@ -31,24 +29,24 @@ import { signalState } from '@ngrx/signals';
 export class InitiativeTrackerComponent {
   public readonly fontSet = 'material-icons-outlined';
 
-  public characters: Character[] = [
-    new Character(neo, signalState({
-      currentHP: 100,
-      currentAP: 100,
-    }))
-  ];
+  public get characters() {
+    return this.gameService.characters;
+  }
 
   @ViewChild('stepper')
   private stepper!: MatStepper;
 
   public round = 1;
 
-  constructor() {
-    // this.initCharacters();
+  constructor(
+    private gameService: GameService,
+  ) {
   }
 
-  public initCharacters() {
-    this.characters = [];
+  public getPlayedBy(char: GameCharacter) {
+    return char.player
+      ? `Played by ${char.player}`
+      : 'NPC';
   }
 
   public resetStepper() {

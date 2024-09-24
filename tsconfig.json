@@ -25,7 +25,11 @@
       "dom"
     ],
     "paths": {
-      "@lib/*": ["src/app/shared/configs/*"]
+      "@lib/scenarios/*": ["src/app/$scenario/lib/*"],
+      "@lib/characters/*": ["src/app/$character/lib/*"],
+      "@lib/components/*": ["src/app/$component/lib/*"],
+      "@lib/maps/*": ["src/app/$map/lib/*"],
+      "@lib/mechanics/*": ["src/app/$mechanics/lib/*"],
     }
   },
   "angularCompilerOptions": {

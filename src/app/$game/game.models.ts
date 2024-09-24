@@ -1,8 +1,30 @@
-import { CharacterConfig, CharacterKey, CharacterState } from "../$character";
-import { GameComponentConfig, GameComponentKey, GameComponentState } from "../$component";
-import { GameMapConfig, GameMapState } from "../$map";
-import { ScenarioState } from "../$scenario";
+import { GameCharacterDraft } from "../$character";
+import { GameScenarioConfig, GameScenarioKey, GameScenarioState } from "../$scenario";
+import { GameScenarioDraft } from "../$scenario/scenario.models";
 
+// ===================== DRAFT =====================
+
+export interface GameDraft {
+  scenario: GameScenarioKey;
+  players: string[];
+
+  characters: Array<GameCharacterDraft>;
+  settings: GameScenarioDraft;
+}
+
+// ===================== CONFIG =====================
+
+export interface GameConfig {
+  id: string;
+  name: string;
+  players: string[];
+
+  scenario: GameScenarioConfig;
+
+  startedOn: number; // timestamp
+}
+
+// ===================== STATE =====================
 
 export enum GamePhase {
   PreGame,
@@ -18,7 +40,7 @@ export interface GameState {
   phase: GamePhase;
   isPaused: boolean;
 
-  scenario: ScenarioState;
+  scenario: GameScenarioState;
 
   stats: GameStats;
 
@@ -26,17 +48,9 @@ export interface GameState {
   endedOn?: number; // timestamp
 }
 
-export interface GameConfig {
-  id: string;
-  name: string; // the name of the game
-  players: string[];
+// ===================== STORAGE =====================
 
-  characters: Record<string, CharacterConfig>;
-  components: Record<string, GameComponentConfig>;
-  map: GameMapConfig;
-
-  maxTurns?: number;
-  maxTime?: number;
-
-  startedOn: number; // timestamp
+export interface GameRecord {
+  config: GameConfig;
+  state: GameState;
 }

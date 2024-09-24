@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Character } from 'src/app/$character';
+import { GameCharacter } from 'src/app/$character';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatListModule } from '@angular/material/list';
@@ -35,14 +35,11 @@ export class CharacterCardComponent {
 
   isOpen = false;
 
-
   @Input()
-  public character!: Character;
+  public character!: GameCharacter;
 
-  // TODO remove ? from currentHP
-  public charHP = computed(() => {
-    return Math.floor(this.character.currentHP?.() ?? 10 / this.character.maxHP * 100);
-
+  public $percentageHP = computed(() => {
+    return Math.floor(this.character.$currentHP() / this.character.maxHP * 100);
   });
 
   constructor(
