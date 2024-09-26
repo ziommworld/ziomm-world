@@ -1,26 +1,22 @@
-import { Component, computed, effect, HostListener, signal, ViewChild } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component, computed, effect, HostListener, ViewChild } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import { MatButtonModule } from '@angular/material/button';
 import { MatBottomSheet, MatBottomSheetConfig } from '@angular/material/bottom-sheet';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 
 import { GameMapComponent } from './core/components/game-map/game-map.component';
 import { ActionPanelComponent } from './core/components/action-panel/action-panel.component';
-import { GuiService } from './core/services/gui.service';
 import { AppService } from './core/services/app.service';
 import { GameModalComponent } from './core/components/game-modal/game-modal.component';
 import { GameViewComponent } from "./core/components/game-view/game-view.component";
 import { InitiativeTrackerComponent } from "./core/components/initiative-tracker/initiative-tracker.component";
 import { ReferenceSheetComponent } from "./core/components/reference-sheet/reference-sheet.component";
 import { GameService } from './core/services/game.service';
+import { MainMenuComponent } from "./core/components/main-menu/main-menu.component";
 
 
 @Component({
@@ -30,23 +26,25 @@ import { GameService } from './core/services/game.service';
     RouterOutlet,
     GameMapComponent,
     MatSidenavModule,
-    MatButtonModule,
     MatIcon,
     MatTooltip,
     MatButtonToggleModule,
-    MatListModule,
-    MatCardModule,
     NgClass,
     GameViewComponent,
     InitiativeTrackerComponent,
-    ReferenceSheetComponent
-],
+    ReferenceSheetComponent,
+    NgIf,
+    MainMenuComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  @ViewChild('ldrawer') ldrawer!: MatSidenav;
-  @ViewChild('rdrawer') rdrawer!: MatSidenav;
+  @ViewChild('ldrawer')
+  public ldrawer!: MatSidenav;
+
+  @ViewChild('rdrawer')
+  public rdrawer!: MatSidenav;
 
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
@@ -60,23 +58,23 @@ export class AppComponent {
     }
 
     if (event.key === 'Tab') {
-      if (!this.gui.$gdialogOpened()) {
+      if (!this.appService.$gdialogOpened()) {
         return;
       } else {
-        this.gui.toggleGUI();
+        this.appService.toggleGUI();
       }
     }
 
     if (event.key === 'Escape') {
-      this.gui.toggleGDialog();
+      this.appService.toggleGDialog();
     }
   }
 
-  public $ldrawerOpened = this.gui.$ldrawerOpened;
-  public $bsheetOpened = this.gui.$bsheetOpened;
-  public $rdrawerOpened = this.gui.$rdrawerOpened;
+  public $ldrawerOpened = this.appService.$ldrawerOpened;
+  public $bsheetOpened = this.appService.$bsheetOpened;
+  public $rdrawerOpened = this.appService.$rdrawerOpened;
 
-  public $inGame = this.appService.$inGame;
+  public $inGame = this.gameService.$inGame;
 
   public $buttonGroupContainerClass = computed(() => {
     return {
@@ -85,10 +83,8 @@ export class AppComponent {
   });
 
   constructor(
-    private gui: GuiService,
     private bsheet: MatBottomSheet,
     private gdialog: MatDialog,
-    private snackbar: MatSnackBar,
     private appService: AppService,
     private gameService: GameService,
   ) {
@@ -97,7 +93,7 @@ export class AppComponent {
 
   public initEffects() {
     effect(() => {
-      const ldrawerOpened = this.gui.$ldrawerOpened();
+      const ldrawerOpened = this.appService.$ldrawerOpened();
 
       if (ldrawerOpened) {
         this.ldrawer.close();
@@ -107,7 +103,7 @@ export class AppComponent {
     });
 
     effect(() => {
-      const bsheetOpened = this.gui.$bsheetOpened();
+      const bsheetOpened = this.appService.$bsheetOpened();
 
       if (bsheetOpened) {
         if (this.bsheet._openedBottomSheetRef) {
@@ -124,7 +120,7 @@ export class AppComponent {
     });
 
     effect(() => {
-      const gdialogOpened = this.gui.$gdialogOpened();
+      const gdialogOpened = this.appService.$gdialogOpened();
 
       if (gdialogOpened) {
         this.gdialog.closeAll();
@@ -144,7 +140,7 @@ export class AppComponent {
     });
 
     effect(() => {
-      const rdrawerOpened = this.gui.$rdrawerOpened();
+      const rdrawerOpened = this.appService.$rdrawerOpened();
 
       if (rdrawerOpened) {
         this.rdrawer.close();
@@ -154,23 +150,17 @@ export class AppComponent {
     });
   }
 
-  public newGame() {
-    this.gameService.initGame();
-  }
 
-  public loadGame() {
-    this.snackbar.open('Load game not implemented', 'Dismiss');
-  }
 
   public toggleBSheet() {
-    this.gui.toggleBSheet();
+    this.appService.toggleBSheet();
   }
 
   public toggleLDrawer() {
-    this.gui.toggleLDrawer();
+    this.appService.toggleLDrawer();
   }
 
   public toggleRDrawer() {
-    this.gui.toggleRDrawer();
+    this.appService.toggleRDrawer();
   }
 }

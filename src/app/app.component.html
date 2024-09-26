@@ -38,8 +38,10 @@
               mode="over"
               position="start"
               [disableClose]="true">
+    @if($inGame()) {
     <app-initiative-tracker>
     </app-initiative-tracker>
+    }
   </mat-drawer>
 
   <mat-drawer #rdrawer
@@ -47,44 +49,18 @@
               mode="over"
               position="end"
               [disableClose]="true">
+    @if($inGame()) {
     <app-reference-sheet>
     </app-reference-sheet>
+    }
   </mat-drawer>
 
+
   <div class="app-content">
+    <!-- TODO refactor to router-outlet -->
     @if(!$inGame()) {
-    <mat-card appearance="outlined"
-              class="main-menu">
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item>
-            <div class="main-menu-item-container">
-              <h3>
-                ZiomM World
-              </h3>
-            </div>
-          </mat-list-item>
-
-          <mat-list-item>
-            <div class="main-menu-item-container">
-              <button mat-stroked-button
-                      (click)="newGame()">
-                New Game
-              </button>
-            </div>
-          </mat-list-item>
-
-          <mat-list-item>
-            <div class="main-menu-item-container">
-              <button mat-stroked-button
-                      (click)="loadGame()">
-                Load Game
-              </button>
-            </div>
-          </mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card>
+    <app-main-menu>
+    </app-main-menu>
     } @else {
     <app-game-view>
     </app-game-view>

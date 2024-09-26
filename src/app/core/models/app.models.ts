@@ -1,3 +1,6 @@
 export interface AppState {
-  inGame: boolean;
+  ldrawerOpened: boolean;
+  rdrawerOpened: boolean;
+  bsheetOpened: boolean;
+  gdialogOpened: boolean;
 }

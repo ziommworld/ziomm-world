@@ -60,6 +60,8 @@ export interface BaseCharacterConfig {
   abilities: GameActionKey[];
   actions: GameActionKey[];
   interactions: GameActionKey[];
+
+  alt?: BaseCharacterConfig;
 }
 
 export interface GameCharacterConfig extends Omit<BaseCharacterConfig, 'abilities' | 'actions' | 'interactions'> {

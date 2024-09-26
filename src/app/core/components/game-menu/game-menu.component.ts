@@ -1,15 +1,15 @@
-import { Component, effect } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
 
 import { AppService } from '../../services/app.service';
-import { GuiService } from '../../services/gui.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GameService } from '../../services/game.service';
+import { GameRecord } from 'src/app/$game';
+import { DateTime } from 'luxon';
 
 
 @Component({
@@ -28,7 +28,6 @@ export class GameMenuComponent {
   constructor(
     private appService: AppService,
     private gameService: GameService,
-    private gui: GuiService,
     private dialog: MatDialog,
     private snackbar: MatSnackBar,
   ) {
@@ -39,7 +38,26 @@ export class GameMenuComponent {
   }
 
   public saveGame() {
-    this.snackbar.open('Save game not implemented', 'Dismiss');
+    const rawRecord = localStorage.getItem('autosave');
+    if (!rawRecord) {
+      return;
+    }
+    const savedOn = DateTime.now();
+
+    const record: GameRecord = JSON.parse(rawRecord);
+    const filename = `save@${savedOn.toFormat('yyyy-MM-dd_HH-mm-ss')}.json`;
+
+    const json = JSON.stringify(record, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = window.URL.createObjectURL(blob);
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode?.removeChild(link);
+
+    this.appService.toggleGDialog();
+    this.snackbar.open('Game saved.', 'Dismiss');
   }
 
   public quitGame() {
@@ -56,9 +74,9 @@ export class GameMenuComponent {
     const dialogRef = this.dialog.open(ConfirmModalComponent, config);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.gui.toggleGDialog();
+        this.appService.closeAll();
         this.gameService.endGame();
-        this.appService.toggleInGame();
+        localStorage.removeItem('autosave');
       }
     });
   }

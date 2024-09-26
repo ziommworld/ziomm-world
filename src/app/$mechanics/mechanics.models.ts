@@ -39,10 +39,10 @@ export interface BaseActionConfig {
   damage?: number;
   damageType?: DamageType;
   accuracy?: number;
-  armorPenetration?: number;
+  // armorPenetration?: number;
 
   range?: number;
-  aoe?: number;
+  // aoe?: number;
   targets?: number;
 
   evasion?: number;
@@ -72,8 +72,8 @@ export interface BaseEventConfig {
   reactive?: boolean;
   interactive?: boolean;
 
-  cooldown?: number; // turns
-  duration?: number; // turns
+  cooldown?: number; // rounds
+  duration?: number; // rounds
 
   damage?: number;
   damageType?: DamageType;

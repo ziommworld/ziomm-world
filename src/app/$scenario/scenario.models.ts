@@ -41,13 +41,14 @@ export interface GameScenarioConfig extends Omit<BaseScenarioConfig, 'npcs' | 'm
 // ===================== STATE =====================
 
 export interface GameScenarioStats {
-  totalRounds: number;
+  totalTurns: number;
   avgRoundTime: number; // ms
+  avgTurnTime: number; // ms
 }
 
 export interface GameScenarioState {
-  currentTurn: number;
-  currentRound: number; // corresponds to initiative
+  currentTurn: number; // corresponds to initiative
+  currentRound: number;
   activeMap: GameMapKey;
 
   characters: Record<string, GameCharacterState>;

@@ -110,7 +110,8 @@ export class GameScenario {
 
       stats: {
         avgRoundTime: 0,
-        totalRounds: 0,
+        totalTurns: 0,
+        avgTurnTime: 0,
       },
     }
   }

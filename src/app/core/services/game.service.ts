@@ -1,29 +1,66 @@
-import { Injectable } from '@angular/core';
+import { computed, effect, Injectable, signal } from '@angular/core';
 
 import { GameCharacter } from 'src/app/$character';
 import { AppService } from './app.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DraftModalComponent } from '../components/draft-modal/draft-modal.component';
-import { Game, GameDraft, GameRecord } from 'src/app/$game';
+import { Game, GameDraft, GameRecord, GameState } from 'src/app/$game';
 import { bypass, dummyGameDraft } from '../configs/core.configs';
 import { patchState } from '@ngrx/signals';
+import { doDmg } from 'src/app/$game/game.configs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
+  private $game = signal<Game | null>(null);
 
-  private game: Game | null = null;
+  /**
+   * use only while inGame
+   */
+  private get game() {
+    const game = this.$game();
+    if (!game) {
+      throw new Error('Game not initialized');
+    }
+
+    return game;
+  }
+
+  public $inGame = computed(() => {
+    return !!this.$game();
+  });
 
   public get characters(): GameCharacter[] {
-    return this.game?.scenario.characters ?? [];
+    return this.game.scenario.characters;
   }
 
   constructor(
     private dialog: MatDialog,
-    private appService: AppService,
-  ) { }
+  ) {
+    this.setAutosave();
+  }
+
+  private setAutosave() {
+    effect(() => {
+      const game = this.$game();
+      if (!game) {
+        return;
+      }
+
+      const config = this.game.config;
+      const state = this.game.$state();
+      const record: GameRecord = {
+        config,
+        state,
+      };
+
+      localStorage.setItem('autosave', JSON.stringify(record));
+
+      console.warn('State updated', state)
+    });
+  }
 
   public initGame() {
     if (bypass) {
@@ -34,7 +71,7 @@ export class GameService {
     const config: MatDialogConfig = {
       id: 'draft-modal',
       autoFocus: false,
-      disableClose: true,
+      disableClose: false,
       width: '60vw',
       maxWidth: '80vw',
       height: '60vh',
@@ -53,32 +90,18 @@ export class GameService {
   }
 
   public doAction() {
-    patchState(this.game!.$state, (state) => ({
-      scenario: {
-        ...state.scenario,
-        characters: {
-          ...state.scenario.characters,
-          [this.characters[0].id]: {
-            ...state.scenario.characters[this.characters[0].id],
-            currentHP: state.scenario.characters[this.characters[0].id].currentHP - 1,
-          }
-        }
-      }
-    }));
+    patchState(this.game.$state, doDmg());
   }
 
   public startGame(draft: GameDraft) {
-    this.game = new Game(draft);
-    this.appService.toggleInGame();
+    this.$game.set(new Game(draft));
   }
 
   public loadGame(record: GameRecord) {
-    this.game = new Game(undefined, record);
-    this.appService.toggleInGame();
+    this.$game.set(new Game(undefined, record));
   }
 
   public endGame() {
-    this.game = null;
-    this.appService.toggleInGame();
+    this.$game.set(null);
   }
 }

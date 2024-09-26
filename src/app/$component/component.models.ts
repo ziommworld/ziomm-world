@@ -9,7 +9,9 @@ export interface CellDefinition {
   destructible?: boolean;
   impassable?: boolean;
   transparent?: boolean;
+  // movable?: boolean;
 
+  // interactable?: boolean; // general purpose
   climbable?: GameMapDirection;
   mountable?: GameMapDirection;
 }
