@@ -88,10 +88,12 @@ export class GameCharacter {
   }
 
   public static initState(
-    config: GameCharacterConfig
+    config: GameCharacterConfig,
   ): GameCharacterState {
     return {
       initiative: -1,
+      // TODO set position according to scenario and initial map
+      position: { x: 0, y: 0 },
       player: config.player,
 
       currentAP: roundAP,

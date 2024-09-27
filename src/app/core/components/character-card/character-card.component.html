@@ -4,7 +4,7 @@
     <div mat-card-avatar
          matTooltip="Icon">
       <mat-icon>
-        category
+        {{ character.icon }}
       </mat-icon>
     </div>
 
@@ -85,8 +85,7 @@
             self_improvement
           </mat-icon>
 
-          <mat-icon [fontSet]="fontSet"
-                    aria-hidden="false"
+          <mat-icon aria-hidden="false"
                     matTooltip="Mounted"
                     class="state-value"
                     matBadge="0"
@@ -94,11 +93,10 @@
                     matBadgeSize="small"
                     [matBadgeOverlap]="false"
                     [matBadgePosition]="'below'">
-            layers
+            sports_esports
           </mat-icon>
 
-          <mat-icon [fontSet]="fontSet"
-                    aria-hidden="false"
+          <mat-icon aria-hidden="false"
                     matTooltip="Dead"
                     class="state-value"
                     matBadge="0"
@@ -106,7 +104,7 @@
                     matBadgeSize="small"
                     [matBadgeOverlap]="false"
                     [matBadgePosition]="'below'">
-            power_settings_new
+            person_off
           </mat-icon>
         </div>
       </mat-list-item>

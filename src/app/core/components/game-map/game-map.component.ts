@@ -2,6 +2,14 @@ import { Component } from '@angular/core';
 import { MicroTile } from '../../../$map/map.models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
+import {
+  CdkDragDrop,
+  CdkDrag,
+  CdkDropList,
+  CdkDropListGroup,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop'
 
 
 interface GameMap {
@@ -24,7 +32,10 @@ interface MapCell {
   standalone: true,
   imports: [
     MatIconModule,
-    MatBadgeModule
+    MatBadgeModule,
+    CdkDropListGroup,
+    CdkDropList,
+    CdkDrag,
   ],
   templateUrl: './game-map.component.html',
   styleUrl: './game-map.component.scss'

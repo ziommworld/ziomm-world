@@ -85,6 +85,7 @@ export class GameScenario {
 
       characters: config.characters.reduce(
         (rec, config) => {
+          // TODO add other configs as params
           const state = GameCharacter.initState(config);
           rec[config.id] = state;
           return rec;

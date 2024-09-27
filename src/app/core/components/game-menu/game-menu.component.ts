@@ -24,7 +24,6 @@ import { DateTime } from 'luxon';
   styleUrl: './game-menu.component.scss'
 })
 export class GameMenuComponent {
-
   constructor(
     private appService: AppService,
     private gameService: GameService,
@@ -35,6 +34,10 @@ export class GameMenuComponent {
   }
 
   public initEffects() {
+  }
+
+  public mainMenu() {
+    window.location.reload();
   }
 
   public saveGame() {

@@ -1,4 +1,4 @@
-import { GameActionConfig, GameActionKey, GameActionState } from "../$mechanics";
+import { GameActionConfig, GameActionKey, GameActionState, GameMapCoordinate } from "../$mechanics";
 
 // ===================== DRAFT =====================
 
@@ -82,6 +82,7 @@ export interface GameCharacterStats {
 
 export interface GameCharacterState {
   initiative: number;
+  position: GameMapCoordinate;
   player?: string;
 
   currentAP: number;

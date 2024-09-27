@@ -46,27 +46,31 @@ export class AppComponent {
   @ViewChild('rdrawer')
   public rdrawer!: MatSidenav;
 
+  @ViewChild(MainMenuComponent)
+  public mainMenu!: MainMenuComponent;
+
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Tab' || event.key === 'Escape') {
+    if (event.key === 'Tab' || event.key === 'Escape' || event.key === ' ') {
       event.preventDefault();
       event.stopPropagation();
     }
-
     if (!this.$inGame()) {
-      return;
-    }
-
-    if (event.key === 'Tab') {
-      if (!this.appService.$gdialogOpened()) {
-        return;
-      } else {
-        this.appService.toggleGUI();
+      if (event.key === ' ') {
+        this.mainMenu.resumeGame();
       }
-    }
+    } else {
+      if (event.key === 'Tab') {
+        if (!this.appService.$gdialogOpened()) {
+          return;
+        } else {
+          this.appService.toggleGUI();
+        }
+      }
 
-    if (event.key === 'Escape') {
-      this.appService.toggleGDialog();
+      if (event.key === 'Escape') {
+        this.appService.toggleGDialog();
+      }
     }
   }
 
