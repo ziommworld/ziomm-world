@@ -49,7 +49,7 @@ export interface GameScenarioStats {
 export interface GameScenarioState {
   currentTurn: number; // corresponds to initiative
   currentRound: number;
-  activeMap: GameMapKey;
+  activeMap: GameMapKey; // TODO change to mapId
 
   characters: Record<string, GameCharacterState>;
   npcs: Record<string, GameCharacterState>;

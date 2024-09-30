@@ -1,12 +1,3 @@
-// ===================== GLOBAL =====================
-
-export interface GameMapCoordinate {
-  x: number;
-  y: number;
-}
-
-export type GameMapDirection = 'north' | 'east' | 'south' | 'west';
-
 // ===================== CONFIG =====================
 
 export enum DamageType {

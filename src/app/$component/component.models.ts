@@ -1,4 +1,5 @@
-import { GameActionConfig, GameActionKey, GameActionState, GameEventConfig, GameEventKey, GameEventState, GameMapCoordinate, GameMapDirection } from "../$mechanics";
+import { GameMapDirection, GameMapCoordinate } from "../$map";
+import { GameActionConfig, GameActionKey, GameActionState, GameEventConfig, GameEventKey, GameEventState } from "../$mechanics";
 
 // ===================== GLOBAL =====================
 

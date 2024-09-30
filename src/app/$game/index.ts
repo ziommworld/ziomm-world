@@ -1,4 +1,5 @@
 export {
+  quickGameDraft,
 } from './game.configs';
 
 export {

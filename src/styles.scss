@@ -24,7 +24,7 @@ $density: (
   scale: -1,
 );
 
-$light-theme: mat.define-theme(
+$theme: mat.define-theme(
   (
     color: (
       theme-type: light,
@@ -114,8 +114,8 @@ $light-theme: mat.define-theme(
 }
 
 html {
-  @include mat.all-component-themes($light-theme);
-  @include define-theme-vars($light-theme);
+  @include mat.all-component-themes($theme);
+  @include define-theme-vars($theme);
 }
 
 html,

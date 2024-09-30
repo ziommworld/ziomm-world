@@ -1,16 +1,18 @@
 @use "@angular/material" as mat;
+@use "styles.scss" as *;
 
-$theme: mat.define-theme(
+:host {
+  display: block;
 
-);
+  padding: 100px 35vw;
+  margin: auto;
+}
 
 .map-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50vw;
-  height: 50vh;
 
   .map-row {
     display: flex;
@@ -30,7 +32,6 @@ $theme: mat.define-theme(
       height: 42px;
 
       box-sizing: border-box;
-      border-top: medium dashed green;
 
       // background-color: #e5e5f7;
       // opacity: 1;
@@ -52,10 +53,6 @@ $theme: mat.define-theme(
       }
 
       .cell-content {
-        background-image: url("public/assets/checkbox.png"); /* Path to your PNG */
-        background-repeat: space; /* Repeat the image */
-        background-size: 6px;
-
         display: flex;
         justify-content: center;
         align-items: center;
@@ -67,12 +64,19 @@ $theme: mat.define-theme(
         }
 
         &.cell-component {
-          opacity: 0.2;
+          opacity: 0.5;
+          width: 100%;
+          height: 100%;
+
+          border-top: medium dashed green;
+
+          background-image: url("public/assets/checkbox.png"); /* Path to your PNG */
+          background-repeat: space; /* Repeat the image */
+          background-size: 6px;
         }
 
         &.cell-character {
-          // opacity: 0.5;
-
+          position: absolute;
           .mat-icon {
             font-size: 30px;
             @include mat.icon-color($theme, $color-variant: primary);
@@ -81,4 +85,8 @@ $theme: mat.define-theme(
       }
     }
   }
+}
+
+.cdk-drag {
+  @include mat.icon-color($theme, $color-variant: primary);
 }

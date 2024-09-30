@@ -1,4 +1,5 @@
-import { GameActionConfig, GameActionKey, GameActionState, GameMapCoordinate } from "../$mechanics";
+import { GameMapCoordinate } from "../$map";
+import { GameActionConfig, GameActionKey, GameActionState } from "../$mechanics";
 
 // ===================== DRAFT =====================
 

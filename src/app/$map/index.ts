@@ -12,7 +12,15 @@ export {
   BaseMapConfig,
   GameComponentDef,
   GameComponentLayout,
+  GameMapCoordinate,
+  GameMapDirection,
+  GameMapSize,
 } from './map.models';
+
+export {
+  chess2coord,
+  coord2chess,
+} from './map.utils';
 
 export {
   GameMap,

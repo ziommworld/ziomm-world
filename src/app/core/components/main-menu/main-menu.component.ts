@@ -2,9 +2,12 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GameRecord } from 'src/app/$game';
-import { GameService } from '../../services/game.service';
 import { MatButtonModule } from '@angular/material/button';
+
+import { GameRecord, quickGameDraft } from 'src/app/$game';
+import { GameService } from '../../services/game.service';
+import { snackbarDuration } from '../../configs';
+
 
 @Component({
   selector: 'app-main-menu',
@@ -50,18 +53,24 @@ export class MainMenuComponent {
     this.loadGameInput.nativeElement.click();
   }
 
+  public quickGame() {
+    this.gameService.startGame(quickGameDraft);
+  }
+
   public onLoadGame($event: Event) {
     const input = $event.target as HTMLInputElement;
 
     if (!input.files || input.files.length === 0) {
-      this.snackbar.open('No file selected.', 'Dismiss');
+      const snackbarConfig = { duration: snackbarDuration };
+      this.snackbar.open('No file selected.', 'Try again', snackbarConfig);
       return;
     }
 
     const file = input.files[0];
 
     if (file.type !== 'application/json') {
-      this.snackbar.open('Please select a JSON file.', 'Dismiss');
+      const snackbarConfig = { duration: snackbarDuration };
+      this.snackbar.open('Please select a JSON file.', 'Try again', snackbarConfig);
       return;
     }
 
@@ -72,15 +81,18 @@ export class MainMenuComponent {
       try {
         record = JSON.parse(reader.result as string);
         this.gameService.loadGame(record);
-        this.snackbar.open('Game loaded.', 'Dismiss');
+        const snackbarConfig = { duration: snackbarDuration };
+        this.snackbar.open('Game loaded.', 'OK', snackbarConfig);
       } catch (error) {
         console.error('Error parsing JSON:', error);
-        this.snackbar.open(`Invalid JSON file.: ${reader.error}`);
+        const snackbarConfig = { duration: snackbarDuration };
+        this.snackbar.open(`Invalid JSON file.: ${reader.error}`, 'Dismiss', snackbarConfig);
       }
     };
 
     reader.onerror = () => {
-      this.snackbar.open(`Error reading file: ${reader.error}`);
+      const snackbarConfig = { duration: snackbarDuration };
+      this.snackbar.open(`Error reading file: ${reader.error}`, 'Dismiss', snackbarConfig);
     };
 
     reader.readAsText(file);

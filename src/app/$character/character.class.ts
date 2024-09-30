@@ -7,6 +7,9 @@ import { GameAction, GameActionState } from '../$mechanics';
 
 
 export class GameCharacter {
+  public actions!: GameAction[];
+  public abilities!: GameAction[];
+  public interactions!: GameAction[];
 
   // ===================== CONFIG =====================
 
@@ -60,6 +63,35 @@ export class GameCharacter {
     public config: GameCharacterConfig,
     public $state: Signal<GameCharacterState>,
   ) {
+    this.actions = config.actions.map(
+      (config) => {
+        const $state = computed(() => {
+          const stateMap = this.$state().actions;
+          return stateMap[config.id]
+        });
+
+        return new GameAction(config, $state);
+      });
+
+    this.abilities = config.abilities.map(
+      (config) => {
+        const $state = computed(() => {
+          const stateMap = this.$state().abilities;
+          return stateMap[config.id]
+        });
+
+        return new GameAction(config, $state);
+      });
+
+    this.interactions = config.interactions.map(
+      (config) => {
+        const $state = computed(() => {
+          const stateMap = this.$state().interactions;
+          return stateMap[config.id]
+        });
+
+        return new GameAction(config, $state);
+      });
   }
 
   public static initConfig(

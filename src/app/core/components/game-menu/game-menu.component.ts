@@ -2,14 +2,15 @@ import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DateTime } from 'luxon';
 
 import { AppService } from '../../services/app.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { GameService } from '../../services/game.service';
 import { GameRecord } from 'src/app/$game';
-import { DateTime } from 'luxon';
+import { snackbarDuration } from '../../configs';
 
 
 @Component({
@@ -60,7 +61,9 @@ export class GameMenuComponent {
     link.parentNode?.removeChild(link);
 
     this.appService.toggleGDialog();
-    this.snackbar.open('Game saved.', 'Dismiss');
+
+    const snackbarConfig = { duration: snackbarDuration };
+    this.snackbar.open('Game saved.', 'OK', snackbarConfig);
   }
 
   public quitGame() {

@@ -1,15 +1,31 @@
+import { computed, Signal } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid';
 
-import { GameMapConfig, GameMapKey, GameMapState, MicroTile } from ".";
+import { coord2chess, GameMapConfig, GameMapKey, GameMapState, MicroTile } from ".";
 import { maps } from "./lib";
 import { GameComponent, GameComponentState } from "../$component";
 import { GameEvent, GameEventState } from "../$mechanics";
-import { computed, Signal } from "@angular/core";
 
 
 export class GameMap {
   public components: GameComponent[];
   public events: GameEvent[];
+
+  public get id() {
+    return this.config.id;
+  }
+
+  public get key() {
+    return this.config.key;
+  }
+
+  public get name() {
+    return this.config.name;
+  }
+
+  public get tiles() {
+    return this.config.tiles;
+  }
 
   constructor(
     public config: GameMapConfig,
@@ -47,13 +63,14 @@ export class GameMap {
 
       tiles: config.terrain.map(
         (row, y) => row.map(
-          (terrain, x) => ({
+          (terrain, x): MicroTile => ({
+            id: coord2chess({ x, y }, config.size),
             coord: {
               x,
               y
             },
             terrain,
-          } as MicroTile)
+          })
         )
       ),
 

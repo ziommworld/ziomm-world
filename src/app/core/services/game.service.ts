@@ -1,13 +1,11 @@
 import { computed, effect, Injectable, signal } from '@angular/core';
 
 import { GameCharacter } from 'src/app/$character';
-import { AppService } from './app.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DraftModalComponent } from '../components/draft-modal/draft-modal.component';
-import { Game, GameDraft, GameRecord, GameState } from 'src/app/$game';
-import { bypass, dummyGameDraft } from '../configs/core.configs';
+import { Game, GameDraft, GameRecord } from 'src/app/$game';
 import { patchState } from '@ngrx/signals';
-import { doDmg } from 'src/app/$game/game.configs';
+import { doDmg } from 'src/app/$mechanics/mechanics.utils';
 
 
 @Injectable({
@@ -32,8 +30,28 @@ export class GameService {
     return !!this.$game();
   });
 
+  public get config() {
+    return this.game.config;
+  }
+
+  public get $state() {
+    return this.game.$state;
+  }
+
+  public get scenario() {
+    return this.game.scenario;
+  }
+
   public get characters(): GameCharacter[] {
     return this.game.scenario.characters;
+  }
+
+  public get npcs(): GameCharacter[] {
+    return this.game.scenario.npcs;
+  }
+
+  public get maps() {
+    return this.game.scenario.maps;
   }
 
   constructor(
@@ -63,11 +81,6 @@ export class GameService {
   }
 
   public initGame() {
-    if (bypass) {
-      this.startGame(dummyGameDraft);
-      return;
-    }
-
     const config: MatDialogConfig = {
       id: 'draft-modal',
       autoFocus: false,

@@ -19,9 +19,12 @@ export {
   GameActionKey,
   BaseActionConfig,
   BaseEventConfig,
-  GameMapCoordinate,
-  GameMapDirection,
+
 } from './mechanics.models';
+
+export {
+
+} from './mechanics.utils';
 
 export {
   GameAction,

@@ -25,11 +25,11 @@
         margin-left: 16px;
 
         &.tech-lvl-value {
-          @include mat.chips-color($light-theme, $color-variant: tertiary);
+          @include mat.chips-color($theme, $color-variant: tertiary);
         }
 
         &.ms-value {
-          @include mat.chips-color($light-theme, $color-variant: error);
+          @include mat.chips-color($theme, $color-variant: error);
         }
       }
     }
@@ -42,7 +42,7 @@
 
       .health-indicator {
         @include mat.progress-spinner-color(
-          $light-theme,
+          $theme,
           $color-variant: error
         );
       }
@@ -69,15 +69,15 @@
         margin-right: 24px;
 
         &.state-value {
-          @include mat.badge-color($light-theme, $color-variant: primary);
+          @include mat.badge-color($theme, $color-variant: primary);
         }
 
         &.buff-value {
-          @include mat.badge-color($light-theme, $color-variant: tertiary);
+          @include mat.badge-color($theme, $color-variant: tertiary);
         }
 
         &.debuff-value {
-          @include mat.badge-color($light-theme, $color-variant: error);
+          @include mat.badge-color($theme, $color-variant: error);
         }
       }
     }
@@ -86,14 +86,14 @@
   mat-card-actions {
     button {
       margin-right: 8px;
-      @include mat.badge-color($light-theme, $color-variant: secondary);
+      @include mat.badge-color($theme, $color-variant: secondary);
 
       &.offensive-action {
-        @include mat.button-color($light-theme, $color-variant: error);
+        @include mat.button-color($theme, $color-variant: error);
       }
 
       &.defensive-action {
-        @include mat.button-color($light-theme, $color-variant: tertiary);
+        @include mat.button-color($theme, $color-variant: tertiary);
       }
     }
   }
@@ -102,15 +102,15 @@
     .list-item-container {
       mat-chip {
         &.p-res {
-          @include mat.chips-color($light-theme, $color-variant: tertiary);
+          @include mat.chips-color($theme, $color-variant: tertiary);
         }
 
         &.e-res {
-          @include mat.chips-color($light-theme, $color-variant: error);
+          @include mat.chips-color($theme, $color-variant: error);
         }
 
         &.n-res {
-          @include mat.chips-color($light-theme, $color-variant: primary);
+          @include mat.chips-color($theme, $color-variant: primary);
         }
       }
     }

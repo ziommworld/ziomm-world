@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { MicroTile } from '../../../$map/map.models';
+import { Component, computed } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import {
@@ -7,25 +6,13 @@ import {
   CdkDrag,
   CdkDropList,
   CdkDropListGroup,
-  moveItemInArray,
-  transferArrayItem,
+  CdkDragEnter,
 } from '@angular/cdk/drag-drop'
+import { NgClass } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
+import { GameService } from '../../services/game.service';
 
-interface GameMap {
-  rows: MapRow[];
-}
-
-interface MapRow {
-  id: number;
-  cells: MapCell[];
-}
-
-interface MapCell {
-  id: string;
-  component?: string;
-  character?: string;
-}
 
 @Component({
   selector: 'app-game-map',
@@ -36,65 +23,55 @@ interface MapCell {
     CdkDropListGroup,
     CdkDropList,
     CdkDrag,
+    NgClass,
+    MatTooltipModule,
   ],
   templateUrl: './game-map.component.html',
   styleUrl: './game-map.component.scss'
 })
 export class GameMapComponent {
-  public map: GameMap = {
-    rows: [
-      {
-        id: 1,
-        cells: [
-          {
-            id: 'A1',
-            component: 'home'
-          },
-          {
-            id: 'B1',
-            component: 'home'
-          },
-          {
-            id: 'C1',
-            component: 'home'
-          }
-        ]
-      },
-      {
-        id: 2,
-        cells: [
-          {
-            id: 'A2',
-            component: 'home',
-            character: 'send',
-          },
-          {
-            id: 'B2',
-            component: 'home',
-          },
-          {
-            id: 'C2',
-            component: 'home'
-          }
-        ]
-      },
-      {
-        id: 3,
-        cells: [
-          {
-            id: 'A3',
-            component: 'home'
-          },
-          {
-            id: 'B3',
-            component: 'home',
-          },
-          {
-            id: 'C3',
-            component: 'home'
-          }
-        ]
-      }
-    ]
-  };
+  public scenario = this.gameService.scenario;
+  public maps = this.scenario.maps;
+
+  public $currentMap = computed(() => {
+    const activeMap = this.maps.find(
+      map => map.config.key === this.scenario.$state().activeMap
+    );
+
+    if (!activeMap) {
+      throw new Error('No active map found.');
+    }
+
+    console.warn('activeMap', activeMap);
+    return activeMap;
+  });
+
+  constructor(
+    private gameService: GameService
+  ) {
+
+  }
+
+  public drop($event: CdkDragDrop<any, any, any>) {
+    console.log($event.container.data, $event.item.data);
+    const [y, x] = $event.container.data;
+    const [char, yc, xc] = $event.item.data;
+
+    // if (y === yc && x === xc ||
+    //   this.map.rows[y].cells[x].component
+    // ) {
+    //   return;
+    // }
+
+    // this.map.rows[y].cells[x].character = char;
+    // this.map.rows[yc].cells[xc].character = undefined;
+  }
+
+  public dragEntered($event: CdkDragEnter<any>) {
+    const [y, x] = $event.container.data;
+    const [char, yc, xc] = $event.item.data;
+
+    console.log($event.container.data, $event.item.data);
+
+  }
 }

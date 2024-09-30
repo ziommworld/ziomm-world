@@ -1,21 +1,18 @@
-import { GameState } from ".";
+import { GameDraft } from ".";
 
 
-export const doDmg = () => {
-  return (state: GameState) => {
-    const char0Id = Object.keys(state.scenario.characters)[0];
-
-    return {
-      scenario: {
-        ...state.scenario,
-        characters: {
-          ...state.scenario.characters,
-          [char0Id]: {
-            ...state.scenario.characters[char0Id],
-            currentHP: state.scenario.characters[char0Id].currentHP - 1,
-          }
-        }
-      }
-    };
+export const quickGameDraft: GameDraft = {
+  players: ['P1', 'P2'],
+  characters: [
+    {
+      character: 'neo',
+      player: 'P1'
+    },
+  ],
+  scenario: 'test',
+  settings: {
+    difficulty: 100,
+    time: 120,
+    turns: 30,
   }
-};
+}
