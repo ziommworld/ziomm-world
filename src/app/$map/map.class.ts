@@ -1,7 +1,7 @@
 import { computed, Signal } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid';
 
-import { coord2chess, GameMapConfig, GameMapKey, GameMapState, MicroTile } from ".";
+import { GameMapConfig, GameMapKey, GameMapState, MicroTile } from ".";
 import { maps } from "./lib";
 import { GameComponent, GameComponentState } from "../$component";
 import { GameEvent, GameEventState } from "../$mechanics";
@@ -53,7 +53,10 @@ export class GameMap {
   }
 
   static initConfig(key: GameMapKey): GameMapConfig {
-    const config = maps[key];
+    const {
+      terrain,
+      ...config
+    } = maps[key];
 
     return {
       ...config,
@@ -61,10 +64,9 @@ export class GameMap {
       id: uuidv4(),
       key,
 
-      tiles: config.terrain.map(
+      tiles: terrain.map(
         (row, y) => row.map(
           (terrain, x): MicroTile => ({
-            id: coord2chess({ x, y }, config.size),
             coord: {
               x,
               y

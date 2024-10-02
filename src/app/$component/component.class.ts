@@ -1,8 +1,7 @@
 import { computed, Signal } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid';
 
-import { GameComponentConfig, GameComponentKey, GameComponentState } from ".";
-import { GameComponentLayout } from "../$map/map.models";
+import { GameComponentConfig, GameComponentKey, GameComponentLayout, GameComponentState } from ".";
 import { components } from "./lib";
 import { GameAction, GameActionState, GameEvent, GameEventState } from "../$mechanics";
 
@@ -44,6 +43,7 @@ export class GameComponent {
 
       id: uuidv4(),
       key,
+      layout,
 
       interactions: config.interactions.map(
         key => GameAction.initConfig(key)

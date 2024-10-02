@@ -1,4 +1,4 @@
-import { GameComponentConfig, GameComponentKey, GameComponentState } from "../$component";
+import { MapComponentConfig, GameComponentConfig, GameComponentState } from "../$component";
 import { GameEventConfig, GameEventKey, GameEventState } from "../$mechanics";
 
 // ===================== CONFIG =====================
@@ -16,10 +16,6 @@ export interface GameMapSize {
 
 export type GameMapDirection = 'north' | 'east' | 'south' | 'west';
 
-// BOTTOM LEFT CORNER is (0, 0)
-// X-AXIS shows east
-// Y-AXIS shows north
-
 export enum TerrainType {
   Spawn = 'spawn', // char starting point
 
@@ -36,15 +32,7 @@ export enum TerrainType {
   Interior = 'interior', // inside a building
 }
 
-export interface GameComponentLayout {
-  anchor: GameMapCoordinate;
-  direction: GameMapDirection;
-}
-
-export type GameComponentDef = [GameComponentKey, GameComponentLayout];
-
 export interface MicroTile {
-  id: string;
   coord: GameMapCoordinate;
   terrain: TerrainType;
 }
@@ -55,7 +43,7 @@ export interface BaseMapConfig {
 
   terrain: TerrainType[][];
 
-  components: GameComponentDef[];
+  components: MapComponentConfig[];
   events: GameEventKey[];
 }
 
@@ -64,6 +52,7 @@ export interface GameMapConfig extends Omit<BaseMapConfig, 'components' | 'event
   key: GameMapKey;
 
   tiles: MicroTile[][];
+
   components: GameComponentConfig[];
   events: GameEventConfig[];
 }

@@ -4,6 +4,7 @@ import { BaseComponentConfig, GameComponentType } from "../../component.models";
 export const basicWindow: BaseComponentConfig = {
   name: 'Window',
   type: GameComponentType.Edge,
+  height: 2,
 
   // transparent: true,
 
@@ -18,6 +19,7 @@ export const basicWindow: BaseComponentConfig = {
 export const reinforcedWindow: BaseComponentConfig = {
   name: 'Reinforced wall',
   type: GameComponentType.Edge,
+  height: 2,
 
   // transparent: true,
 

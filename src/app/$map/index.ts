@@ -10,8 +10,6 @@ export {
   GameMapLib,
   GameMapStats,
   BaseMapConfig,
-  GameComponentDef,
-  GameComponentLayout,
   GameMapCoordinate,
   GameMapDirection,
   GameMapSize,

@@ -12,6 +12,7 @@ import { NgClass } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { GameService } from '../../services/game.service';
+import { coord2chess } from 'src/app/$map';
 
 
 @Component({
@@ -42,7 +43,6 @@ export class GameMapComponent {
       throw new Error('No active map found.');
     }
 
-    console.warn('activeMap', activeMap);
     return activeMap;
   });
 
@@ -50,6 +50,10 @@ export class GameMapComponent {
     private gameService: GameService
   ) {
 
+  }
+
+  public getCellCoord(x: number, y: number): string {
+    return coord2chess({ x, y }, this.$currentMap().config.size)
   }
 
   public drop($event: CdkDragDrop<any, any, any>) {

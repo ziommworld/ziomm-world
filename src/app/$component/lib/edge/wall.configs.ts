@@ -4,6 +4,7 @@ import { BaseComponentConfig, GameComponentType } from "../../component.models";
 export const wall: BaseComponentConfig = {
   name: 'Wall',
   type: GameComponentType.Edge,
+  height: 2,
 
   interactions: [
   ],
@@ -15,6 +16,7 @@ export const wall: BaseComponentConfig = {
 export const damagedWall: BaseComponentConfig = {
   name: 'Damaged wall',
   type: GameComponentType.Edge,
+  height: 2,
 
   penaltyMS: 2,
 
@@ -28,6 +30,7 @@ export const damagedWall: BaseComponentConfig = {
 export const reinforcedWall: BaseComponentConfig = {
   name: 'Reinforced wall',
   type: GameComponentType.Edge,
+  height: 2,
 
   interactions: [
 

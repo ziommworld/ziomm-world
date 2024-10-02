@@ -84,6 +84,7 @@ export interface GameCharacterStats {
 export interface GameCharacterState {
   initiative: number;
   position: GameMapCoordinate;
+  zLevel: number;
   player?: string;
 
   currentAP: number;

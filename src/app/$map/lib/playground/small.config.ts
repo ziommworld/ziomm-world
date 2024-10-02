@@ -1,5 +1,6 @@
 import { BaseMapConfig, TerrainType } from "src/app/$map";
 
+
 const size = 10;
 
 const rows = size;
@@ -27,6 +28,7 @@ export const small: BaseMapConfig = {
   terrain,
 
   components: [
+
   ],
   events: [
 

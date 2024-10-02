@@ -6,7 +6,7 @@
     @for (cell of row; track $index; let x = $index)
     {
     <div class="map-cell"
-         [matTooltip]="cell.id"
+         [matTooltip]="getCellCoord(x, y)"
          matTooltipShowDelay="100"
          cdkDropList
          [cdkDropListData]="[y, x]"

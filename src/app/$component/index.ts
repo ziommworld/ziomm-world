@@ -10,6 +10,6 @@ export {
   GameComponentKey,
   GameComponentStats,
   BaseComponentConfig,
-  ComponentLayoutState,
-  ComponentLayoutConfig,
+  GameComponentLayout,
+  MapComponentConfig,
 } from './component.models';

@@ -16,4 +16,7 @@ export const arena: BaseScenarioConfig = {
   maps: [
     'small',
   ],
+  events: [
+
+  ],
 };

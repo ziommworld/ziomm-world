@@ -1,6 +1,6 @@
 import { GameCharacterConfig, GameCharacterKey, GameCharacterState } from "../$character";
-import { GameComponentKey, GameComponentState } from "../$component";
 import { GameMapConfig, GameMapKey, GameMapState } from "../$map";
+import { GameEventConfig, GameEventKey, GameEventState } from "../$mechanics";
 
 // ===================== DRAFT =====================
 
@@ -23,9 +23,10 @@ export interface BaseScenarioConfig {
 
   npcs: GameCharacterKey[];
   maps: GameMapKey[];
+  events: GameEventKey[];
 }
 
-export interface GameScenarioConfig extends Omit<BaseScenarioConfig, 'npcs' | 'maps'> {
+export interface GameScenarioConfig extends Omit<BaseScenarioConfig, 'npcs' | 'maps' | 'events'> {
   id: string;
   key: GameScenarioKey;
 
@@ -36,6 +37,7 @@ export interface GameScenarioConfig extends Omit<BaseScenarioConfig, 'npcs' | 'm
   characters: GameCharacterConfig[];
   npcs: GameCharacterConfig[];
   maps: GameMapConfig[];
+  events: GameEventConfig[];
 }
 
 // ===================== STATE =====================
@@ -54,6 +56,7 @@ export interface GameScenarioState {
   characters: Record<string, GameCharacterState>;
   npcs: Record<string, GameCharacterState>;
   maps: Record<string, GameMapState>;
+  events: Record<string, GameEventState>;
 
   stats: GameScenarioStats;
 }

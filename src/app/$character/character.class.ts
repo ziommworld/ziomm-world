@@ -124,6 +124,7 @@ export class GameCharacter {
   ): GameCharacterState {
     return {
       initiative: -1,
+      zLevel: 0,
       // TODO set position according to scenario and initial map
       position: { x: 0, y: 0 },
       player: config.player,

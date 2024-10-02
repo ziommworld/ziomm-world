@@ -18,4 +18,7 @@ export const test: BaseScenarioConfig = {
     'small',
     'medium',
   ],
+  events: [
+
+  ],
 };

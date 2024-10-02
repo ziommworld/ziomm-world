@@ -1,6 +1,12 @@
 import { GameMapCoordinate, GameMapSize } from ".";
 
 
+/**
+ * "Chess" coordinates <=> (0, 0) is bottom left
+ *
+ * X-axis shows east,
+ * Y-axis shows north
+ */
 export const coord2chess = (coord: GameMapCoordinate, size: GameMapSize): string => {
   const north = size.rows - coord.y;
   const east = coord.x + 1;

@@ -19,7 +19,6 @@ export {
   GameActionKey,
   BaseActionConfig,
   BaseEventConfig,
-
 } from './mechanics.models';
 
 export {

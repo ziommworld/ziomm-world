@@ -7,18 +7,19 @@ import { GameCharacter, GameCharacterState } from "../$character";
 import { GameDraft } from "../$game";
 import { GameMap, GameMapState } from "../$map";
 import { GameScenarioConfig, GameScenarioState } from ".";
+import { GameEvent, GameEventState } from "../$mechanics";
 
 
 export class GameScenario {
   public characters: GameCharacter[];
   public npcs: GameCharacter[];
   public maps: GameMap[];
+  public events: GameEvent[];
 
   constructor(
     public config: GameScenarioConfig,
     public $state: DeepSignal<GameScenarioState>,
   ) {
-
     this.characters = config.characters.map(
       (config) => {
         const $state = computed(() => {
@@ -48,6 +49,16 @@ export class GameScenario {
 
         return new GameMap(config, $state);
       });
+
+    this.events = config.events.map(
+      (config) => {
+        const $state = computed(() => {
+          const stateMap = this.$state.events();
+          return stateMap[config.id];
+        });
+
+        return new GameEvent(config, $state);
+      });
   }
 
   public static initConfig(draft: GameDraft): GameScenarioConfig {
@@ -71,6 +82,9 @@ export class GameScenario {
       ),
       maps: config.maps.map(
         map => GameMap.initConfig(map)
+      ),
+      events: config.events.map(
+        event => GameEvent.initConfig(event)
       ),
     };
   }
@@ -107,6 +121,14 @@ export class GameScenario {
           return rec;
         },
         {} as Record<string, GameMapState>
+      ),
+      events: config.events.reduce(
+        (rec, config) => {
+          const state = GameEvent.initState(config);
+          rec[config.id] = state;
+          return rec;
+        },
+        {} as Record<string, GameEventState>
       ),
 
       stats: {
