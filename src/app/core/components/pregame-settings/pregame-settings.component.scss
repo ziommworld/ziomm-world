@@ -10,8 +10,16 @@
   align-items: center;
   justify-content: center;
 
+  &.begin-button {
+    @include mat.button-color($theme, $color-variant: primary);
+  }
+
   &.randomize-button {
     @include mat.button-color($theme, $color-variant: tertiary);
+  }
+
+  &.reset-button {
+    @include mat.button-color($theme, $color-variant: error);
   }
 }
 

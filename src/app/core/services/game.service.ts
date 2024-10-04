@@ -178,4 +178,15 @@ export class GameService {
   public displaceCharacter(tile: MicroTileConfig) {
     patchState(this.game.$state, displaceCharacter(tile.coord));
   }
+
+  public displaceAllCharacters() {
+    const characters$ = this.$characters();
+
+    this.characters.forEach((char) => {
+      const charPosition = characters$[char.id].position;
+      if (charPosition) {
+        patchState(this.game.$state, displaceCharacter(charPosition));
+      }
+    });
+  }
 }

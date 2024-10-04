@@ -1,6 +1,6 @@
 <mat-list>
   <mat-list-item>
-    <div class="list-item-container">
+    <div class="list-item-container begin-button">
       <button mat-stroked-button
               [disabled]="!$canBegin()"
               (click)="beginGame()">
@@ -14,6 +14,15 @@
       <button mat-stroked-button
               (click)="randomize()">
         Randomize
+      </button>
+    </div>
+  </mat-list-item>
+
+  <mat-list-item>
+    <div class="list-item-container reset-button">
+      <button mat-stroked-button
+              (click)="reset()">
+        Reset
       </button>
     </div>
   </mat-list-item>

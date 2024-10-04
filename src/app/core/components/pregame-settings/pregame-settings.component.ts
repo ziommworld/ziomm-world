@@ -4,7 +4,7 @@ import { GameService } from '../../services/game.service';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatIcon } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { GameMapCoordinate } from 'src/app/$map';
+import { GameMapCoordinate, TerrainType } from 'src/app/$map';
 import { NgClass } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { GameCharacterConfig } from 'src/app/$character';
@@ -50,7 +50,22 @@ export class PreGameSettingsComponent {
   }
 
   public randomize() {
-    console.log('randomize');
+    this.reset();
+    const spawnTiles = this.gameService.$activeMap().tiles.flat().filter(tile => tile.terrain === TerrainType.Spawn);
+
+    // suffle
+    spawnTiles.sort(() => Math.random() - 0.5);
+    this.charactersSequence.sort(() => Math.random() - 0.5);
+
+    this.charactersSequence.forEach((char, idx) => {
+      this.gameService.placeCharacter(char.id, spawnTiles[idx]);
+    });
+
+    this.gameService.changeInitiative(this.charactersSequence);
+  }
+
+  public reset() {
+    this.gameService.displaceAllCharacters();
   }
 
   public getPlacementIcon(coord?: GameMapCoordinate) {
