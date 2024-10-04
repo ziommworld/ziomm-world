@@ -1,4 +1,4 @@
-import { Component, computed } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { GameService } from '../../services/game.service';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -26,8 +26,32 @@ import { GameCharacterConfig } from 'src/app/$character';
 export class PreGameSettingsComponent {
   public readonly fontSet = 'material-icons-outlined';
 
+  // ===================== CONFIG =====================
+
+  public characters = this.gameService.characters;
+
+  public charactersSequence = [
+    ...this.characters,
+  ];
+
+  // ===================== STATE =====================
+
   public $characters = this.gameService.$characters;
   public $canBegin = this.gameService.$canBegin;
+
+  constructor(
+    private gameService: GameService,
+  ) {
+
+  }
+
+  public beginGame() {
+    this.gameService.beginGame();
+  }
+
+  public randomize() {
+    console.log('randomize');
+  }
 
   public getPlacementIcon(coord?: GameMapCoordinate) {
     return !!coord ? 'where_to_vote' : 'location_off';
@@ -37,30 +61,8 @@ export class PreGameSettingsComponent {
     return !!coord ? 'is-placed' : null;
   }
 
-  public get characters() {
-    return this.gameService.characters
-  }
-
-  public charactersSequence = [
-    ...this.characters,
-  ];
-
-  constructor(
-    private gameService: GameService,
-  ) {
-
-  }
-
   public changeInitiative(event: CdkDragDrop<GameCharacterConfig[]>) {
     moveItemInArray(this.charactersSequence, event.previousIndex, event.currentIndex);
     this.gameService.changeInitiative(this.charactersSequence);
-  }
-
-  public beginGame() {
-    this.gameService.beginGame();
-  }
-
-  public randomize() {
-    console.log('randomize');
   }
 }

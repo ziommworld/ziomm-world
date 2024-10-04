@@ -19,10 +19,11 @@ export {
   GameActionKey,
   BaseActionConfig,
   BaseEventConfig,
+  ActionMenuItem,
+  ActionMenuSubItem,
 } from './mechanics.models';
 
 export {
-  doDmg,
   changeInitiative,
   placeCharacter,
   displaceCharacter,

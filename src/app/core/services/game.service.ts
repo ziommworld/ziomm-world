@@ -1,12 +1,12 @@
-import { computed, effect, Injectable, Signal, signal, WritableSignal } from '@angular/core';
+import { computed, effect, Injectable, signal, WritableSignal } from '@angular/core';
 
-import { GameCharacter, GameCharacterConfig } from 'src/app/$character';
+import { GameCharacter } from 'src/app/$character';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DraftModalComponent } from '../components/draft-modal/draft-modal.component';
 import { Game, GameDraft, GamePhase, GameRecord } from 'src/app/$game';
 import { patchState } from '@ngrx/signals';
 import { MicroTileConfig } from 'src/app/$map';
-import { changeInitiative, displaceCharacter, doDmg, placeCharacter } from 'src/app/$mechanics';
+import { changeInitiative, displaceCharacter, placeCharacter } from 'src/app/$mechanics';
 
 
 @Injectable({
@@ -14,6 +14,9 @@ import { changeInitiative, displaceCharacter, doDmg, placeCharacter } from 'src/
 })
 export class GameService {
   private $game = signal<Game | null>(null);
+  public $activeTile: WritableSignal<MicroTileConfig | null> = signal(null);
+
+  // ===================== CONFIG =====================
 
   /**
    * use only while inGame
@@ -27,34 +30,8 @@ export class GameService {
     return game;
   }
 
-  public $noGame = computed(() => {
-    return !this.$game();
-  });
-
-  public $inGame = computed(() => {
-    return this.$game()?.$state().phase === GamePhase.InGame;
-  });
-
-  public $preGame = computed(() => {
-    return this.$game()?.$state().phase === GamePhase.PreGame;
-  });
-
-  public $endGame = computed(() => {
-    return this.$game()?.$state().phase === GamePhase.PreGame;
-  });
-
-  public $canBegin = computed(() => this.characters.every(
-    (character) => !!this.$characters()[character.id].position
-  ));
-
-  public $activeTile: WritableSignal<MicroTileConfig | null> = signal(null);
-
   public get config() {
     return this.game.config;
-  }
-
-  public get $state() {
-    return this.game.$state;
   }
 
   public get scenario() {
@@ -73,8 +50,53 @@ export class GameService {
     return this.game.scenario.maps;
   }
 
+  // ===================== STATE =====================
+
+  public $noGame = computed(() => {
+    return !this.$game();
+  });
+
+  public $canBegin = computed(() => this.characters.every(
+    (character) => !!this.$characters()[character.id].position
+  ));
+
+  public $preGame = computed(() => {
+    return this.$game()?.$state().phase === GamePhase.PreGame;
+  });
+
+  public $inGame = computed(() => {
+    return this.$game()?.$state().phase === GamePhase.InGame;
+  });
+
+  public $endGame = computed(() => {
+    return this.$game()?.$state().phase === GamePhase.PreGame;
+  });
+
+  public get $state() {
+    return this.game.$state;
+  }
+
   public $characters = computed(() => {
     return this.$state().scenario.characters;
+  });
+
+  public $npcs = computed(() => {
+    return this.$state().scenario.npcs;
+  });
+
+  public $maps = computed(() => {
+    return this.$state().scenario.maps;
+  });
+
+  public $events = computed(() => {
+    return this.$state().scenario.events;
+  });
+
+  public $activeMap = computed(() => {
+    const activeMapKey = this.scenario.$state().activeMap;
+    const activeMap = this.scenario.mapsDict[activeMapKey];
+
+    return activeMap;
   });
 
   constructor(
@@ -155,9 +177,5 @@ export class GameService {
 
   public displaceCharacter(tile: MicroTileConfig) {
     patchState(this.game.$state, displaceCharacter(tile.coord));
-  }
-
-  public doAction() {
-    patchState(this.game.$state, doDmg());
   }
 }

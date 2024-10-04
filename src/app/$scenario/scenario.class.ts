@@ -18,7 +18,7 @@ export class GameScenario {
 
   public charactersDict!: Record<string, GameCharacter>;
   public npcsDict!: Record<string, GameCharacter>;
-  public mapsDict!: Record<string, GameMap>;
+  public mapsDict!: Record<GameMapKey, GameMap>;
   public eventsDict!: Record<string, GameEvent>;
 
   // ===================== CONFIG =====================
@@ -82,10 +82,10 @@ export class GameScenario {
 
     this.mapsDict = this.maps.reduce(
       (rec, map) => {
-        rec[map.id] = map;
+        rec[map.key] = map;
         return rec;
       },
-      {} as Record<string, GameMap>
+      {} as Record<GameMapKey, GameMap>
     );
 
     this.events = config.events.map(

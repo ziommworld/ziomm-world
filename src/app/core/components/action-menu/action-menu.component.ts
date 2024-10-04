@@ -2,23 +2,9 @@ import { Component, computed, Signal, ViewChild } from '@angular/core';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { GameService } from '../../services/game.service';
 import { GamePhase } from 'src/app/$game';
-import { GameActionKey } from 'src/app/$mechanics';
+import { ActionMenuItem, ActionMenuSubItem } from 'src/app/$mechanics';
 import { placeCharacter } from '@lib/mechanics/interaction.configs';
-import { MicroTileConfig } from 'src/app/$map';
 
-
-interface ActionMenuItem {
-  key: GameActionKey;
-  label: string;
-  tile: MicroTileConfig;
-
-  subItems?: ActionMenuSubItem[];
-}
-
-interface ActionMenuSubItem {
-  key: string;
-  label: string;
-}
 
 @Component({
   selector: 'app-action-menu',
@@ -34,50 +20,44 @@ export class ActionMenuComponent {
   public menu!: MatMenu;
 
   public $state = this.gameService.$state;
-  public config = this.gameService.config;
+  public characters = this.gameService.characters;
 
   public $menuItems: Signal<ActionMenuItem[]> = computed(() => {
     const activeTile = this.gameService.$activeTile();
-    const characters = this.$state.scenario.characters();
-
-    const canBegin = this.config.scenario.characters.every(
-      (character) => !!characters[character.id].position
-    );
 
     if (!activeTile) {
       return [];
     }
 
-    const $state = this.$state();
-    const activeMapKey = $state.scenario.activeMap;
-    const activeMap = $state.scenario.maps[activeMapKey];
+    const state$ = this.$state();
+    const characters$ = this.gameService.$characters();
+    const canBegin$ = this.gameService.$canBegin();
+    const activeMap$ = this.gameService.$activeMap().$state();
+
     const {
-      coord: {
-        x,
-        y,
-      }
+      coord: { x, y }
     } = activeTile;
 
-    const activeTileState = activeMap.tiles[y][x];
+    const activeTile$ = activeMap$.tiles[y][x];
 
-    if ($state.phase === GamePhase.PreGame) {
+    if (state$.phase === GamePhase.PreGame) {
       const actions: ActionMenuItem[] = [];
 
-      if (activeTileState.characterId) {
+      if (activeTile$.characterId) {
         actions.push({
           key: 'displaceCharacter',
           label: 'Displace Character',
           tile: activeTile,
         });
-      } else if (!canBegin) {
+      } else if (!canBegin$) {
         actions.push({
           key: 'placeCharacter',
           label: placeCharacter.name,
           tile: activeTile,
-          subItems: this.config.scenario.characters
+          subItems: this.characters
             .filter(
               (character) => {
-                return !characters[character.id].position;
+                return !characters$[character.id].position;
               }
             ).map(
               (character) => ({

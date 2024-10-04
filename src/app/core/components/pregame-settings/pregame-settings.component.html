@@ -41,11 +41,11 @@
       [ {{ character.player }} ]
     </div>
 
-    @let characterState = $characters()[character.id];
+    @let character$ = $characters()[character.id];
     <mat-icon class="state-icon"
-              [ngClass]="getPlacementIconClass(characterState.position)"
+              [ngClass]="getPlacementIconClass(character$.position)"
               [fontSet]="fontSet">
-      {{ getPlacementIcon(characterState.position) }}
+      {{ getPlacementIcon(character$.position) }}
     </mat-icon>
   </div>
   }

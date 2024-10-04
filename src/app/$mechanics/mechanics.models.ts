@@ -1,4 +1,19 @@
+import { MicroTileConfig } from "../$map";
+
 // ===================== CONFIG =====================
+
+export interface ActionMenuItem {
+  key: GameActionKey;
+  label: string;
+  tile: MicroTileConfig;
+
+  subItems?: ActionMenuSubItem[];
+}
+
+export interface ActionMenuSubItem {
+  key: string;
+  label: string;
+}
 
 export enum DamageType {
   Physical,

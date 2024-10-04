@@ -39,24 +39,18 @@ export class GameMapComponent {
   @ViewChild('actionMenu')
   public actionMenu!: ActionMenuComponent;
 
+  // ===================== CONFIG =====================
+
   public scenario = this.gameService.scenario;
-  public maps = this.scenario.maps;
+  public mapsDict = this.scenario.mapsDict;
+
+  // ===================== STATE =====================
 
   public $tiles = computed(() => {
     return this.scenario.$state.maps()[this.scenario.$state().activeMap].tiles;
   });
 
-  public $currentMap = computed(() => {
-    const activeMap = this.maps.find(
-      map => map.config.key === this.scenario.$state().activeMap
-    );
-
-    if (!activeMap) {
-      throw new Error('No active map found.');
-    }
-
-    return activeMap;
-  });
+  public $activeMap = this.gameService.$activeMap;
 
   constructor(
     private gameService: GameService
@@ -64,17 +58,14 @@ export class GameMapComponent {
 
   }
 
-  public getCellTooltip(coord: GameMapCoordinate): string {
-    const {
-      x,
-      y,
-    } = coord;
-
-    return coord2chess({ x, y }, this.$currentMap().config.size)
-  }
-
   public getCharacterIcon(characterId: string): string {
     return this.scenario.charactersDict[characterId].config.icon;
+  }
+
+  public getCellTooltip(coord: GameMapCoordinate): string {
+    const { x, y } = coord;
+
+    return coord2chess({ x, y }, this.$activeMap().config.size)
   }
 
   public drop($event: CdkDragDrop<any, any, any>) {
@@ -102,13 +93,13 @@ export class GameMapComponent {
 
   public triggerMenu(tile: MicroTileConfig): MatMenu | null {
     if (this.gameService.$state().phase === GamePhase.PreGame) {
-      const tileState = this.$currentMap().$state().tiles[tile.coord.y][tile.coord.x];
-      const canBegin = this.gameService.$canBegin();
+      const tile$ = this.$activeMap().$state().tiles[tile.coord.y][tile.coord.x];
+      const canBegin$ = this.gameService.$canBegin();
 
-      if (tile.terrain === 'spawn' && tileState.characterId) {
+      if (tile$.characterId) {
         return this.actionMenu?.menu;
       } else {
-        if (!canBegin) {
+        if (!canBegin$ && tile.terrain === 'spawn') {
           return this.actionMenu?.menu;
         }
 

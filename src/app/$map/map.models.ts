@@ -1,4 +1,3 @@
-import { GameCharacter } from "../$character";
 import { MapComponentConfig, GameComponentConfig, GameComponentState, GameComponent } from "../$component";
 import { GameEventConfig, GameEventKey, GameEventState } from "../$mechanics";
 

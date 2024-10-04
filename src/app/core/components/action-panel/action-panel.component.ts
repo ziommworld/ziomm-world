@@ -24,7 +24,6 @@ export class ActionPanelComponent {
   }
 
   public test() {
-    this.gameService.doAction();
   }
 
 }

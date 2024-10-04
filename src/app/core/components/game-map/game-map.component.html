@@ -1,11 +1,12 @@
 <div class="map-container"
      cdkDropListGroup>
-  @for (row of $currentMap().tiles; track $index; let y = $index)
+  @let activeMap = $activeMap();
+  @for (row of activeMap.tiles; track $index; let y = $index)
   {
   <div class="map-row">
     @for (cell of row; track $index; let x = $index)
     {
-    @let cellState = $tiles()[y][x];
+    @let tile$ = $tiles()[y][x];
     <div class="map-cell"
          [matMenuTriggerFor]="triggerMenu(cell)"
          [matTooltip]="getCellTooltip(cell.coord)"
@@ -19,12 +20,12 @@
            [ngClass]="{'cell-component': cell.component}">
       </div> -->
 
-      @if(cellState.characterId) {
+      @if(tile$.characterId) {
       <div class="cell-content cell-character"
            cdkDrag
            [cdkDragData]="[]">
         <mat-icon color="accent">
-          {{ getCharacterIcon(cellState.characterId) }}
+          {{ getCharacterIcon(tile$.characterId) }}
         </mat-icon>
       </div>
       }
