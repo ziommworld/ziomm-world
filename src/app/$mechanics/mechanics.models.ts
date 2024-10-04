@@ -133,9 +133,13 @@ export type GameActionKey =
   'mountSentry' |
   'triggerAlarm' |
   'rejuvenate' |
-  'lootChest'
+  'lootChest' |
 
   // character interactions
+
+  // special interactions
+  'placeCharacter' |
+  'displaceCharacter'
   ;
 
 export type GameEventKey =

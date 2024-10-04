@@ -22,7 +22,10 @@ export {
 } from './mechanics.models';
 
 export {
-
+  doDmg,
+  changeInitiative,
+  placeCharacter,
+  displaceCharacter,
 } from './mechanics.utils';
 
 export {

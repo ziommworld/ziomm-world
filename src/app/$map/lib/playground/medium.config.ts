@@ -29,7 +29,10 @@ export const medium: BaseMapConfig = {
     ]
   ],
   components: [
-    ['rock', { position: { x: 1, y: 1 }, orientation: 'north' }],
+    ['rock', {
+      position: { x: 1, y: 1 },
+      orientation: 'north'
+    }],
   ],
   events: [
     'wind'

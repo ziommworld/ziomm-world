@@ -83,7 +83,7 @@ export interface GameCharacterStats {
 
 export interface GameCharacterState {
   initiative: number;
-  position: GameMapCoordinate;
+  position?: GameMapCoordinate;
   zLevel: number;
   player?: string;
 

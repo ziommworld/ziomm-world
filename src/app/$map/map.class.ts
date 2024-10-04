@@ -1,7 +1,7 @@
 import { computed, Signal } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid';
 
-import { GameMapConfig, GameMapKey, GameMapState, MicroTile } from ".";
+import { GameMapConfig, GameMapKey, GameMapState, MicroTileConfig } from ".";
 import { maps } from "./lib";
 import { GameComponent, GameComponentState } from "../$component";
 import { GameEvent, GameEventState } from "../$mechanics";
@@ -10,6 +10,11 @@ import { GameEvent, GameEventState } from "../$mechanics";
 export class GameMap {
   public components: GameComponent[];
   public events: GameEvent[];
+
+  public componentsDict!: Record<string, GameComponent>;
+  public eventsDict!: Record<string, GameEvent>;
+
+  // ===================== CONFIG =====================
 
   public get id() {
     return this.config.id;
@@ -27,6 +32,8 @@ export class GameMap {
     return this.config.tiles;
   }
 
+  // ===================== STATE =====================
+
   constructor(
     public config: GameMapConfig,
     public $state: Signal<GameMapState>,
@@ -41,6 +48,14 @@ export class GameMap {
         return new GameComponent(config, $state);
       });
 
+    this.componentsDict = this.components.reduce(
+      (rec, component) => {
+        rec[component.id] = component;
+        return rec;
+      },
+      {} as Record<string, GameComponent>
+    );
+
     this.events = config.events.map(
       (config) => {
         const $state = computed(() => {
@@ -50,6 +65,14 @@ export class GameMap {
 
         return new GameEvent(config, $state);
       });
+
+    this.eventsDict = this.events.reduce(
+      (rec, event) => {
+        rec[event.id] = event;
+        return rec;
+      },
+      {} as Record<string, GameEvent>
+    );
   }
 
   static initConfig(key: GameMapKey): GameMapConfig {
@@ -66,7 +89,7 @@ export class GameMap {
 
       tiles: terrain.map(
         (row, y) => row.map(
-          (terrain, x): MicroTile => ({
+          (terrain, x): MicroTileConfig => ({
             coord: {
               x,
               y
@@ -88,6 +111,11 @@ export class GameMap {
   public static initState(config: GameMapConfig): GameMapState {
 
     return {
+      tiles: config.tiles.map(
+        row => row.map(
+          () => ({})
+        )
+      ),
       components: config.components.reduce(
         (map, config) => {
           const state = GameComponent.initState(config);

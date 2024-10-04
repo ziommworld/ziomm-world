@@ -1,4 +1,4 @@
-import { signalState, SignalState } from "@ngrx/signals";
+import { patchState, signalState, SignalState } from "@ngrx/signals";
 import { DateTime } from 'luxon';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -64,7 +64,23 @@ export class Game {
     }
   };
 
+  public beginGame() {
+    patchState(
+      this.$state,
+      {
+        phase: GamePhase.InGame,
+        updatedOn: DateTime.now().toMillis(),
+      }
+    );
+  }
+
   public endGame() {
-    throw new Error("Method not implemented.");
+    patchState(
+      this.$state,
+      {
+        phase: GamePhase.InGame,
+        updatedOn: DateTime.now().toMillis(),
+      }
+    );
   }
 }

@@ -17,6 +17,7 @@ import { InitiativeTrackerComponent } from "./core/components/initiative-tracker
 import { ReferenceSheetComponent } from "./core/components/reference-sheet/reference-sheet.component";
 import { GameService } from './core/services/game.service';
 import { MainMenuComponent } from "./core/components/main-menu/main-menu.component";
+import { PreGameSettingsComponent } from './core/components/pregame-settings/pregame-settings.component';
 
 
 @Component({
@@ -34,7 +35,8 @@ import { MainMenuComponent } from "./core/components/main-menu/main-menu.compone
     InitiativeTrackerComponent,
     ReferenceSheetComponent,
     NgIf,
-    MainMenuComponent
+    MainMenuComponent,
+    PreGameSettingsComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -55,7 +57,7 @@ export class AppComponent {
       event.preventDefault();
       event.stopPropagation();
     }
-    if (!this.$inGame()) {
+    if (this.$noGame()) {
       if (event.key === ' ') {
         this.mainMenu.resumeGame();
       }
@@ -78,11 +80,13 @@ export class AppComponent {
   public $bsheetOpened = this.appService.$bsheetOpened;
   public $rdrawerOpened = this.appService.$rdrawerOpened;
 
+  public $noGame = this.gameService.$noGame;
   public $inGame = this.gameService.$inGame;
+  public $preGame = this.gameService.$preGame;
 
   public $buttonGroupContainerClass = computed(() => {
     return {
-      'button-group-container-hidden': !this.$inGame(),
+      'button-group-container-hidden': this.$noGame(),
     };
   });
 
@@ -154,6 +158,9 @@ export class AppComponent {
     });
   }
 
+  public onRightClick($event: MouseEvent) {
+    $event.preventDefault();
+  }
 
 
   public toggleBSheet() {

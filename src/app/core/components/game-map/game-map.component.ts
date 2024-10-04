@@ -1,4 +1,4 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import {
@@ -12,7 +12,10 @@ import { NgClass } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { GameService } from '../../services/game.service';
-import { coord2chess } from 'src/app/$map';
+import { coord2chess, GameMapCoordinate, MicroTileConfig } from 'src/app/$map';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { ActionMenuComponent } from '../action-menu/action-menu.component';
+import { GamePhase } from 'src/app/$game';
 
 
 @Component({
@@ -26,13 +29,22 @@ import { coord2chess } from 'src/app/$map';
     CdkDrag,
     NgClass,
     MatTooltipModule,
+    MatMenuModule,
+    ActionMenuComponent
   ],
   templateUrl: './game-map.component.html',
   styleUrl: './game-map.component.scss'
 })
 export class GameMapComponent {
+  @ViewChild('actionMenu')
+  public actionMenu!: ActionMenuComponent;
+
   public scenario = this.gameService.scenario;
   public maps = this.scenario.maps;
+
+  public $tiles = computed(() => {
+    return this.scenario.$state.maps()[this.scenario.$state().activeMap].tiles;
+  });
 
   public $currentMap = computed(() => {
     const activeMap = this.maps.find(
@@ -52,8 +64,17 @@ export class GameMapComponent {
 
   }
 
-  public getCellCoord(x: number, y: number): string {
+  public getCellTooltip(coord: GameMapCoordinate): string {
+    const {
+      x,
+      y,
+    } = coord;
+
     return coord2chess({ x, y }, this.$currentMap().config.size)
+  }
+
+  public getCharacterIcon(characterId: string): string {
+    return this.scenario.charactersDict[characterId].config.icon;
   }
 
   public drop($event: CdkDragDrop<any, any, any>) {
@@ -77,5 +98,39 @@ export class GameMapComponent {
 
     console.log($event.container.data, $event.item.data);
 
+  }
+
+  public triggerMenu(tile: MicroTileConfig): MatMenu | null {
+    if (this.gameService.$state().phase === GamePhase.PreGame) {
+      const tileState = this.$currentMap().$state().tiles[tile.coord.y][tile.coord.x];
+      const canBegin = this.gameService.$canBegin();
+
+      if (tile.terrain === 'spawn' && tileState.characterId) {
+        return this.actionMenu?.menu;
+      } else {
+        if (!canBegin) {
+          return this.actionMenu?.menu;
+        }
+
+        return null;
+      }
+    } else if (this.gameService.$state().phase === GamePhase.InGame) {
+      if (tile.terrain === 'spawn') {
+        return null;
+      } else {
+        return this.actionMenu?.menu;
+      };
+    } else {
+      return null;
+    }
+  }
+
+  public onLeftClick($event: MouseEvent, cell: MicroTileConfig) {
+    this.gameService.$activeTile.set(cell);
+  }
+
+  public onRightClick($event: MouseEvent, cell: MicroTileConfig) {
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 }

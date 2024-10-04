@@ -1,0 +1,20 @@
+<mat-menu #menu="matMenu">
+  @for(item of $menuItems(); track item.key) {
+  <button mat-menu-item
+          [matMenuTriggerFor]="item.subItems ? subMenu : null"
+          [disabled]="!item.key"
+          (click)="onMenuItemClick(item)">
+    {{ item.label }}
+  </button>
+
+  <mat-menu #subMenu="matMenu">
+    @for(subItem of item.subItems; track subItem.key) {
+    <button mat-menu-item
+            [disabled]="!subItem.key"
+            (click)="onMenuItemClick(item, subItem)">
+      {{ subItem.label }}
+    </button>
+    }
+  </mat-menu>
+  }
+</mat-menu>

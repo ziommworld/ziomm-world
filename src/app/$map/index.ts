@@ -3,7 +3,8 @@ export {
 
 export {
   GameMapConfig,
-  MicroTile,
+  MicroTileConfig,
+  MicroTileState,
   TerrainType,
   GameMapState,
   GameMapKey,

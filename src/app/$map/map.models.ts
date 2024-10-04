@@ -1,4 +1,5 @@
-import { MapComponentConfig, GameComponentConfig, GameComponentState } from "../$component";
+import { GameCharacter } from "../$character";
+import { MapComponentConfig, GameComponentConfig, GameComponentState, GameComponent } from "../$component";
 import { GameEventConfig, GameEventKey, GameEventState } from "../$mechanics";
 
 // ===================== CONFIG =====================
@@ -32,7 +33,7 @@ export enum TerrainType {
   Interior = 'interior', // inside a building
 }
 
-export interface MicroTile {
+export interface MicroTileConfig {
   coord: GameMapCoordinate;
   terrain: TerrainType;
 }
@@ -51,7 +52,7 @@ export interface GameMapConfig extends Omit<BaseMapConfig, 'components' | 'event
   id: string;
   key: GameMapKey;
 
-  tiles: MicroTile[][];
+  tiles: MicroTileConfig[][];
 
   components: GameComponentConfig[];
   events: GameEventConfig[];
@@ -59,11 +60,20 @@ export interface GameMapConfig extends Omit<BaseMapConfig, 'components' | 'event
 
 // ===================== STATE =====================
 
+export interface MicroTileState {
+  characterId?: string;
+  blockComponentId?: string;
+  edgeComponentIds?: string[];
+  ambientComponentIds?: string[];
+}
+
 export interface GameMapStats {
 
 }
 
 export interface GameMapState {
+  tiles: MicroTileState[][];
+
   components: Record<string, GameComponentState>;
   events: Record<string, GameEventState>;
 

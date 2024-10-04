@@ -7,6 +7,14 @@ import { actions } from "./lib";
 
 export class GameAction {
 
+  // ===================== CONFIG =====================
+
+  public get id() {
+    return this.config.id;
+  }
+
+  // ===================== STATE =====================
+
   constructor(
     public config: GameActionConfig,
     public $state: Signal<GameActionState>,

@@ -1,0 +1,52 @@
+<mat-list>
+  <mat-list-item>
+    <div class="list-item-container">
+      <button mat-stroked-button
+              [disabled]="!$canBegin()"
+              (click)="beginGame()">
+        Begin Game
+      </button>
+    </div>
+  </mat-list-item>
+
+  <mat-list-item>
+    <div class="list-item-container randomize-button">
+      <button mat-stroked-button
+              (click)="randomize()">
+        Randomize
+      </button>
+    </div>
+  </mat-list-item>
+</mat-list>
+
+<div cdkDropList
+     class="initiative-list"
+     (cdkDropListDropped)="changeInitiative($event)">
+  @for (character of charactersSequence; track character.id; let idx = $index) {
+  <div class="character-box"
+       cdkDrag>
+    <mat-chip highlighted>
+      {{ idx + 1 }}
+    </mat-chip>
+
+    <mat-icon>
+      {{ character.icon }}
+    </mat-icon>
+
+    <div class="character-name">
+      {{ character.name }}
+    </div>
+
+    <div class="character-player">
+      [ {{ character.player }} ]
+    </div>
+
+    @let characterState = $characters()[character.id];
+    <mat-icon class="state-icon"
+              [ngClass]="getPlacementIconClass(characterState.position)"
+              [fontSet]="fontSet">
+      {{ getPlacementIcon(characterState.position) }}
+    </mat-icon>
+  </div>
+  }
+</div>

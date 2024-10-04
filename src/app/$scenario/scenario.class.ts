@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { scenarios } from "./lib";
 import { GameCharacter, GameCharacterState } from "../$character";
 import { GameDraft } from "../$game";
-import { GameMap, GameMapState } from "../$map";
+import { GameMap, GameMapKey, GameMapState } from "../$map";
 import { GameScenarioConfig, GameScenarioState } from ".";
 import { GameEvent, GameEventState } from "../$mechanics";
 
@@ -15,6 +15,20 @@ export class GameScenario {
   public npcs: GameCharacter[];
   public maps: GameMap[];
   public events: GameEvent[];
+
+  public charactersDict!: Record<string, GameCharacter>;
+  public npcsDict!: Record<string, GameCharacter>;
+  public mapsDict!: Record<string, GameMap>;
+  public eventsDict!: Record<string, GameEvent>;
+
+  // ===================== CONFIG =====================
+
+  public get id() {
+    return this.config.id;
+  }
+
+  // ===================== STATE =====================
+
 
   constructor(
     public config: GameScenarioConfig,
@@ -30,6 +44,14 @@ export class GameScenario {
         return new GameCharacter(config, $state);
       });
 
+    this.charactersDict = this.characters.reduce(
+      (rec, character) => {
+        rec[character.id] = character;
+        return rec;
+      },
+      {} as Record<string, GameCharacter>
+    );
+
     this.npcs = config.npcs.map(
       (config) => {
         const $state = computed(() => {
@@ -40,15 +62,31 @@ export class GameScenario {
         return new GameCharacter(config, $state);
       });
 
+    this.npcsDict = this.npcs.reduce(
+      (rec, npc) => {
+        rec[npc.id] = npc;
+        return rec;
+      },
+      {} as Record<string, GameCharacter>
+    );
+
     this.maps = config.maps.map(
       (config) => {
         const $state = computed(() => {
           const stateMap = this.$state.maps();
-          return stateMap[config.id]
+          return stateMap[config.key]
         });
 
         return new GameMap(config, $state);
       });
+
+    this.mapsDict = this.maps.reduce(
+      (rec, map) => {
+        rec[map.id] = map;
+        return rec;
+      },
+      {} as Record<string, GameMap>
+    );
 
     this.events = config.events.map(
       (config) => {
@@ -59,6 +97,14 @@ export class GameScenario {
 
         return new GameEvent(config, $state);
       });
+
+    this.eventsDict = this.events.reduce(
+      (rec, event) => {
+        rec[event.id] = event;
+        return rec;
+      },
+      {} as Record<string, GameEvent>
+    );
   }
 
   public static initConfig(draft: GameDraft): GameScenarioConfig {
@@ -117,10 +163,10 @@ export class GameScenario {
       maps: config.maps.reduce(
         (rec, config) => {
           const state = GameMap.initState(config);
-          rec[config.id] = state;
+          rec[config.key] = state;
           return rec;
         },
-        {} as Record<string, GameMapState>
+        {} as Record<GameMapKey, GameMapState>
       ),
       events: config.events.reduce(
         (rec, config) => {

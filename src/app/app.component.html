@@ -31,8 +31,9 @@
 </header>
 
 <mat-drawer-container class="app-container"
+                      autosize
                       [hasBackdrop]="false"
-                      autosize>
+                      (contextmenu)="onRightClick($event)">
   <mat-drawer #ldrawer
               class="side-panel left-side-panel"
               mode="over"
@@ -41,6 +42,9 @@
     @if($inGame()) {
     <app-initiative-tracker>
     </app-initiative-tracker>
+    } @else if ($preGame()) {
+    <app-pregame-settings>
+    </app-pregame-settings>
     }
   </mat-drawer>
 
@@ -49,7 +53,7 @@
               mode="over"
               position="end"
               [disableClose]="true">
-    @if($inGame()) {
+    @if(!$noGame()) {
     <app-reference-sheet>
     </app-reference-sheet>
     }
@@ -58,7 +62,7 @@
 
   <div class="app-content">
     <!-- TODO refactor to router-outlet -->
-    @if(!$inGame()) {
+    @if($noGame()) {
     <app-main-menu>
     </app-main-menu>
     } @else {

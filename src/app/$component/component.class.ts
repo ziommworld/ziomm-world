@@ -10,6 +10,17 @@ export class GameComponent {
   public interactions: GameAction[];
   public events: GameEvent[];
 
+  public interactionsDict!: Record<string, GameAction>;
+  public eventsDict!: Record<string, GameEvent>;
+
+  // ===================== CONFIG =====================
+
+  public get id() {
+    return this.config.id;
+  }
+
+  // ===================== STATE =====================
+
   constructor(
     public config: GameComponentConfig,
     public $state: Signal<GameComponentState>,
@@ -24,6 +35,14 @@ export class GameComponent {
         return new GameAction(config, $state);
       });
 
+    this.interactionsDict = this.interactions.reduce(
+      (rec, interaction) => {
+        rec[interaction.id] = interaction;
+        return rec;
+      },
+      {} as Record<string, GameAction>
+    );
+
     this.events = config.events.map(
       (config) => {
         const $state = computed(() => {
@@ -33,6 +52,14 @@ export class GameComponent {
 
         return new GameEvent(config, $state);
       });
+
+    this.eventsDict = this.events.reduce(
+      (rec, event) => {
+        rec[event.id] = event;
+        return rec;
+      },
+      {} as Record<string, GameEvent>
+    );
   }
 
   static initConfig(key: GameComponentKey, layout: GameComponentLayout): GameComponentConfig {

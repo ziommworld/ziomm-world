@@ -6,7 +6,11 @@ export const quickGameDraft: GameDraft = {
   characters: [
     {
       character: 'neo',
-      player: 'P1'
+      player: 'Kris'
+    },
+    {
+      character: 'beetle',
+      player: 'Milen'
     },
   ],
   scenario: 'test',

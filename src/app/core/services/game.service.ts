@@ -1,11 +1,12 @@
-import { computed, effect, Injectable, signal } from '@angular/core';
+import { computed, effect, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 
-import { GameCharacter } from 'src/app/$character';
+import { GameCharacter, GameCharacterConfig } from 'src/app/$character';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DraftModalComponent } from '../components/draft-modal/draft-modal.component';
-import { Game, GameDraft, GameRecord } from 'src/app/$game';
+import { Game, GameDraft, GamePhase, GameRecord } from 'src/app/$game';
 import { patchState } from '@ngrx/signals';
-import { doDmg } from 'src/app/$mechanics/mechanics.utils';
+import { MicroTileConfig } from 'src/app/$map';
+import { changeInitiative, displaceCharacter, doDmg, placeCharacter } from 'src/app/$mechanics';
 
 
 @Injectable({
@@ -26,9 +27,27 @@ export class GameService {
     return game;
   }
 
-  public $inGame = computed(() => {
-    return !!this.$game();
+  public $noGame = computed(() => {
+    return !this.$game();
   });
+
+  public $inGame = computed(() => {
+    return this.$game()?.$state().phase === GamePhase.InGame;
+  });
+
+  public $preGame = computed(() => {
+    return this.$game()?.$state().phase === GamePhase.PreGame;
+  });
+
+  public $endGame = computed(() => {
+    return this.$game()?.$state().phase === GamePhase.PreGame;
+  });
+
+  public $canBegin = computed(() => this.characters.every(
+    (character) => !!this.$characters()[character.id].position
+  ));
+
+  public $activeTile: WritableSignal<MicroTileConfig | null> = signal(null);
 
   public get config() {
     return this.game.config;
@@ -53,6 +72,10 @@ export class GameService {
   public get maps() {
     return this.game.scenario.maps;
   }
+
+  public $characters = computed(() => {
+    return this.$state().scenario.characters;
+  });
 
   constructor(
     private dialog: MatDialog,
@@ -80,7 +103,9 @@ export class GameService {
     });
   }
 
-  public initGame() {
+  // ===================== GAME =====================
+
+  public draftGame() {
     const config: MatDialogConfig = {
       id: 'draft-modal',
       autoFocus: false,
@@ -102,10 +127,6 @@ export class GameService {
     );
   }
 
-  public doAction() {
-    patchState(this.game.$state, doDmg());
-  }
-
   public startGame(draft: GameDraft) {
     this.$game.set(new Game(draft));
   }
@@ -114,7 +135,29 @@ export class GameService {
     this.$game.set(new Game(undefined, record));
   }
 
+  public beginGame() {
+    this.game.beginGame();
+  }
+
   public endGame() {
     this.$game.set(null);
+  }
+
+  // ===================== CHARACTERS =====================
+
+  public changeInitiative(chars: GameCharacter[]) {
+    patchState(this.game.$state, changeInitiative(chars.map((char) => char.id)));
+  }
+
+  public placeCharacter(charId: string, tile: MicroTileConfig) {
+    patchState(this.game.$state, placeCharacter(charId, tile.coord));
+  }
+
+  public displaceCharacter(tile: MicroTileConfig) {
+    patchState(this.game.$state, displaceCharacter(tile.coord));
+  }
+
+  public doAction() {
+    patchState(this.game.$state, doDmg());
   }
 }

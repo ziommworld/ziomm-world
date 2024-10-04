@@ -11,6 +11,10 @@ export class GameCharacter {
   public abilities!: GameAction[];
   public interactions!: GameAction[];
 
+  public actionsDict!: Record<string, GameAction>;
+  public abilitiesDict!: Record<string, GameAction>;
+  public interactionsDict!: Record<string, GameAction>;
+
   // ===================== CONFIG =====================
 
   public get id() {
@@ -73,6 +77,14 @@ export class GameCharacter {
         return new GameAction(config, $state);
       });
 
+    this.actionsDict = this.actions.reduce(
+      (rec, action) => {
+        rec[action.id] = action;
+        return rec;
+      },
+      {} as Record<string, GameAction>
+    );
+
     this.abilities = config.abilities.map(
       (config) => {
         const $state = computed(() => {
@@ -83,6 +95,14 @@ export class GameCharacter {
         return new GameAction(config, $state);
       });
 
+    this.abilitiesDict = this.abilities.reduce(
+      (rec, ability) => {
+        rec[ability.id] = ability
+        return rec;
+      },
+      {} as Record<string, GameAction>
+    );
+
     this.interactions = config.interactions.map(
       (config) => {
         const $state = computed(() => {
@@ -92,6 +112,14 @@ export class GameCharacter {
 
         return new GameAction(config, $state);
       });
+
+    this.interactionsDict = this.interactions.reduce(
+      (rec, interaction) => {
+        rec[interaction.id] = interaction;
+        return rec;
+      },
+      {} as Record<string, GameAction>
+    );
   }
 
   public static initConfig(
@@ -126,7 +154,6 @@ export class GameCharacter {
       initiative: -1,
       zLevel: 0,
       // TODO set position according to scenario and initial map
-      position: { x: 0, y: 0 },
       player: config.player,
 
       currentAP: roundAP,

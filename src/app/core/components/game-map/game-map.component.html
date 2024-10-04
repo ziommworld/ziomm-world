@@ -5,25 +5,34 @@
   <div class="map-row">
     @for (cell of row; track $index; let x = $index)
     {
+    @let cellState = $tiles()[y][x];
     <div class="map-cell"
-         [matTooltip]="getCellCoord(x, y)"
+         [matMenuTriggerFor]="triggerMenu(cell)"
+         [matTooltip]="getCellTooltip(cell.coord)"
          matTooltipShowDelay="100"
          cdkDropList
          [cdkDropListData]="[y, x]"
-         (cdkDropListDropped)="drop($event)">
+         (cdkDropListDropped)="drop($event)"
+         (click)="onLeftClick($event, cell)"
+         (contextmenu)="onRightClick($event, cell)">
       <!-- <div class="cell-content "
            [ngClass]="{'cell-component': cell.component}">
-      </div>
+      </div> -->
 
+      @if(cellState.characterId) {
       <div class="cell-content cell-character"
            cdkDrag
-           [cdkDragData]="[cell.character, row.id, cell.id]">
+           [cdkDragData]="[]">
         <mat-icon color="accent">
-          {{cell.character}}
+          {{ getCharacterIcon(cellState.characterId) }}
         </mat-icon>
-      </div> -->
+      </div>
+      }
     </div>
     }
   </div>
   }
+
+  <app-action-menu #actionMenu>
+  </app-action-menu>
 </div>

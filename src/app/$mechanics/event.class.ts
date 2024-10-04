@@ -7,6 +7,14 @@ import { events } from "./lib";
 
 export class GameEvent {
 
+  // ===================== CONFIG =====================
+
+  public get id() {
+    return this.config.id;
+  }
+
+  // ===================== STATE =====================
+
   constructor(
     public config: GameEventConfig,
     public $state: Signal<GameEventState>,

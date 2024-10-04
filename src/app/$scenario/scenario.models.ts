@@ -55,7 +55,7 @@ export interface GameScenarioState {
 
   characters: Record<string, GameCharacterState>;
   npcs: Record<string, GameCharacterState>;
-  maps: Record<string, GameMapState>;
+  maps: Record<GameMapKey, GameMapState>;
   events: Record<string, GameEventState>;
 
   stats: GameScenarioStats;

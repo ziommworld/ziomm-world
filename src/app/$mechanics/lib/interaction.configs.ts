@@ -55,3 +55,16 @@ export const lootChest: BaseActionConfig = {
 /**
  * character interactions
  */
+
+/**
+ * special interactions
+ */
+export const placeCharacter: BaseActionConfig = {
+  name: 'Place Character',
+  baseAP: 0,
+};
+
+export const displaceCharacter: BaseActionConfig = {
+  name: 'Displace Character',
+  baseAP: 0,
+};
