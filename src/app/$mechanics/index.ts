@@ -24,9 +24,9 @@ export {
 } from './mechanics.models';
 
 export {
-  changeInitiative,
-  placeCharacter,
-  displaceCharacter,
+  $changeInitiative,
+  $placeCharacter,
+  $displaceCharacter,
 } from './mechanics.utils';
 
 export {

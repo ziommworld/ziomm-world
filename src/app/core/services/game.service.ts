@@ -6,7 +6,7 @@ import { DraftModalComponent } from '../components/draft-modal/draft-modal.compo
 import { Game, GameDraft, GamePhase, GameRecord } from 'src/app/$game';
 import { patchState } from '@ngrx/signals';
 import { MicroTileConfig } from 'src/app/$map';
-import { changeInitiative, displaceCharacter, placeCharacter } from 'src/app/$mechanics';
+import { $changeInitiative, $displaceCharacter, $placeCharacter } from 'src/app/$mechanics';
 
 
 @Injectable({
@@ -168,15 +168,15 @@ export class GameService {
   // ===================== CHARACTERS =====================
 
   public changeInitiative(chars: GameCharacter[]) {
-    patchState(this.game.$state, changeInitiative(chars.map((char) => char.id)));
+    patchState(this.game.$state, $changeInitiative(chars.map((char) => char.id)));
   }
 
   public placeCharacter(charId: string, tile: MicroTileConfig) {
-    patchState(this.game.$state, placeCharacter(charId, tile.coord));
+    patchState(this.game.$state, $placeCharacter(charId, tile.coord));
   }
 
   public displaceCharacter(tile: MicroTileConfig) {
-    patchState(this.game.$state, displaceCharacter(tile.coord));
+    patchState(this.game.$state, $displaceCharacter(tile.coord));
   }
 
   public displaceAllCharacters() {
@@ -185,7 +185,7 @@ export class GameService {
     this.characters.forEach((char) => {
       const charPosition = characters$[char.id].position;
       if (charPosition) {
-        patchState(this.game.$state, displaceCharacter(charPosition));
+        patchState(this.game.$state, $displaceCharacter(charPosition));
       }
     });
   }

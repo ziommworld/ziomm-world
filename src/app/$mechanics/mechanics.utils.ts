@@ -2,7 +2,7 @@ import { GameState } from "../$game";
 import { GameMapCoordinate } from "../$map";
 
 
-export const changeInitiative = (charIds: string[]) => {
+export const $changeInitiative = (charIds: string[]) => {
   return (state: GameState) => {
     const updatedCharacters = { ...state.scenario.characters };
 
@@ -22,7 +22,7 @@ export const changeInitiative = (charIds: string[]) => {
   };
 }
 
-export const placeCharacter = (charId: string, position: GameMapCoordinate) => {
+export const $placeCharacter = (charId: string, position: GameMapCoordinate) => {
   return (state: GameState) => {
     const { scenario } = state;
     const { activeMap, maps, characters } = scenario;
@@ -63,7 +63,7 @@ export const placeCharacter = (charId: string, position: GameMapCoordinate) => {
   };
 };
 
-export const displaceCharacter = (position: GameMapCoordinate) => {
+export const $displaceCharacter = (position: GameMapCoordinate) => {
   return (state: GameState) => {
     const { activeMap, maps, characters } = state.scenario;
     const { tiles } = maps[activeMap];

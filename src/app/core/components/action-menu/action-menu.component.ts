@@ -1,9 +1,10 @@
 import { Component, computed, Signal, ViewChild } from '@angular/core';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
-import { GameService } from '../../services/game.service';
+
+import { placeCharacter, displaceCharacter } from '@lib/mechanics/interaction.configs';
 import { GamePhase } from 'src/app/$game';
 import { ActionMenuItem, ActionMenuSubItem } from 'src/app/$mechanics';
-import { placeCharacter } from '@lib/mechanics/interaction.configs';
+import { GameService } from '../../services/game.service';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class ActionMenuComponent {
       if (activeTile$.characterId) {
         actions.push({
           key: 'displaceCharacter',
-          label: 'Displace Character',
+          label: displaceCharacter.name,
           tile: activeTile,
         });
       } else if (!canBegin$) {
