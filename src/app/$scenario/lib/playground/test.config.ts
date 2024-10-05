@@ -11,8 +11,8 @@ export const test: BaseScenarioConfig = {
   defaultTurns: 10,
 
   npcs: [
-    'beetle',
-    'beetle',
+    'ratdogFighter',
+    'ratdogRanger',
   ],
   maps: [
     'small',

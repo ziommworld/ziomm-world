@@ -16,6 +16,7 @@ import { coord2chess, GameMapCoordinate, MicroTileConfig } from 'src/app/$map';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { ActionMenuComponent } from '../action-menu/action-menu.component';
 import { GamePhase } from 'src/app/$game';
+import { GameCharacterTeam } from 'src/app/$character';
 
 
 @Component({
@@ -60,6 +61,12 @@ export class GameMapComponent {
 
   public getCharacterIcon(characterId: string): string {
     return this.scenario.charactersDict[characterId].config.icon;
+  }
+
+  getCharacterIconClass(characterId: string) {
+    const team = this.scenario.charactersDict[characterId].config.team;
+
+    return team;
   }
 
   public getCellTooltip(coord: GameMapCoordinate): string {

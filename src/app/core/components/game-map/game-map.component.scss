@@ -77,9 +77,29 @@
 
         &.cell-character {
           position: absolute;
-          .mat-icon {
+          @include mat.badge-color($theme, $color-variant: secondary);
+
+          .character-icon {
             font-size: 30px;
-            @include mat.icon-color($theme, $color-variant: primary);
+            z-index: 2;
+
+            &.team1 {
+              @include mat.icon-color($theme, $color-variant: tertiary);
+            }
+
+            &.team2 {
+              @include mat.icon-color($theme, $color-variant: primary);
+            }
+
+            &.enemy {
+              @include mat.icon-color($theme, $color-variant: error);
+              @include mat.badge-color($theme, $color-variant: error);
+            }
+
+            &.npc {
+              @include mat.icon-color($theme, $color-variant: secondary);
+            }
+
           }
         }
       }

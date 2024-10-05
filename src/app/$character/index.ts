@@ -13,6 +13,8 @@ export {
   GameCharacterStats,
   GameCharacterDraft,
   BaseCharacterConfig,
+  GameCharacterAlignment,
+  GameCharacterTeam,
 } from './character.models';
 
 export {

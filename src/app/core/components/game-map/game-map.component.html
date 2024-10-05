@@ -23,8 +23,15 @@
       @if(tile$.characterId) {
       <div class="cell-content cell-character"
            cdkDrag
-           [cdkDragData]="[]">
-        <mat-icon color="accent">
+           [cdkDragData]="[]"
+           matBadge="B"
+           matBadgePosition="above">
+        <mat-icon class="character-icon"
+                  [ngClass]="getCharacterIconClass(tile$.characterId)"
+                  color="accent"
+                  matBadge="1"
+                  matBadgePosition="below"
+                  [matBadgeSize]="'large'">
           {{ getCharacterIcon(tile$.characterId) }}
         </mat-icon>
       </div>

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { GameCharacterConfig, GameCharacterKey, GameCharacterState, roundAP } from '.';
+import { GameCharacterConfig, GameCharacterKey, GameCharacterState, GameCharacterTeam, roundAP } from '.';
 import { computed, Signal } from '@angular/core';
 import { characters } from './lib';
 import { GameAction, GameActionState } from '../$mechanics';
@@ -134,6 +134,7 @@ export class GameCharacter {
       id: uuidv4(),
       key,
       player,
+      team: player ? GameCharacterTeam.Team1 : GameCharacterTeam.Enemy,
 
       abilities: config.abilities.map(
         key => GameAction.initConfig(key)

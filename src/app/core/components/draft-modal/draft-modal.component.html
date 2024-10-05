@@ -84,8 +84,7 @@
           <ng-container formArrayName="characters">
             @for(group of charactersFormArray.controls; track $index) {
             <div [formGroup]="group">
-              <mat-form-field class="select-field"
-                              appearance="outline">
+              <mat-form-field appearance="outline">
                 <mat-label>
                   Character
                 </mat-label>

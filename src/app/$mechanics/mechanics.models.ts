@@ -45,10 +45,8 @@ export interface BaseActionConfig {
   damage?: number;
   damageType?: DamageType;
   accuracy?: number;
-  // armorPenetration?: number;
 
   range?: number;
-  // aoe?: number;
   targets?: number;
 
   evasion?: number;
@@ -83,7 +81,6 @@ export interface BaseEventConfig {
 
   damage?: number;
   damageType?: DamageType;
-  armorPenetration?: number;
 
   range?: number;
   aoe?: number;
@@ -140,7 +137,123 @@ export type GameActionKey =
   'wait' |
   'pass' |
 
-  // abilities
+  // attack abilities
+  'deadlyBite' |
+  'advancedDeadlyBite' |
+  'crushingBlow' |
+  'advancedCrushingBlow' |
+  'tendonRip' |
+  'advancedTendonRip' |
+  'groundSmash' |
+  'advancedGroundSmash' |
+  'dagger' |
+  'advancedDagger' |
+  'warhammer' |
+  'advancedWarhammer' |
+  'toxicBlow' |
+  'advancedToxicBlow' |
+  'gatlingGun' |
+  'advancedGatlingGun' |
+  'electroBite' |
+  'advancedElectroBite' |
+  'photonRifle' |
+  'advancedPhotonRifle' |
+  'photonShotgun' |
+  'advancedPhotonShotgun' |
+  'photonBlaster' |
+  'advancedPhotonBlaster' |
+  'nuclearPistol' |
+  'advancedNuclearPistol' |
+  'nuclearRifle' |
+  'advancedNuclearRifle' |
+  'toxicFumes' |
+  'advancedToxicFumes' |
+  'lightSabre' |
+  'toxicSpit' |
+  'advancedToxicSpit' |
+  'toxicBite' |
+  'advancedToxicBite' |
+  'bite' |
+  'advancedBite' |
+  'toxicSpray' |
+  'advancedToxicSpray' |
+  'superDeadlyBite' |
+  'advancedSuperDeadlyBite' |
+  'battleChain' |
+  'shockBaton' |
+  'longBow' |
+  'axe' |
+
+  // special abilities
+  'swipe' |
+  'advancedSwipe' |
+  'rockToss' |
+  'advancedRockToss' |
+  'chomp' |
+  'advancedChomp' |
+  'entangle' |
+  'advancedEntangle' |
+  'sword' |
+  'advancedSword' |
+  'shieldSlam' |
+  'advancedShieldSlam' |
+  'neuroDart' |
+  'advancedNeuroDart' |
+  'electricNetgun' |
+  'advancedElectricNetgun' |
+  'rapidBite' |
+  'advancedRapidBite' |
+  'photonGranade' |
+  'advancedPhotonGranade' |
+  'healingNanobots' |
+  'advancedHealingNanobots' |
+  'photonCannon' |
+  'advancedPhotonCannon' |
+  'blastout' |
+  'advancedBlastout' |
+  'neuralInjection' |
+  'advancedNeuralInjection' |
+  'lifeDrain' |
+  'advancedLifeDrain' |
+  'propelledLunge' |
+  'advancedPropelledLunge' |
+  'toxicBomb' |
+  'advancedToxicBomb' |
+  'bleedingClaw' |
+  'advancedBleedingClaw' |
+  'dominate' |
+  'advancedDominate' |
+  'jumpOut' |
+  'advancedJumpOut' |
+  'superBleedingClaw' |
+  'advancedSuperBleedingClaw' |
+  'quickCharge' |
+  'powerPunch' |
+  'stunGun' |
+
+  // defense abilities
+  'block' |
+  'shift' |
+  'evade' |
+  'deflect' |
+  'counter' |
+  'rush' |
+  'dodge' |
+  'elude' |
+  'avoid' |
+  'vanish' |
+  'assault' |
+  'sidestep' |
+  'charge' |
+  'hide' |
+  'basicHide' |
+  'basicAvoid' |
+  'advancedCharge' |
+  'shieldWall' |
+  'basicAssault' |
+  'basicVanish' |
+  'basicDodge' |
+  'advancedBlock' |
 
   // component interactions
   'climb' |
