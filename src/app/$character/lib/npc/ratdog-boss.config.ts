@@ -7,6 +7,7 @@ import { BaseCharacterConfig, GameCharacterAlignment, GameCharacterIcon } from "
 const ratdogBossAlt: BaseCharacterConfig = {
   name: 'Ratdog boss B',
   icon: GameCharacterIcon.Ratdog,
+  iconBadge: 'B',
 
   maxHP: 8,
   baseMS: 3,

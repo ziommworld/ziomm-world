@@ -5,11 +5,11 @@ export const quickGameDraft: GameDraft = {
   players: ['P1', 'P2'],
   characters: [
     {
-      character: 'marauderBoss',
+      character: 'ratdogBoss',
       player: 'Kris'
     },
     {
-      character: 'ratdogBoss',
+      character: 'marauderBoss',
       player: 'Milen'
     },
   ],

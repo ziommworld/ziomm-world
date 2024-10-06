@@ -4,9 +4,13 @@ import { GameCharacterConfig, GameCharacterKey, GameCharacterState, GameCharacte
 import { computed, Signal } from '@angular/core';
 import { characters } from './lib';
 import { GameAction, GameActionState } from '../$mechanics';
+import { Game } from '../$game';
 
 
 export class GameCharacter {
+  public static instanceMap = new Map<GameCharacterKey, number>();
+  private instanceIdx!: number;
+
   public actions!: GameAction[];
   public abilities!: GameAction[];
   public interactions!: GameAction[];
@@ -19,6 +23,14 @@ export class GameCharacter {
 
   public get id() {
     return this.config.id;
+  }
+
+  public get idx() {
+    return this.instanceIdx;
+  }
+
+  public get showIdx() {
+    return GameCharacter.instanceMap.get(this.config.key)! > 1;
   }
 
   public get name() {
@@ -67,6 +79,8 @@ export class GameCharacter {
     public config: GameCharacterConfig,
     public $state: Signal<GameCharacterState>,
   ) {
+    this.initIdx();
+
     this.actions = config.actions.map(
       (config) => {
         const $state = computed(() => {
@@ -120,6 +134,21 @@ export class GameCharacter {
       },
       {} as Record<string, GameAction>
     );
+  }
+
+  public initIdx() {
+    let count;
+
+    if (GameCharacter.instanceMap.has(this.config.key)) {
+      count = GameCharacter.instanceMap.get(this.config.key)!;
+    } else {
+      count = 0;
+    }
+
+    const idx = count + 1;
+    console.warn('initIdx', this.config.key, idx);
+    GameCharacter.instanceMap.set(this.config.key, idx);
+    this.instanceIdx = idx;
   }
 
   public static initConfig(

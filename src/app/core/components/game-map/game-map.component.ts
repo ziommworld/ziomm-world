@@ -16,7 +16,7 @@ import { coord2chess, GameMapCoordinate, MicroTileConfig } from 'src/app/$map';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { ActionMenuComponent } from '../action-menu/action-menu.component';
 import { GamePhase } from 'src/app/$game';
-import { GameCharacterTeam } from 'src/app/$character';
+import { GameCharacter, GameCharacterTeam } from 'src/app/$character';
 
 
 @Component({
@@ -59,14 +59,27 @@ export class GameMapComponent {
 
   }
 
-  public getCharacterIcon(characterId: string): string {
-    return this.scenario.charactersDict[characterId].config.icon;
+  public getCharacterIcon(character: GameCharacter): string {
+    return character.config.icon;
   }
 
-  getCharacterIconClass(characterId: string) {
-    const team = this.scenario.charactersDict[characterId].config.team;
+  public getCharacterIconClass(character: GameCharacter) {
+    const team = character.config.team;
 
     return team;
+  }
+
+  public getCharacterCellBadge(character: GameCharacter) {
+    return character.config.iconBadge;
+  }
+
+  public getCharacterCellBadgePosition(character: GameCharacter) {
+    // icon badge is inheriting position from cell badge if it does not exist
+    return character.config.iconBadge ? 'above' : 'below';
+  }
+
+  public getCharacterIconBadge(character: GameCharacter) {
+    return character.showIdx ? character.idx : null;
   }
 
   public getCellTooltip(coord: GameMapCoordinate): string {

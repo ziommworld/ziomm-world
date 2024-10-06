@@ -77,6 +77,7 @@ export enum GameCharacterTeam {
 export interface BaseCharacterConfig {
   name: string;
   icon: GameCharacterIcon;
+  iconBadge?: string;
 
   maxHP: number;
   baseMS: number;
@@ -100,7 +101,7 @@ export interface BaseCharacterConfig {
 
 export interface GameCharacterConfig extends Omit<BaseCharacterConfig, 'abilities' | 'actions' | 'interactions' | 'alt'> {
   id: string;
-  key: string;
+  key: GameCharacterKey;
 
   player?: string; // npc if undefined
   team: GameCharacterTeam;

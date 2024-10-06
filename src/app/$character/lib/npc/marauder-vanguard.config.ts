@@ -7,6 +7,7 @@ import { BaseCharacterConfig, GameCharacterAlignment, GameCharacterIcon } from "
 export const marauderVanguard: BaseCharacterConfig = {
   name: 'Marauder vanguard',
   icon: GameCharacterIcon.Marauder,
+  iconBadge: 'V',
 
   maxHP: 6,
   baseMS: 2,

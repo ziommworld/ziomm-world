@@ -21,18 +21,21 @@
       </div> -->
 
       @if(tile$.characterId) {
+      @let character = this.scenario.charactersDict[tile$.characterId];
+
       <div class="cell-content cell-character"
            cdkDrag
            [cdkDragData]="[]"
-           matBadge="B"
-           matBadgePosition="above">
+           aria-hidden="false"
+           [matBadge]="getCharacterCellBadge(character)"
+           [matBadgePosition]="getCharacterCellBadgePosition(character)">
         <mat-icon class="character-icon"
-                  [ngClass]="getCharacterIconClass(tile$.characterId)"
+                  [ngClass]="getCharacterIconClass(character)"
                   color="accent"
-                  matBadge="1"
-                  matBadgePosition="below"
-                  [matBadgeSize]="'large'">
-          {{ getCharacterIcon(tile$.characterId) }}
+                  aria-hidden="false"
+                  [matBadge]="getCharacterIconBadge(character)"
+                  matBadgePosition="below">
+          {{ getCharacterIcon(character) }}
         </mat-icon>
       </div>
       }
