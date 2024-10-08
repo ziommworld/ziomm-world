@@ -88,19 +88,26 @@ export class GameMapComponent {
     return coord2chess({ x, y }, this.$activeMap().config.size)
   }
 
-  public drop($event: CdkDragDrop<any, any, any>) {
-    console.log($event.container.data, $event.item.data);
-    const [y, x] = $event.container.data;
-    const [char, yc, xc] = $event.item.data;
+  public getCoordinate(y: number, x: number): GameMapCoordinate {
+    return { y, x };
+  }
 
-    // if (y === yc && x === xc ||
-    //   this.map.rows[y].cells[x].component
-    // ) {
-    //   return;
-    // }
+  public onCharacterMove($event: CdkDragDrop<GameMapCoordinate, any, GameCharacter>) {
+    const destination = $event.container.data;
+    const char = $event.item.data;
 
-    // this.map.rows[y].cells[x].character = char;
-    // this.map.rows[yc].cells[xc].character = undefined;
+    this.gameService.moveCharacter(char.id, destination);
+  }
+
+  public canMoveCharacter(character: GameCharacter): boolean {
+    const initiative = this.gameService.$state().scenario.currentTurn;
+    const activeCharacter = this.gameService.scenario.characters.find(char => char.$state().initiative === initiative);
+
+    if (!activeCharacter) {
+      throw new Error('No active character');
+    }
+
+    return activeCharacter.id === character.id;
   }
 
   public dragEntered($event: CdkDragEnter<any>) {

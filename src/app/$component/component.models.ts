@@ -41,7 +41,7 @@ export interface BaseComponentConfig {
 
 export interface GameComponentConfig extends Omit<BaseComponentConfig, 'interactions' | 'events'> {
   id: string;
-  key: string;
+  key: GameComponentKey;
   layout: GameComponentLayout;
 
   durability?: number;

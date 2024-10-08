@@ -12,8 +12,8 @@
          [matTooltip]="getCellTooltip(cell.coord)"
          matTooltipShowDelay="100"
          cdkDropList
-         [cdkDropListData]="[y, x]"
-         (cdkDropListDropped)="drop($event)"
+         [cdkDropListData]="getCoordinate(y, x)"
+         (cdkDropListDropped)="onCharacterMove($event)"
          (click)="onLeftClick($event, cell)"
          (contextmenu)="onRightClick($event, cell)">
       <!-- <div class="cell-content "
@@ -25,7 +25,8 @@
 
       <div class="cell-content cell-character"
            cdkDrag
-           [cdkDragData]="[]"
+           [cdkDragDisabled]="canMoveCharacter(character)"
+           [cdkDragData]="character"
            aria-hidden="false"
            [matBadge]="getCharacterCellBadge(character)"
            [matBadgePosition]="getCharacterCellBadgePosition(character)">

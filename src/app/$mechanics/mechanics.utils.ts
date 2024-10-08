@@ -1,5 +1,6 @@
 import { GameState } from "../$game";
 import { GameMapCoordinate } from "../$map";
+import { cloneDeep } from 'lodash';
 
 
 export const $changeInitiative = (charIds: string[]) => {
@@ -101,3 +102,35 @@ export const $displaceCharacter = (position: GameMapCoordinate) => {
     };
   };
 };
+
+export const $moveCharacter = (charId: string, destination: GameMapCoordinate) => {
+  return (state: GameState) => {
+    const { activeMap, maps, characters } = cloneDeep(state.scenario);
+    const { tiles } = maps[activeMap];
+    const character = characters[charId];
+    const origin = character.position!;
+
+    tiles[origin.y][origin.x].characterId = undefined;
+    tiles[destination.y][destination.x].characterId = charId;
+
+    return {
+      scenario: {
+        ...state.scenario,
+        characters: {
+          ...characters,
+          [charId]: {
+            ...character,
+            position: destination
+          }
+        },
+        maps: {
+          ...maps,
+          [activeMap]: {
+            ...maps[activeMap],
+            tiles
+          }
+        }
+      }
+    };
+  }
+}

@@ -146,7 +146,6 @@ export class GameCharacter {
     }
 
     const idx = count + 1;
-    console.warn('initIdx', this.config.key, idx);
     GameCharacter.instanceMap.set(this.config.key, idx);
     this.instanceIdx = idx;
   }

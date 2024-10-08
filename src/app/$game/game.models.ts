@@ -27,9 +27,9 @@ export interface GameConfig {
 // ===================== STATE =====================
 
 export enum GamePhase {
-  PreGame,
-  InGame,
-  PostGame,
+  PreGame = 'pre-game',
+  InGame = 'in-game',
+  PostGame = 'post-game',
 }
 
 export interface GameStats {

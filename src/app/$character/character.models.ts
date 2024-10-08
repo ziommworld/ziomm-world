@@ -178,5 +178,4 @@ export type GameCharacterKey =
   'ratdogVanguard'
   ;
 
-// key -> character config
 export type GameCharacterLib = Record<GameCharacterKey, BaseCharacterConfig>;

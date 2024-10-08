@@ -66,7 +66,7 @@ export interface BaseActionConfig {
 
 export interface GameActionConfig extends BaseActionConfig {
   id: string;
-  key: string;
+  key: GameActionKey;
 }
 
 export interface BaseEventConfig {
@@ -100,7 +100,7 @@ export interface BaseEventConfig {
 
 export interface GameEventConfig extends BaseEventConfig {
   id: string;
-  key: string;
+  key: GameEventKey;
 }
 
 // ===================== STATE =====================

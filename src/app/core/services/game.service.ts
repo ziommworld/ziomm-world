@@ -5,8 +5,9 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DraftModalComponent } from '../components/draft-modal/draft-modal.component';
 import { Game, GameDraft, GamePhase, GameRecord } from 'src/app/$game';
 import { patchState } from '@ngrx/signals';
-import { MicroTileConfig } from 'src/app/$map';
+import { GameMapCoordinate, MicroTileConfig } from 'src/app/$map';
 import { $changeInitiative, $displaceCharacter, $placeCharacter } from 'src/app/$mechanics';
+import { $moveCharacter } from 'src/app/$mechanics/mechanics.utils';
 
 
 @Injectable({
@@ -68,8 +69,8 @@ export class GameService {
     return this.$game()?.$state().phase === GamePhase.InGame;
   });
 
-  public $endGame = computed(() => {
-    return this.$game()?.$state().phase === GamePhase.PreGame;
+  public $postGame = computed(() => {
+    return this.$game()?.$state().phase === GamePhase.PostGame;
   });
 
   public get $state() {
@@ -188,5 +189,9 @@ export class GameService {
         patchState(this.game.$state, $displaceCharacter(charPosition));
       }
     });
+  }
+
+  public moveCharacter(charId: string, coord: GameMapCoordinate) {
+    patchState(this.game.$state, $moveCharacter(charId, coord));
   }
 }
