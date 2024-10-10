@@ -5,6 +5,10 @@
           [disabled]="!item.key"
           (click)="onMenuItemClick(item)">
     {{ item.label }}
+
+    <mat-icon>
+      {{ item.icon }}
+    </mat-icon>
   </button>
 
   <mat-menu #subMenu="matMenu">

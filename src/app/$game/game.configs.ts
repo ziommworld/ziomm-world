@@ -1,4 +1,5 @@
 import { GameDraft } from ".";
+import { GameCharacterTeam } from "../$character";
 
 
 export const quickGameDraft: GameDraft = {
@@ -6,11 +7,13 @@ export const quickGameDraft: GameDraft = {
   characters: [
     {
       character: 'ratdogBoss',
-      player: 'Kris'
+      player: 'Kris',
+      team: GameCharacterTeam.Team1
     },
     {
       character: 'marauderBoss',
-      player: 'Milen'
+      player: 'Milen',
+      team: GameCharacterTeam.Enemy
     },
   ],
   scenario: 'test',

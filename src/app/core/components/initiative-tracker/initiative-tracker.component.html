@@ -2,10 +2,10 @@
   Round {{ $currentRound() }}
 </h1>
 
-<mat-stepper orientation="vertical"
-             [linear]="true"
-             #stepper
-             [selectedIndex]="$currentTurn() - 1">
+<mat-stepper [linear]="false"
+             orientation="vertical"
+             [selectedIndex]="$currentTurn() - 1"
+             #stepper>
   <ng-template matStepperIcon="edit">
     <mat-icon>
       how_to_reg
@@ -13,7 +13,7 @@
   </ng-template>
 
   @for (char of $activeCharacters(); track char.id) {
-  <mat-step>
+  <mat-step [completed]="false">
     <ng-template matStepLabel>
       <div class="character-label">
         <div [matTooltip]="getPlayedBy(char)">

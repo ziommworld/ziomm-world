@@ -310,7 +310,9 @@ export class GameCharacter {
   }
 
   public getAction(key: GameActionKey) {
-    const action = this.actions.find(action => action.config.key === key);
+    const action = this.actions.find(action => action.config.key === key) ??
+      this.abilities.find(action => action.config.key === key) ??
+      this.interactions.find(action => action.config.key === key);
 
     if (!action) {
       throw new Error(`Action ${key} not found`);

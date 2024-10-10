@@ -1,6 +1,6 @@
 import { computed, effect, Injectable, signal, WritableSignal } from '@angular/core';
 
-import { GameCharacter } from 'src/app/$character';
+import { GameCharacter, GameCharacterConfig } from 'src/app/$character';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DraftModalComponent } from '../components/draft-modal/draft-modal.component';
 import { Game, GameDraft, GamePhase, GameRecord } from 'src/app/$game';
@@ -282,9 +282,15 @@ export class GameService {
     );
   }
 
-  public characterAction(characterId: string, config: GameActionConfig) {
+  public characterAction(
+    actionId: string,
+    source: GameCharacter,
+    target?: GameCharacter
+  ) {
+    const action = source.actionsDict[actionId] ?? source.abilitiesDict[actionId] ?? source.interactionsDict[actionId];
+
     patchState(this.$state,
-      $characterAction(characterId, config),
+      $characterAction(action.config, source.config, target?.config),
       $setUpdatedOn(),
     );
   }

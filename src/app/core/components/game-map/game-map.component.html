@@ -8,7 +8,7 @@
     {
     @let tile$ = $tiles()[y][x];
     <div class="map-cell"
-         [matMenuTriggerFor]="triggerMenu(cell)"
+         [matMenuTriggerFor]="triggerMenu(cell, tile$)"
          [matTooltip]="getCellTooltip(cell, tile$)"
          matTooltipShowDelay="100"
          matTooltipClass="cell-tooltip"

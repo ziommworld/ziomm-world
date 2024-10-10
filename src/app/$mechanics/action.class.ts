@@ -126,4 +126,15 @@ export class GameAction {
       }
     }
   }
+
+  public isInRange(distance: number) {
+    const range = this.config.range;
+
+    if (range == null) {
+      return true;
+      // throw new Error(`Action ${this.key} has no range`);
+    }
+
+    return range >= distance;
+  }
 }

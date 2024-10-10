@@ -55,6 +55,10 @@ export class CharacterCardComponent {
     });
   }
 
+  public canUseAbility(ability: GameAction) {
+    return this.character.hasAP$(ability.config.baseAP);
+  }
+
   public getAbilityClass(ability: GameAction) {
     if (ability.type === GameActionType.Attack) {
       return {

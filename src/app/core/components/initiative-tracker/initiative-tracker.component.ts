@@ -1,4 +1,4 @@
-import { Component, effect, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -29,26 +29,16 @@ import { GameCharacter } from 'src/app/$character';
 export class InitiativeTrackerComponent {
   public readonly fontSet = 'material-icons-outlined';
 
+  @ViewChild('stepper')
+  private stepper!: MatStepper;
+
   public $currentTurn = this.gameService.$currentTurn;
   public $currentRound = this.gameService.$currentRound;
   public $activeCharacters = this.gameService.$activeCharacters;
 
-  @ViewChild('stepper')
-  private stepper!: MatStepper;
-
   constructor(
     private gameService: GameService,
   ) {
-
-    this.initRoundResetEffects();
-  }
-
-  private initRoundResetEffects() {
-    effect(() => {
-      const round = this.$currentRound();
-
-      this.resetStepper();
-    });
   }
 
   public getPlayedBy(char: GameCharacter) {

@@ -201,6 +201,7 @@
     @let isOpen$ = $isOpen()[idx];
     <button [ngClass]="getAbilityClass(ability)"
             [matBadge]="ability.config.baseAP"
+            [disabled]="!canUseAbility(ability)"
             mat-stroked-button
             cdkOverlayOrigin
             #trigger="cdkOverlayOrigin"

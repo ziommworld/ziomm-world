@@ -5,13 +5,17 @@ import { placeCharacter, displaceCharacter } from '@lib/mechanics/interaction.co
 import { GamePhase } from 'src/app/$game';
 import { ActionMenuItem, ActionMenuSubItem } from 'src/app/$mechanics';
 import { GameService } from '../../services/game.service';
+import { calculateDist } from 'src/app/$map';
+import { MatIcon } from '@angular/material/icon';
+import { actions } from '@lib/mechanics/index';
 
 
 @Component({
   selector: 'app-action-menu',
   standalone: true,
   imports: [
-    MatMenuModule
+    MatMenuModule,
+    MatIcon,
   ],
   templateUrl: './action-menu.component.html',
   styleUrl: './action-menu.component.scss'
@@ -20,8 +24,10 @@ export class ActionMenuComponent {
   @ViewChild(MatMenu)
   public menu!: MatMenu;
 
-  public $state = this.gameService.$state;
   public characters = this.gameService.characters;
+
+  public $state = this.gameService.$state;
+  public $activeCharacter = this.gameService.$activeCharacter;
 
   public $menuItems: Signal<ActionMenuItem[]> = computed(() => {
     const activeTile = this.gameService.$activeTile();
@@ -33,13 +39,14 @@ export class ActionMenuComponent {
     const state$ = this.$state();
     const characters$ = this.gameService.$characters();
     const canBegin$ = this.gameService.$canBegin();
-    const activeMap$ = this.gameService.$activeMap().$state();
+    const activeMap$ = this.gameService.$activeMap();
+    const activeCharacter$ = this.$activeCharacter();
 
     const {
       coord: { x, y }
     } = activeTile;
 
-    const activeTile$ = activeMap$.tiles[y][x];
+    const activeTile$ = activeMap$.$tiles()[y][x];
 
     if (state$.phase === GamePhase.PreGame) {
       const actions: ActionMenuItem[] = [];
@@ -70,6 +77,36 @@ export class ActionMenuComponent {
       }
 
       return actions;
+    } else if (state$.phase === GamePhase.InGame) {
+      const origin = activeCharacter$.$position();
+
+      if (!origin) {
+        throw new Error('Invalid character origin position');
+      }
+
+      const destination = activeTile.coord;
+      const distance = calculateDist(origin, destination);
+
+      const menuItems = activeCharacter$.abilities
+        .filter(
+          (ability) => {
+            return !ability.reactive &&
+              ability.isInRange(distance) &&
+              activeCharacter$.hasAP$(ability.config.baseAP);
+          }
+        ).map(
+          (ability) => {
+            return {
+              key: ability.key,
+              icon: 'construction',
+              label: ability.name,
+              tile: activeTile,
+              target: activeTile$.characterId,
+            };
+          }
+        );
+
+      return menuItems.length > 0 ? menuItems : [];
     }
 
     const buttons: ActionMenuItem[] = [
@@ -87,12 +124,17 @@ export class ActionMenuComponent {
   public onMenuItemClick(item: ActionMenuItem, subItem?: ActionMenuSubItem): void {
     const {
       tile,
+      label,
+      icon,
+      target,
       subItems,
     } = item;
 
     if (subItems && !subItem) {
       return;
     }
+
+    const activeCharacter$ = this.$activeCharacter();
 
     switch (item.key) {
       case 'placeCharacter': {
@@ -107,8 +149,17 @@ export class ActionMenuComponent {
         break;
       }
 
-      default:
-        throw new Error(`Unknown action: ${item.key}`);
+      default: {
+        if (item.key in actions) {
+          const actionConfig = this.$activeCharacter().getAction(item.key).config;
+
+          const targetCharacter = target ? this.gameService.scenario.charactersDict[target] : undefined;
+
+          this.gameService.characterAction(actionConfig.id, activeCharacter$, targetCharacter);
+        } else {
+          throw new Error(`Unknown action: ${item.key}`);
+        }
+      }
     }
   }
 }

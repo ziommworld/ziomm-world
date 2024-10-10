@@ -17,7 +17,7 @@ import { calculateDist, coord2chess, GameMapCoordinate, MicroTileConfig, MicroTi
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { ActionMenuComponent } from '../action-menu/action-menu.component';
 import { GamePhase } from 'src/app/$game';
-import { GameCharacter, GameCharacterTeam } from 'src/app/$character';
+import { GameCharacter } from 'src/app/$character';
 
 
 @Component({
@@ -70,7 +70,6 @@ export class GameMapComponent {
 
   public getCharacterIconClass(character: GameCharacter) {
     const team = character.config.team;
-
     return team;
   }
 
@@ -182,26 +181,48 @@ export class GameMapComponent {
     console.log($event.container.data, $event.item.data);
   }
 
-  public triggerMenu(tile: MicroTileConfig): MatMenu | null {
+  public triggerMenu(config: MicroTileConfig, state: MicroTileState): MatMenu | null {
     if (this.gameService.$state().phase === GamePhase.PreGame) {
-      const tile$ = this.$activeMap().$state().tiles[tile.coord.y][tile.coord.x];
       const canBegin$ = this.gameService.$canBegin();
 
-      if (tile$.characterId) {
+      if (state.characterId) {
         return this.actionMenu?.menu;
       } else {
-        if (!canBegin$ && tile.terrain === 'spawn') {
+        if (!canBegin$ && config.terrain === 'spawn') {
           return this.actionMenu?.menu;
         }
 
         return null;
       }
     } else if (this.gameService.$state().phase === GamePhase.InGame) {
-      if (tile.terrain === 'spawn') {
+      const activeCharacter$ = this.gameService.$activeCharacter();
+
+      if (state.characterId && state.characterId !== activeCharacter$.id) {
+
+        const abilities = activeCharacter$.abilities;
+        const origin = activeCharacter$.$position();
+
+        if (!origin) {
+          throw new Error('Invalid character origin position');
+        }
+
+        const destination = config.coord;
+        const distance = calculateDist(origin, destination);
+
+        const activeAbilities = abilities.filter(
+          ability => !ability.reactive &&
+          ability.isInRange(distance) &&
+          activeCharacter$.hasAP$(ability.config.baseAP)
+        );
+
+        if (activeAbilities.length > 0) {
+          return this.actionMenu?.menu;
+        }
+
         return null;
-      } else {
-        return this.actionMenu?.menu;
-      };
+      }
+
+      return null;
     } else {
       return null;
     }

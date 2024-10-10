@@ -121,7 +121,7 @@ export class GameScenario {
       difficulty: draft.settings.difficulty,
 
       characters: draft.characters.map(
-        char => GameCharacter.initConfig(char.character, char.player)
+        char => GameCharacter.initConfig(char.character, char.player, char.team)
       ),
       npcs: config.npcs.map(
         npc => GameCharacter.initConfig(npc)

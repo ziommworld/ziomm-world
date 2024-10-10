@@ -34,6 +34,8 @@ export class GameMap {
 
   // ===================== STATE =====================
 
+  public $tiles = computed(() => this.$state().tiles);
+
   constructor(
     public config: GameMapConfig,
     public $state: Signal<GameMapState>,
@@ -138,47 +140,4 @@ export class GameMap {
       }
     };
   }
-
-  // // TODO change to JSON
-  // public loadMap(mapData: string): string[][] {
-  //   const rows = mapData.split('\n'); // Split by new lines
-  //   return rows.map(row => row.trim().split(/\s+/)); // Split each row by spaces
-  // }
-
-  // // TODO change to JSON
-  // public downloadMap(mapData: string, mapName: string): void {
-  //   const blob = new Blob([mapData], { type: 'text/plain' });
-
-  //   const link = document.createElement('a');
-  //   const url = window.URL.createObjectURL(blob);
-
-  //   link.href = url;
-  //   link.download = `${mapName}.txt`;
-
-  //   document.body.appendChild(link);
-
-  //   link.click();
-
-  //   document.body.removeChild(link);
-  //   window.URL.revokeObjectURL(url);
-  // }
-
-  // // TODO complete implementation
-  // public uploadMap(file: File): Promise<string> {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-
-  //     reader.onload = (event) => {
-  //       if (event.target) {
-  //         resolve(event.target.result as string);
-  //       }
-  //     };
-
-  //     reader.onerror = (event) => {
-  //       reject(event);
-  //     };
-
-  //     reader.readAsText(file);
-  //   });
-  // }
 }

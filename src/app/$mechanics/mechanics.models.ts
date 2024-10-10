@@ -6,6 +6,8 @@ export interface ActionMenuItem {
   key: GameActionKey;
   label: string;
   tile: MicroTileConfig;
+  icon?: string;
+  target?: string;
 
   subItems?: ActionMenuSubItem[];
 }
@@ -13,6 +15,7 @@ export interface ActionMenuItem {
 export interface ActionMenuSubItem {
   key: string;
   label: string;
+  icon?: string;
 }
 
 export enum DamageType {

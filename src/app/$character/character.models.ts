@@ -6,6 +6,7 @@ import { GameActionConfig, GameActionKey, GameActionState } from "../$mechanics"
 export interface GameCharacterDraft {
   character: GameCharacterKey;
   player: string;
+  team?: GameCharacterTeam;
 }
 
 // ===================== CONFIG =====================

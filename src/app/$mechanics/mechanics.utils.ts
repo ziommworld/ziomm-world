@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash';
 import { GamePhase, GameState } from "../$game";
 import { GameMapCoordinate } from "../$map";
 import { GameCharacter, GameCharacterConfig, GameCharacterState } from "../$character";
-import { GameActionConfig, checkAP, getConfigsDict } from ".";
+import { DamageType, GameActionConfig, checkAP, getConfigsDict } from ".";
 
 // ===================== COMMON =====================
 
@@ -306,24 +306,99 @@ export const $moveCharacter = (charId: string, destination: GameMapCoordinate, c
   }
 }
 
-export const $characterAction = (characterId: string, actionConfig: GameActionConfig) => {
+export const $characterAction = (
+  action: GameActionConfig,
+  source: GameCharacterConfig,
+  target?: GameCharacterConfig
+) => {
   return (state: GameState) => {
     const { characters } = cloneDeep(state.scenario);
-    const character = characters[characterId];
+
+    const attacker = characters[source.id];
+    const defender = target ? characters[target.id] : undefined;
 
     // TODO update state
-    const actionState = character.actions[actionConfig.id];
+    const actionState = attacker.actions[action.id];
+
+    const {
+      baseAP,
+      damage,
+      damageType,
+      boosting,
+      concussive,
+      bleeding,
+      poisonous,
+      healing,
+      hindering,
+      immobilizing,
+      freeing,
+    } = action;
+
+    attacker.currentAP -= baseAP;
+
+    if (healing) {
+      attacker.currentHP += healing;
+    }
+
+    if (boosting) {
+      attacker.bolsterCounter += boosting;
+    }
+
+    if (freeing) {
+      attacker.hinderCounter -= freeing;
+      attacker.immobilizeCounter -= freeing;
+    }
+
+    if (damage || damageType || concussive || bleeding || poisonous || hindering || immobilizing) {
+      if (!target || !defender) {
+        throw new Error('No target');
+      }
+
+      const {
+        resistance
+      } = target;
+
+      if (damage) {
+        if (damageType === DamageType.Physical) {
+          defender.currentHP -= (damage - resistance[DamageType.Physical]);
+        } else if (damageType === DamageType.Elemental) {
+          defender.currentHP -= (damage - resistance[DamageType.Elemental]);
+        } else if (damageType === DamageType.Nuclear) {
+          defender.currentHP -= (damage - resistance[DamageType.Nuclear]);
+        } else {
+          if (damageType !== DamageType.True) {
+            throw new Error(`Unknown damage type ${damageType}`);
+          }
+
+          defender.currentHP -= damage;
+        }
+      }
+
+      if (concussive) {
+        defender.concussionCounter += concussive;
+      }
+
+      if (bleeding) {
+        defender.bleedCounter += bleeding;
+      }
+
+      if (poisonous) {
+        defender.poisonCounter += poisonous;
+      }
+
+      if (hindering) {
+        defender.hinderCounter += hindering;
+      }
+
+      if (immobilizing) {
+        defender.immobilizeCounter += immobilizing;
+      }
+    }
 
     return {
       scenario: {
         ...state.scenario,
-        characters: {
-          ...characters,
-          [characterId]: {
-            ...character,
-            bonusAP: false
-          }
-        }
+        characters,
       }
     } as Partial<GameState>;
   };
