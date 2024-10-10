@@ -23,3 +23,13 @@ export const chess2coord = (chess: string, size: GameMapSize): GameMapCoordinate
 
   return { x, y };
 }
+
+export const calculateDist = (from: GameMapCoordinate, to: GameMapCoordinate): number => {
+  const dx = Math.abs(from.x - to.x);
+  const dy = Math.abs(from.y - to.y);
+
+  const unitFactor = 2;
+
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  return Math.ceil(distance * unitFactor);
+}

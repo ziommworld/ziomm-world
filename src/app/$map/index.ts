@@ -19,6 +19,7 @@ export {
 export {
   chess2coord,
   coord2chess,
+  calculateDist,
 } from './map.utils';
 
 export {

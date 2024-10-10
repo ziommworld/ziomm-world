@@ -1,4 +1,4 @@
-import { Component, computed, ViewChild } from '@angular/core';
+import { Component, computed, signal, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import {
@@ -7,12 +7,13 @@ import {
   CdkDropList,
   CdkDropListGroup,
   CdkDragEnter,
+  CdkDragStart,
 } from '@angular/cdk/drag-drop'
 import { NgClass } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { GameService } from '../../services/game.service';
-import { coord2chess, GameMapCoordinate, MicroTileConfig } from 'src/app/$map';
+import { calculateDist, coord2chess, GameMapCoordinate, MicroTileConfig, MicroTileState } from 'src/app/$map';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { ActionMenuComponent } from '../action-menu/action-menu.component';
 import { GamePhase } from 'src/app/$game';
@@ -44,8 +45,12 @@ export class GameMapComponent {
 
   public scenario = this.gameService.scenario;
   public mapsDict = this.scenario.mapsDict;
+  public charactersDict = this.scenario.charactersDict;
+  public npcsDict = this.scenario.npcsDict;
 
   // ===================== STATE =====================
+
+  private $isDragging = signal(false);
 
   public $tiles = computed(() => {
     return this.scenario.$state.maps()[this.scenario.$state().activeMap].tiles;
@@ -82,32 +87,92 @@ export class GameMapComponent {
     return character.showIdx ? character.idx : null;
   }
 
-  public getCellTooltip(coord: GameMapCoordinate): string {
-    const { x, y } = coord;
+  public getCellTooltip(config: MicroTileConfig, state: MicroTileState): string {
+    if (this.$isDragging()) {
+      return this.getMoveTooltip(config, state);
+    }
 
-    return coord2chess({ x, y }, this.$activeMap().config.size)
+    return this.getDefaultTooltip(config, state);
+  }
+
+  private getDefaultTooltip(config: MicroTileConfig, state: MicroTileState): string {
+    const { x, y } = config.coord;
+
+    const coordDisplay = coord2chess({ x, y }, this.$activeMap().config.size);
+    const charName = state.characterId ?
+      this.charactersDict[state.characterId].config.name ?? this.npcsDict[state.characterId].config.name :
+      '';
+
+    return `${coordDisplay} \n ${charName}`;
+  }
+
+  private getMoveTooltip(config: MicroTileConfig, state: MicroTileState): string {
+    const activeCharacter$ = this.gameService.$activeCharacter();
+
+    const origin = activeCharacter$.$position();
+    const destination = config.coord;
+
+    if (!origin) {
+      return 'Invalid character origin position';
+    }
+
+    const distance = calculateDist(origin, destination);
+    const cost = activeCharacter$.getMovementCost$(distance);
+
+    const overdraftAP$ = cost - activeCharacter$.$currentAP();
+
+    return `Distance: ${distance}, Cost: ${cost} \n ${overdraftAP$ > 0 ? 'Insufficient AP: ' + overdraftAP$ : ''}`;
   }
 
   public getCoordinate(y: number, x: number): GameMapCoordinate {
     return { y, x };
   }
 
-  public onCharacterMove($event: CdkDragDrop<GameMapCoordinate, any, GameCharacter>) {
+  public onCharacterMove($event: CdkDragDrop<GameMapCoordinate, GameMapCoordinate, GameCharacter>) {
+    const origin = $event.previousContainer.data;
     const destination = $event.container.data;
-    const char = $event.item.data;
+    const character = $event.item.data;
 
-    this.gameService.moveCharacter(char.id, destination);
+    const distance = calculateDist(origin, destination);
+    const cost = character.getMovementCost$(distance);
+
+    if (!character.hasAP$(cost)) {
+      console.log('move - insufficient AP');
+      return;
+    }
+
+    console.warn('move', origin, destination, character);
+
+    this.gameService.moveCharacter(character.id, destination, cost);
+  }
+
+  public onCharacterMoveStart($event: CdkDragStart<GameCharacter>) {
+    const char = $event.source.data;
+
+    this.$isDragging.set(true);
+  }
+
+  public onCharacterMoveEnd($event: CdkDragStart<GameCharacter>) {
+    const char = $event.source.data;
+
+    this.$isDragging.set(false);
+  }
+
+  public onCharacterMoveHover($event: CdkDragEnter<any>) {
+    const destination = $event.container.data;
+    const character = $event.item.data;
   }
 
   public canMoveCharacter(character: GameCharacter): boolean {
-    const currentTurn$ = this.gameService.$currentTurn();
-    const activeCharacter = this.gameService.scenario.characters.find(char => char.$state().initiative === currentTurn$);
+    const gamePhase$ = this.gameService.$state().phase;
 
-    if (!activeCharacter) {
-      throw new Error('No active character');
+    if (gamePhase$ === GamePhase.PreGame) {
+      return false;
     }
 
-    return activeCharacter.id === character.id;
+    const activeCharacter$ = this.gameService.$activeCharacter();
+
+    return activeCharacter$.id === character.id;
   }
 
   public dragEntered($event: CdkDragEnter<any>) {
@@ -115,7 +180,6 @@ export class GameMapComponent {
     const [char, yc, xc] = $event.item.data;
 
     console.log($event.container.data, $event.item.data);
-
   }
 
   public triggerMenu(tile: MicroTileConfig): MatMenu | null {

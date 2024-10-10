@@ -9,8 +9,9 @@
     @let tile$ = $tiles()[y][x];
     <div class="map-cell"
          [matMenuTriggerFor]="triggerMenu(cell)"
-         [matTooltip]="getCellTooltip(cell.coord)"
+         [matTooltip]="getCellTooltip(cell, tile$)"
          matTooltipShowDelay="100"
+         matTooltipClass="cell-tooltip"
          cdkDropList
          [cdkDropListData]="getCoordinate(y, x)"
          (cdkDropListDropped)="onCharacterMove($event)"
@@ -25,11 +26,14 @@
 
       <div class="cell-content cell-character"
            cdkDrag
-           [cdkDragDisabled]="canMoveCharacter(character)"
+           [cdkDragDisabled]="!canMoveCharacter(character)"
            [cdkDragData]="character"
            aria-hidden="false"
            [matBadge]="getCharacterCellBadge(character)"
-           [matBadgePosition]="getCharacterCellBadgePosition(character)">
+           [matBadgePosition]="getCharacterCellBadgePosition(character)"
+           (cdkDragStarted)="onCharacterMoveStart($event)"
+           (cdkDragEnded)="onCharacterMoveEnd($event)"
+           (cdkDragEntered)="onCharacterMoveHover($event)">
         <mat-icon class="character-icon"
                   [ngClass]="getCharacterIconClass(character)"
                   color="accent"

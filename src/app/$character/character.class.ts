@@ -303,6 +303,12 @@ export class GameCharacter {
     return this.$state().currentAP >= cost;
   }
 
+  public getMovementCost$(distance: number) {
+    const cost = Math.ceil(distance / this.config.baseMS);
+
+    return cost;
+  }
+
   public getAction(key: GameActionKey) {
     const action = this.actions.find(action => action.config.key === key);
 

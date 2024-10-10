@@ -275,9 +275,9 @@ export class GameService {
     });
   }
 
-  public moveCharacter(characterId: string, coord: GameMapCoordinate) {
+  public moveCharacter(characterId: string, coord: GameMapCoordinate, cost: number) {
     patchState(this.$state,
-      $moveCharacter(characterId, coord),
+      $moveCharacter(characterId, coord, cost),
       $setUpdatedOn()
     );
   }

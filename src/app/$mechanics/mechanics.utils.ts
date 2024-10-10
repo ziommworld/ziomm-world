@@ -267,7 +267,7 @@ export const $endGame = () => {
 
 // ===================== CHARACTERS =====================
 
-export const $moveCharacter = (charId: string, destination: GameMapCoordinate) => {
+export const $moveCharacter = (charId: string, destination: GameMapCoordinate, cost: number) => {
   return (state: GameState) => {
     const { activeMap, maps, characters } = cloneDeep(state.scenario);
     const { tiles } = maps[activeMap];
@@ -277,6 +277,12 @@ export const $moveCharacter = (charId: string, destination: GameMapCoordinate) =
     tiles[origin.y][origin.x].characterId = undefined;
     tiles[destination.y][destination.x].characterId = charId;
 
+    const newAP = character.currentAP - cost;
+
+    if (newAP < 0) {
+      throw new Error('Insufficient AP');
+    }
+
     return {
       scenario: {
         ...state.scenario,
@@ -284,7 +290,8 @@ export const $moveCharacter = (charId: string, destination: GameMapCoordinate) =
           ...characters,
           [charId]: {
             ...character,
-            position: destination
+            position: destination,
+            currentAP: newAP
           }
         },
         maps: {

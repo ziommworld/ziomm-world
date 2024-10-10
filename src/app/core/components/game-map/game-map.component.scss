@@ -99,7 +99,6 @@
             &.npc {
               @include mat.icon-color($theme, $color-variant: secondary);
             }
-
           }
         }
       }
@@ -109,4 +108,8 @@
 
 .cdk-drag {
   @include mat.icon-color($theme, $color-variant: primary);
+}
+
+::ng-deep .cell-tooltip {
+  white-space: pre-line;
 }
