@@ -7,7 +7,7 @@ import { GameEventConfig, GameEventKey, GameEventState } from "../$mechanics";
 export interface GameScenarioDraft {
   difficulty: number;
   time: number;
-  turns: number;
+  rounds: number;
 }
 
 // ===================== CONFIG =====================
@@ -19,7 +19,7 @@ export interface BaseScenarioConfig {
   maxCharacters: number;
 
   initialMap: GameMapKey;
-  defaultTurns: number;
+  defaultRounds: number;
 
   npcs: GameCharacterKey[];
   maps: GameMapKey[];
@@ -30,7 +30,7 @@ export interface GameScenarioConfig extends Omit<BaseScenarioConfig, 'npcs' | 'm
   id: string;
   key: GameScenarioKey;
 
-  maxTurns: number;
+  maxRounds: number;
   maxTime: number;
   difficulty: number;
 
@@ -49,8 +49,13 @@ export interface GameScenarioStats {
 }
 
 export interface GameScenarioState {
-  currentTurn: number; // corresponds to initiative
   currentRound: number;
+
+  /**
+   * corresponds to character initiative
+   */
+  currentTurn: number;
+
   activeMap: GameMapKey;
 
   characters: Record<string, GameCharacterState>;

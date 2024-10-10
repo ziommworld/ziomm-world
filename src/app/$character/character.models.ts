@@ -1,4 +1,4 @@
-import { GameMapCoordinate } from "../$map";
+import { GameMapCoordinate, GameMapKey } from "../$map";
 import { GameActionConfig, GameActionKey, GameActionState } from "../$mechanics";
 
 // ===================== DRAFT =====================
@@ -29,7 +29,7 @@ export enum GameCharacterIcon {
   XAVR = 'accessible_forward',
   ElectroWolf = 'bolt',
   Ratbeast = 'pest_control_rodent',
-  Bango = 'boy',
+  Bango = 'emoji_people',
   Rafaela = 'sports_handball',
   Nathaniel = 'hail',
   HumanPlantHybrid = 'park',
@@ -103,6 +103,8 @@ export interface GameCharacterConfig extends Omit<BaseCharacterConfig, 'abilitie
   id: string;
   key: GameCharacterKey;
 
+  defaultAP: number;
+
   player?: string; // npc if undefined
   team: GameCharacterTeam;
 
@@ -119,17 +121,24 @@ export interface GameCharacterStats {
 }
 
 export interface GameCharacterState {
+  /**
+   * 1-based
+   */
   initiative: number;
+
+  player?: string;
+  map?: GameMapKey,
   position?: GameMapCoordinate;
   zLevel: number;
-  player?: string;
+  hidden?: boolean;
 
+  bonusAP: number | null;
   currentAP: number;
   currentHP: number;
 
   isCrouching: boolean;
-  isDead: boolean;
   isMounted: boolean;
+  isDead: boolean;
 
   bolsterCounter: number;
   concussionCounter: number;

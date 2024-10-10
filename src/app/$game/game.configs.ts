@@ -17,6 +17,6 @@ export const quickGameDraft: GameDraft = {
   settings: {
     difficulty: 100,
     time: 120,
-    turns: 30,
+    rounds: 30,
   }
 }

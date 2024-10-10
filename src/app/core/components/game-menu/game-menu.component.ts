@@ -80,9 +80,10 @@ export class GameMenuComponent {
     const dialogRef = this.dialog.open(ConfirmModalComponent, config);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        this.gameService.quitGame();
         this.appService.closeAll();
-        this.gameService.endGame();
-        localStorage.removeItem('autosave');
+        // * no need to remove autosave, give option to download last save
+        // localStorage.removeItem('autosave');
       }
     });
   }

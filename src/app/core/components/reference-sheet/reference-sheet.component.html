@@ -8,7 +8,7 @@
 
     <div class="tab-content">
       <mat-accordion>
-        @for(char of characters; track char.id) {
+        @for(char of activeCharacters$(); track char.id) {
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>

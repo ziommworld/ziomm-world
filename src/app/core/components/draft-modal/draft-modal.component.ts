@@ -77,12 +77,12 @@ export class DraftModalComponent {
 
   // 4th step
   public difficultyFormControl = this.formBuilder.control(100, [Validators.required]);
-  public turnsFormControl = this.formBuilder.control(10, [Validators.required]);
+  public roundsFormControl = this.formBuilder.control(10, [Validators.required]);
   public timeFormControl = this.formBuilder.control(60, [Validators.required]);
 
   public settingsFormGroup = this.formBuilder.group({
     difficulty: this.difficultyFormControl,
-    turns: this.turnsFormControl,
+    rounds: this.roundsFormControl,
     time: this.timeFormControl,
   });
 
@@ -129,12 +129,12 @@ export class DraftModalComponent {
     return maxTime;
   }
 
-  public get minTurns() {
-    return this.selectedScenario.defaultTurns / 2;
+  public get minRounds() {
+    return this.selectedScenario.defaultRounds / 2;
   }
 
-  public get maxTurns() {
-    return this.selectedScenario.defaultTurns * 2;
+  public get maxRounds() {
+    return this.selectedScenario.defaultRounds * 2;
   }
 
   constructor(
@@ -191,7 +191,7 @@ export class DraftModalComponent {
       }
     }
 
-    this.turnsFormControl.setValue(this.selectedScenario.defaultTurns);
+    this.roundsFormControl.setValue(this.selectedScenario.defaultRounds);
   }
 
   public removeCharacter() {

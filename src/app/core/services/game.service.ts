@@ -6,8 +6,18 @@ import { DraftModalComponent } from '../components/draft-modal/draft-modal.compo
 import { Game, GameDraft, GamePhase, GameRecord } from 'src/app/$game';
 import { patchState } from '@ngrx/signals';
 import { GameMapCoordinate, MicroTileConfig } from 'src/app/$map';
-import { $changeInitiative, $displaceCharacter, $placeCharacter } from 'src/app/$mechanics';
-import { $moveCharacter } from 'src/app/$mechanics/mechanics.utils';
+import {
+  $setUpdatedOn, $moveCharacter, $changeInitiative, $displaceCharacter,
+  $placeCharacter,
+  GameActionConfig,
+  $actionPass, $actionWait, $characterAction, $endTurn,
+  $beginGame,
+  $endGame,
+  $endRound,
+  $setEndedOn,
+  $beginRound,
+  $beginTurn
+} from 'src/app/$mechanics';
 
 
 @Injectable({
@@ -77,6 +87,14 @@ export class GameService {
     return this.game.$state;
   }
 
+  public $currentTurn = computed(() => {
+    return this.$state().scenario.currentTurn;
+  });
+
+  public $currentRound = computed(() => {
+    return this.$state().scenario.currentRound;
+  });
+
   public $characters = computed(() => {
     return this.$state().scenario.characters;
   });
@@ -100,6 +118,37 @@ export class GameService {
     return activeMap;
   });
 
+  public $activeCharacters = computed(() => {
+    const activeMap$ = this.$activeMap();
+
+    const allCharacters = [
+      ...this.characters,
+      ...this.npcs
+    ];
+
+    const activeCharacters = allCharacters
+      .filter(
+        char => char.$map() === activeMap$.key && !char.$state().hidden
+      ).sort(
+        (a, b) => a.$state().initiative - b.$state().initiative
+      );
+
+    return activeCharacters;
+  });
+
+  public $activeCharacter = computed(() => {
+    const activeCharacters$ = this.$activeCharacters();
+    const currentTurn$ = this.$currentTurn();
+
+    const activeCharacter = activeCharacters$.find(char => char.$state().initiative === currentTurn$);
+
+    if (!activeCharacter) {
+      throw new Error('No active character');
+    }
+
+    return activeCharacter;
+  });
+
   constructor(
     private dialog: MatDialog,
   ) {
@@ -113,17 +162,22 @@ export class GameService {
         return;
       }
 
-      const config = this.game.config;
-      const state = this.game.$state();
-      const record: GameRecord = {
-        config,
-        state,
-      };
-
-      localStorage.setItem('autosave', JSON.stringify(record));
-
-      console.warn('State updated', state)
+      this.autosave();
     });
+  }
+
+  private autosave() {
+    const config = this.game.config;
+    const state = this.$state();
+    const record: GameRecord = {
+      config,
+      state,
+    };
+
+    console.warn('State updated.', state)
+    localStorage.setItem('autosave', JSON.stringify(record));
+
+    console.warn('Autosaving...');
   }
 
   // ===================== GAME =====================
@@ -159,25 +213,52 @@ export class GameService {
   }
 
   public beginGame() {
-    this.game.beginGame();
+    const activeCharacters$ = this.$activeCharacters();
+
+    patchState(this.$state,
+      $beginGame(),
+      $beginRound(activeCharacters$),
+      $beginTurn(),
+      $setUpdatedOn(),
+    );
   }
 
   public endGame() {
+    patchState(this.$state,
+      $endGame(),
+      $setEndedOn(),
+    );
+
+    // explicit autosave necessary to save the PostGame state
+    this.autosave();
+    console.warn('Game ended');
+  }
+
+  public quitGame() {
+    this.endGame();
     this.$game.set(null);
   }
 
   // ===================== CHARACTERS =====================
 
-  public changeInitiative(chars: GameCharacter[]) {
-    patchState(this.game.$state, $changeInitiative(chars.map((char) => char.id)));
+  public changeInitiative(characters: GameCharacter[]) {
+    const charIds = characters.map((char) => char.id);
+
+    patchState(this.$state,
+      $changeInitiative(charIds),
+    );
   }
 
-  public placeCharacter(charId: string, tile: MicroTileConfig) {
-    patchState(this.game.$state, $placeCharacter(charId, tile.coord));
+  public placeCharacter(characterId: string, tile: MicroTileConfig) {
+    patchState(this.$state,
+      $placeCharacter(characterId, tile.coord),
+    );
   }
 
   public displaceCharacter(tile: MicroTileConfig) {
-    patchState(this.game.$state, $displaceCharacter(tile.coord));
+    patchState(this.$state,
+      $displaceCharacter(tile.coord)
+    );
   }
 
   public displaceAllCharacters() {
@@ -185,13 +266,70 @@ export class GameService {
 
     this.characters.forEach((char) => {
       const charPosition = characters$[char.id].position;
+
       if (charPosition) {
-        patchState(this.game.$state, $displaceCharacter(charPosition));
+        patchState(this.$state,
+          $displaceCharacter(charPosition)
+        );
       }
     });
   }
 
-  public moveCharacter(charId: string, coord: GameMapCoordinate) {
-    patchState(this.game.$state, $moveCharacter(charId, coord));
+  public moveCharacter(characterId: string, coord: GameMapCoordinate) {
+    patchState(this.$state,
+      $moveCharacter(characterId, coord),
+      $setUpdatedOn()
+    );
+  }
+
+  public characterAction(characterId: string, config: GameActionConfig) {
+    patchState(this.$state,
+      $characterAction(characterId, config),
+      $setUpdatedOn(),
+    );
+  }
+
+  public characterWait(characterId: string, config: GameActionConfig) {
+    patchState(this.$state,
+      $actionWait(characterId, config),
+      $setUpdatedOn(),
+    );
+  }
+
+  public characterPass(characterId: string, config: GameActionConfig) {
+    patchState(this.$state,
+      $actionPass(characterId, config),
+      $setUpdatedOn(),
+    );
+  }
+
+  public endTurn() {
+    const activeCharacters$ = this.$activeCharacters();
+
+    const isLastTurn = this.$currentTurn() === activeCharacters$.length;
+    const isLastRound = this.$currentRound() === this.scenario.config.maxRounds;
+
+    const updaters = [
+      $setUpdatedOn(),
+      $endTurn(),
+    ];
+
+    if (isLastTurn) {
+      updaters.push($endRound());
+
+      if (isLastRound) {
+        updaters.push($endGame());
+      } else {
+        updaters.push($beginRound(activeCharacters$));
+      }
+    }
+
+    if (!(isLastRound && isLastRound)) {
+      updaters.push($beginTurn());
+    }
+
+    patchState(this.$state,
+      ...updaters
+    );
   }
 }

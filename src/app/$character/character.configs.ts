@@ -1,1 +1,1 @@
-export const roundAP: number = 6;
+export const defaultAP: number = 6;

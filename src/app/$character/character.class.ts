@@ -1,11 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { GameCharacterConfig, GameCharacterKey, GameCharacterState, GameCharacterTeam, roundAP } from '.';
+import { GameCharacterConfig, GameCharacterKey, GameCharacterState, GameCharacterTeam, defaultAP } from '.';
 import { computed, Signal } from '@angular/core';
 import { characters } from './lib';
-import { GameAction, GameActionState } from '../$mechanics';
-import { Game } from '../$game';
-
+import { GameAction, GameActionKey, GameActionState } from '../$mechanics';
 
 export class GameCharacter {
   public static instanceMap = new Map<GameCharacterKey, number>();
@@ -67,12 +65,72 @@ export class GameCharacter {
 
   // ===================== STATE =====================
 
+  public $initiative = computed(() => {
+    return this.$state().initiative;
+  });
+
+  public $zLevel = computed(() => {
+    return this.$state().zLevel;
+  });
+
+  public $hidden = computed(() => {
+    return this.$state().hidden;
+  });
+
+  public $map = computed(() => {
+    return this.$state().map;
+  });
+
+  public $position = computed(() => {
+    return this.$state().position;
+  });
+
+  public $bonusAP = computed(() => {
+    return this.$state().bonusAP;
+  });
+
   public $currentHP = computed(() => {
     return this.$state().currentHP;
   });
 
   public $currentAP = computed(() => {
     return this.$state().currentAP;
+  });
+
+  public $isCrouching = computed(() => {
+    return this.$state().isCrouching;
+  });
+
+  public $isMounted = computed(() => {
+    return this.$state().isMounted;
+  });
+
+  public $isDead = computed(() => {
+    return this.$state().isDead;
+  });
+
+  public $bolsterCounter = computed(() => {
+    return this.$state().bolsterCounter;
+  });
+
+  public $concussionCounter = computed(() => {
+    return this.$state().concussionCounter;
+  });
+
+  public $bleedCounter = computed(() => {
+    return this.$state().bleedCounter;
+  });
+
+  public $poisonCounter = computed(() => {
+    return this.$state().poisonCounter;
+  });
+
+  public $immobilizeCounter = computed(() => {
+    return this.$state().immobilizeCounter;
+  });
+
+  public $hinderCounter = computed(() => {
+    return this.$state().hinderCounter;
   });
 
   constructor(
@@ -152,17 +210,25 @@ export class GameCharacter {
 
   public static initConfig(
     key: GameCharacterKey,
-    player?: string
+    player?: string,
+    team: GameCharacterTeam = GameCharacterTeam.Team1,
   ): GameCharacterConfig {
     const config = characters[key];
+
+    const npcKeys: GameCharacterKey[] = [
+      'ratdogBoss', 'ratdogFighter', 'ratdogHunter', 'ratdogRanger', 'ratdogVanguard',
+      'marauderBoss', 'marauderArcher', 'marauderPatrol', 'marauderVanguard',
+    ];
+    const defaultTeam = !player && npcKeys.includes(key) ? GameCharacterTeam.Enemy : team;
 
     return {
       ...config,
 
       id: uuidv4(),
       key,
+      defaultAP,
       player,
-      team: player ? GameCharacterTeam.Team1 : GameCharacterTeam.Enemy,
+      team: team ?? defaultTeam,
 
       abilities: config.abilities.map(
         key => GameAction.initConfig(key)
@@ -182,10 +248,10 @@ export class GameCharacter {
     return {
       initiative: -1,
       zLevel: 0,
-      // TODO set position according to scenario and initial map
       player: config.player,
 
-      currentAP: roundAP,
+      bonusAP: null,
+      currentAP: config.defaultAP,
       currentHP: config.maxHP,
 
       isCrouching: false,
@@ -231,5 +297,19 @@ export class GameCharacter {
         healedHP: 0,
       },
     }
+  }
+
+  public hasAP$(cost: number) {
+    return this.$state().currentAP >= cost;
+  }
+
+  public getAction(key: GameActionKey) {
+    const action = this.actions.find(action => action.config.key === key);
+
+    if (!action) {
+      throw new Error(`Action ${key} not found`);
+    }
+
+    return action;
   }
 }

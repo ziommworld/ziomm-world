@@ -18,6 +18,6 @@ export {
 } from './character.models';
 
 export {
-  roundAP,
+  defaultAP,
 } from './character.configs';
 

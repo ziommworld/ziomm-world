@@ -1,10 +1,11 @@
-import { BaseActionConfig, DamageType } from "src/app/$mechanics";
+import { BaseActionConfig, DamageType, GameActionType } from "src/app/$mechanics";
 
 // ===================== ATTACK =====================
 
 export const deadlyBite: BaseActionConfig = {
   name: 'Deadly bite',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 4,
 
@@ -26,6 +27,7 @@ export const advancedDeadlyBite: BaseActionConfig = {
 export const crushingBlow: BaseActionConfig = {
   name: 'Crushing blow',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -49,6 +51,7 @@ export const advancedCrushingBlow: BaseActionConfig = {
 export const tendonRip: BaseActionConfig = {
   name: 'Tendon rip',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -71,6 +74,7 @@ export const advancedTendonRip: BaseActionConfig = {
 export const groundSmash: BaseActionConfig = {
   name: 'Ground smash',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 4,
 
@@ -94,6 +98,7 @@ export const advancedGroundSmash: BaseActionConfig = {
 export const dagger: BaseActionConfig = {
   name: 'Dagger',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 2,
 
@@ -117,6 +122,7 @@ export const advancedDagger: BaseActionConfig = {
 export const warhammer: BaseActionConfig = {
   name: 'Warhammer',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -138,6 +144,7 @@ export const advancedWarhammer: BaseActionConfig = {
 export const toxicBlow: BaseActionConfig = {
   name: 'Toxic blow',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -161,6 +168,7 @@ export const advancedToxicBlow: BaseActionConfig = {
 export const gatlingGun: BaseActionConfig = {
   name: 'Gatling gun',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -183,6 +191,7 @@ export const advancedGatlingGun: BaseActionConfig = {
 export const electroBite: BaseActionConfig = {
   name: 'Electro bite',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -205,6 +214,7 @@ export const advancedElectroBite: BaseActionConfig = {
 export const photonRifle: BaseActionConfig = {
   name: 'Photon rifle',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -227,6 +237,7 @@ export const advancedPhotonRifle: BaseActionConfig = {
 export const photonShotgun: BaseActionConfig = {
   name: 'Photon shotgun',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -250,6 +261,7 @@ export const advancedPhotonShotgun: BaseActionConfig = {
 export const photonBlaster: BaseActionConfig = {
   name: 'Photon blaster',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 2,
 
@@ -271,6 +283,7 @@ export const advancedPhotonBlaster: BaseActionConfig = {
 export const nuclearPistol: BaseActionConfig = {
   name: 'Nuclear pistol',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 2,
 
@@ -292,6 +305,7 @@ export const advancedNuclearPistol: BaseActionConfig = {
 export const nuclearRifle: BaseActionConfig = {
   name: 'Nuclear rifle',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -315,6 +329,7 @@ export const advancedNuclearRifle: BaseActionConfig = {
 export const toxicFumes: BaseActionConfig = {
   name: 'Toxic fumes',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -335,6 +350,7 @@ export const advancedToxicFumes: BaseActionConfig = {
 export const lightSabre: BaseActionConfig = {
   name: 'Light sabre',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -349,6 +365,7 @@ export const lightSabre: BaseActionConfig = {
 export const toxicSpit: BaseActionConfig = {
   name: 'Toxic spit',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -371,6 +388,7 @@ export const advancedToxicSpit: BaseActionConfig = {
 export const toxicBite: BaseActionConfig = {
   name: 'Toxic bite',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -393,6 +411,7 @@ export const advancedToxicBite: BaseActionConfig = {
 export const bite: BaseActionConfig = {
   name: 'Bite',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 4,
 
@@ -413,6 +432,7 @@ export const advancedBite: BaseActionConfig = {
 export const toxicSpray: BaseActionConfig = {
   name: 'Toxic spray',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 4,
 
@@ -437,6 +457,7 @@ export const advancedToxicSpray: BaseActionConfig = {
 export const superDeadlyBite: BaseActionConfig = {
   name: 'Deadly bite',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -459,6 +480,7 @@ export const advancedSuperDeadlyBite: BaseActionConfig = {
 export const battleChain: BaseActionConfig = {
   name: 'Battle chain',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 4,
 
@@ -476,6 +498,7 @@ export const battleChain: BaseActionConfig = {
 export const shockBaton: BaseActionConfig = {
   name: 'Shock baton',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -490,6 +513,7 @@ export const shockBaton: BaseActionConfig = {
 export const longBow: BaseActionConfig = {
   name: 'Long bow',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -504,6 +528,7 @@ export const longBow: BaseActionConfig = {
 export const axe: BaseActionConfig = {
   name: 'Axe',
   description: '',
+  type: GameActionType.Attack,
 
   baseAP: 3,
 
@@ -522,6 +547,7 @@ export const axe: BaseActionConfig = {
 export const swipe: BaseActionConfig = {
   name: 'Swipe',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 3,
 
@@ -544,6 +570,7 @@ export const advancedSwipe: BaseActionConfig = {
 export const rockToss: BaseActionConfig = {
   name: 'Rock toss',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 2,
 
@@ -567,6 +594,7 @@ export const advancedRockToss: BaseActionConfig = {
 export const chomp: BaseActionConfig = {
   name: 'Chomp',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 3,
 
@@ -589,6 +617,7 @@ export const advancedChomp: BaseActionConfig = {
 export const entangle: BaseActionConfig = {
   name: 'Entangle',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 3,
 
@@ -614,6 +643,7 @@ export const advancedEntangle: BaseActionConfig = {
 export const sword: BaseActionConfig = {
   name: 'Sword',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 3,
 
@@ -636,6 +666,7 @@ export const advancedSword: BaseActionConfig = {
 export const shieldSlam: BaseActionConfig = {
   name: 'Shield slam',
   description: '',
+  type: GameActionType.Special,
 
   reactive: true,
   baseAP: 2,
@@ -661,6 +692,7 @@ export const advancedShieldSlam: BaseActionConfig = {
 export const neuroDart: BaseActionConfig = {
   name: 'Neuro dart',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 3,
 
@@ -688,6 +720,7 @@ export const advancedNeuroDart: BaseActionConfig = {
 export const electricNetgun: BaseActionConfig = {
   name: 'Electric netgun',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 3,
 
@@ -712,6 +745,7 @@ export const advancedElectricNetgun: BaseActionConfig = {
 export const rapidBite: BaseActionConfig = {
   name: 'Rapid bite',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 2,
 
@@ -736,6 +770,7 @@ export const advancedRapidBite: BaseActionConfig = {
 export const photonGranade: BaseActionConfig = {
   name: 'Photon granade',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 2,
 
@@ -760,6 +795,7 @@ export const advancedPhotonGranade: BaseActionConfig = {
 export const healingNanobots: BaseActionConfig = {
   name: 'Healing nanobots',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 4,
 
@@ -780,6 +816,7 @@ export const advancedHealingNanobots: BaseActionConfig = {
 export const photonCannon: BaseActionConfig = {
   name: 'Photon cannon',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 4,
 
@@ -804,6 +841,7 @@ export const advancedPhotonCannon: BaseActionConfig = {
 export const blastout: BaseActionConfig = {
   name: 'Blastout',
   description: '',
+  type: GameActionType.Special,
 
   reactive: true,
   baseAP: 1,
@@ -830,6 +868,7 @@ export const advancedBlastout: BaseActionConfig = {
 export const neuralInjection: BaseActionConfig = {
   name: 'Neural injection',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 3,
 
@@ -857,6 +896,7 @@ export const advancedNeuralInjection: BaseActionConfig = {
 export const lifeDrain: BaseActionConfig = {
   name: 'Life drain',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 3,
 
@@ -878,6 +918,7 @@ export const advancedLifeDrain: BaseActionConfig = {
 export const propelledLunge: BaseActionConfig = {
   name: 'Propelled lunge',
   description: '',
+  type: GameActionType.Special,
 
   reactive: true,
   baseAP: 3,
@@ -901,6 +942,7 @@ export const advancedPropelledLunge: BaseActionConfig = {
 export const toxicBomb: BaseActionConfig = {
   name: 'Toxic bomb',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 4,
 
@@ -924,6 +966,7 @@ export const advancedToxicBomb: BaseActionConfig = {
 export const bleedingClaw: BaseActionConfig = {
   name: 'Bleeding claw',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 2,
 
@@ -948,6 +991,7 @@ export const advancedBleedingClaw: BaseActionConfig = {
 export const dominate: BaseActionConfig = {
   name: 'Dominate',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 2,
 
@@ -968,6 +1012,7 @@ export const advancedDominate: BaseActionConfig = {
 export const jumpOut: BaseActionConfig = {
   name: 'Jump out',
   description: '',
+  type: GameActionType.Special,
 
   reactive: true,
   baseAP: 3,
@@ -991,6 +1036,7 @@ export const advancedJumpOut: BaseActionConfig = {
 export const superBleedingClaw: BaseActionConfig = {
   name: 'Bleeding claw',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 2,
 
@@ -1016,6 +1062,7 @@ export const advancedSuperBleedingClaw: BaseActionConfig = {
 export const quickCharge: BaseActionConfig = {
   name: 'Quick charge',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 1,
   reactive: true,
@@ -1027,6 +1074,7 @@ export const quickCharge: BaseActionConfig = {
 export const powerPunch: BaseActionConfig = {
   name: 'Power punch',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 2,
 
@@ -1043,6 +1091,7 @@ export const powerPunch: BaseActionConfig = {
 export const stunGun: BaseActionConfig = {
   name: 'Stun gun',
   description: '',
+  type: GameActionType.Special,
 
   baseAP: 3,
 
@@ -1061,6 +1110,7 @@ export const stunGun: BaseActionConfig = {
 export const block: BaseActionConfig = {
   name: 'Block',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 3,
@@ -1076,7 +1126,9 @@ export const advancedBlock: BaseActionConfig = {
 export const shift: BaseActionConfig = {
   name: 'Shift',
   description: '',
+  type: GameActionType.Defense,
 
+  reactive: true,
   baseAP: 2,
 
   evasion: 1,
@@ -1086,7 +1138,9 @@ export const shift: BaseActionConfig = {
 export const evade: BaseActionConfig = {
   name: 'Evade',
   description: '',
+  type: GameActionType.Defense,
 
+  reactive: true,
   baseAP: 1,
 
   evasion: 1,
@@ -1095,7 +1149,9 @@ export const evade: BaseActionConfig = {
 export const deflect: BaseActionConfig = {
   name: 'Deflect',
   description: '',
+  type: GameActionType.Defense,
 
+  reactive: true,
   baseAP: 2,
 
   evasion: 2,
@@ -1104,6 +1160,7 @@ export const deflect: BaseActionConfig = {
 export const counter: BaseActionConfig = {
   name: 'Counter',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 3,
@@ -1115,6 +1172,7 @@ export const counter: BaseActionConfig = {
 export const rush: BaseActionConfig = {
   name: 'Rush',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 1,
@@ -1126,6 +1184,7 @@ export const rush: BaseActionConfig = {
 export const dodge: BaseActionConfig = {
   name: 'Dodge',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 2,
@@ -1141,6 +1200,7 @@ export const basicDodge: BaseActionConfig = {
 export const elude: BaseActionConfig = {
   name: 'Elude',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 1,
@@ -1151,6 +1211,7 @@ export const elude: BaseActionConfig = {
 export const avoid: BaseActionConfig = {
   name: 'Avoid',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 1,
@@ -1167,6 +1228,7 @@ export const basicAvoid: BaseActionConfig = {
 export const vanish: BaseActionConfig = {
   name: 'Vanish',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 3,
@@ -1183,6 +1245,7 @@ export const basicVanish: BaseActionConfig = {
 export const assault: BaseActionConfig = {
   name: 'Assault',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 2,
@@ -1199,6 +1262,7 @@ export const basicAssault: BaseActionConfig = {
 export const sidestep: BaseActionConfig = {
   name: 'Sidestep',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 2,
@@ -1210,6 +1274,7 @@ export const sidestep: BaseActionConfig = {
 export const charge: BaseActionConfig = {
   name: 'Charge',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 3,
@@ -1226,6 +1291,7 @@ export const advancedCharge: BaseActionConfig = {
 export const hide: BaseActionConfig = {
   name: 'Hide',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 1,
@@ -1242,6 +1308,7 @@ export const basicHide: BaseActionConfig = {
 export const shieldWall: BaseActionConfig = {
   name: 'Shield wall',
   description: '',
+  type: GameActionType.Defense,
 
   reactive: true,
   baseAP: 3,

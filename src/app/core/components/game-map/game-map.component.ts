@@ -100,8 +100,8 @@ export class GameMapComponent {
   }
 
   public canMoveCharacter(character: GameCharacter): boolean {
-    const initiative = this.gameService.$state().scenario.currentTurn;
-    const activeCharacter = this.gameService.scenario.characters.find(char => char.$state().initiative === initiative);
+    const currentTurn$ = this.gameService.$currentTurn();
+    const activeCharacter = this.gameService.scenario.characters.find(char => char.$state().initiative === currentTurn$);
 
     if (!activeCharacter) {
       throw new Error('No active character');

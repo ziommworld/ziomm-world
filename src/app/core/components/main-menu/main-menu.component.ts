@@ -4,7 +4,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 
-import { GameRecord, quickGameDraft } from 'src/app/$game';
+import { GamePhase, GameRecord, quickGameDraft } from 'src/app/$game';
 import { GameService } from '../../services/game.service';
 import { snackbarDuration } from '../../configs';
 
@@ -26,7 +26,8 @@ export class MainMenuComponent {
   public loadGameInput!: ElementRef<HTMLInputElement>;
 
   public get canResume() {
-    return localStorage.getItem('autosave') !== null;
+    const autosave = localStorage.getItem('autosave');
+    return autosave !== null && !autosave.includes(GamePhase.PostGame);
   }
 
   constructor(
@@ -98,5 +99,9 @@ export class MainMenuComponent {
     reader.readAsText(file);
 
     input.value = '';
+  }
+
+  public onDownloadLastGame() {
+    throw new Error('Method not implemented.');
   }
 }

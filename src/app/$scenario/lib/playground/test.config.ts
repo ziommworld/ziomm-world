@@ -8,7 +8,7 @@ export const test: BaseScenarioConfig = {
   maxCharacters: 2,
 
   initialMap: 'small',
-  defaultTurns: 10,
+  defaultRounds: 10,
 
   npcs: [
     'ratdogFighter',

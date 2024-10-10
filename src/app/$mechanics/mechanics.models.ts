@@ -16,11 +16,19 @@ export interface ActionMenuSubItem {
 }
 
 export enum DamageType {
-  Physical,
-  Elemental,
-  Nuclear,
-  True,
+  Physical = 'physical',
+  Elemental = 'elemental',
+  Nuclear = 'nuclear',
+  True = 'true',
 };
+
+export enum GameActionType {
+  Environment,
+  Attack,
+  Defense,
+  Special,
+  Utility,
+}
 
 export enum GameActionModality {
   Quick,
@@ -31,6 +39,7 @@ export enum GameActionModality {
 export interface BaseActionConfig {
   name: string;
   description?: string;
+  type: GameActionType;
 
   baseAP: number;
   modalities?: GameActionModality[];

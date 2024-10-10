@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './confirm-modal.component.scss'
 })
 export class ConfirmModalComponent {
-  message: string = "Are you sure?"; // Default message
+  public message: string = "Are you sure?"; // Default message
 
   constructor(
     private dialogRef: MatDialogRef<ConfirmModalComponent>,
@@ -24,11 +24,11 @@ export class ConfirmModalComponent {
     }
   }
 
-  onConfirm(): void {
+  public onConfirm(): void {
     this.dialogRef.close(true);
   }
 
-  onDismiss(): void {
+  public onDismiss(): void {
     this.dialogRef.close(false);
   }
 }

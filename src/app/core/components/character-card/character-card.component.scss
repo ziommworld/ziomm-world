@@ -41,10 +41,7 @@
       right: 16px;
 
       .health-indicator {
-        @include mat.progress-spinner-color(
-          $theme,
-          $color-variant: error
-        );
+        @include mat.progress-spinner-color($theme, $color-variant: error);
       }
 
       .health-indicator-value {
@@ -65,19 +62,21 @@
       align-items: center;
       min-height: 36px;
 
-      mat-icon {
-        margin-right: 24px;
+      [mat-icon-button] {
+        margin-right: 16px;
 
-        &.state-value {
-          @include mat.badge-color($theme, $color-variant: primary);
-        }
+        mat-icon {
+          &.state-value {
+            @include mat.badge-color($theme, $color-variant: primary);
+          }
 
-        &.buff-value {
-          @include mat.badge-color($theme, $color-variant: tertiary);
-        }
+          &.buff-value {
+            @include mat.badge-color($theme, $color-variant: tertiary);
+          }
 
-        &.debuff-value {
-          @include mat.badge-color($theme, $color-variant: error);
+          &.debuff-value {
+            @include mat.badge-color($theme, $color-variant: error);
+          }
         }
       }
     }
@@ -88,11 +87,11 @@
       margin-right: 8px;
       @include mat.badge-color($theme, $color-variant: secondary);
 
-      &.offensive-action {
+      &.attack-action {
         @include mat.button-color($theme, $color-variant: error);
       }
 
-      &.defensive-action {
+      &.defense-action {
         @include mat.button-color($theme, $color-variant: tertiary);
       }
     }
@@ -101,15 +100,15 @@
   mat-card-footer {
     .list-item-container {
       mat-chip {
-        &.p-res {
+        &.physical-resistance {
           @include mat.chips-color($theme, $color-variant: tertiary);
         }
 
-        &.e-res {
+        &.elemental-resistance {
           @include mat.chips-color($theme, $color-variant: error);
         }
 
-        &.n-res {
+        &.nuclear-resistance {
           @include mat.chips-color($theme, $color-variant: primary);
         }
       }
@@ -123,4 +122,22 @@
 
 .transparent-backdrop {
   background: transparent;
+}
+
+.ability-card-overlay {
+  .list-item-container {
+    mat-chip {
+      &.physical-damage {
+        @include mat.chips-color($theme, $color-variant: tertiary);
+      }
+
+      &.elemental-damage {
+        @include mat.chips-color($theme, $color-variant: error);
+      }
+
+      &.nuclear-damage {
+        @include mat.chips-color($theme, $color-variant: error);
+      }
+    }
+  }
 }

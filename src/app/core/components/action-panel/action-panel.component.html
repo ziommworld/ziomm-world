@@ -1,28 +1,73 @@
+@if($inGame()) {
+@let activeCharacter = $activeCharacter();
 <mat-list>
   <mat-list-item>
-    <div class="list-item-container">
-      <button class="list-item-end"
-              mat-stroked-button
-              (click)="test()">
-        Test
-      </button>
+    <div class="list-item-container character-attributes">
+      <mat-chip matTooltip="Player name"
+                class="player-name"
+                highlighted>
+        <mat-icon matChipAvatar>
+          person
+        </mat-icon>
+
+        {{ activeCharacter.player }}
+      </mat-chip>
+
+      <mat-chip matTooltip="Character name"
+                class="character-name"
+                highlighted>
+        <mat-icon matChipAvatar>
+          {{ activeCharacter.icon }}
+        </mat-icon>
+
+        {{ activeCharacter.name }}
+      </mat-chip>
+
+      <mat-chip matTooltip="Current AP"
+                class="ap-counter"
+                highlighted>
+        <mat-icon [fontSet]="fontSet"
+                  matChipAvatar>
+          play_circle
+        </mat-icon>
+
+        {{ activeCharacter.$currentAP() }}
+      </mat-chip>
     </div>
   </mat-list-item>
+
   <mat-list-item>
-    <div class="list-item-container">
-      <button class="list-item-end"
-              mat-stroked-button>
+    <div class="list-item-container list-item-end">
+      @let waitAction = $waitAction();
+      <button mat-stroked-button
+              [matBadge]="waitAction.config.baseAP"
+              [disabled]="!$canWait()"
+              (click)="wait()">
         Wait
+      </button>
+
+      @let passAction = $passAction();
+      <button mat-stroked-button
+              [matBadge]="passAction.config.baseAP"
+              [disabled]="!$canPass()"
+              (click)="pass()">
+        Pass
+      </button>
+
+      <button mat-stroked-button
+              class="end-turn"
+              (click)="end()">
+        End
       </button>
     </div>
   </mat-list-item>
 
   <mat-list-item>
     <div class="list-item-container">
-      <button class="list-item-end"
-              mat-stroked-button>
-        Pass
-      </button>
+
     </div>
   </mat-list-item>
 </mat-list>
+} @else {
+Pre-game phase
+}

@@ -24,9 +24,7 @@ import { GameService } from '../../services/game.service';
 export class ReferenceSheetComponent {
   public readonly fontSet = 'material-icons-outlined';
 
-  public get characters() {
-    return this.gameService.characters;
-  }
+  public activeCharacters$ = this.gameService.$activeCharacters;
 
   constructor(
     private gameService: GameService,

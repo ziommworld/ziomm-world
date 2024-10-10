@@ -1,4 +1,4 @@
-import { BaseActionConfig } from "src/app/$mechanics";
+import { BaseActionConfig, GameActionType } from "src/app/$mechanics";
 
 /**
  * compontent interactions
@@ -6,36 +6,47 @@ import { BaseActionConfig } from "src/app/$mechanics";
 
 export const climb: BaseActionConfig = {
   name: 'Climb up',
+  interactive: true,
   description: 'DEX 2+ check, Success = +1 accuracy and bypasses half-covers (while occupying the rock unit tiles), Failure = nothing happens',
   baseAP: 3,
+  type: GameActionType.Utility,
 };
 
 export const topple: BaseActionConfig = {
   name: 'Topple',
+  interactive: true,
   description: 'STR 2+ check, Success = remove 1 tile of rock, Failure = nothing happens',
   baseAP: 3,
+  type: GameActionType.Utility,
 };
 
 export const mountSentry: BaseActionConfig = {
   name: 'Operate sentries',
+  interactive: true,
   description: 'PER 2+ check, Success = open the canalization hatch for 1 round, Failure = nothing happens',
   baseAP: 3,
+  type: GameActionType.Utility,
 };
 
 export const triggerAlarm: BaseActionConfig = {
   name: 'Sound the alarm',
+  interactive: true,
   description: 'auto-succeed, Alarm all marauders',
   baseAP: 3,
+  type: GameActionType.Utility,
 };
 
 export const rejuvenate: BaseActionConfig = {
   name: 'Sound the alarm',
+  interactive: true,
   description: 'auto-succeed, restore 2 HP, Removes Bleeding',
   baseAP: 6,
+  type: GameActionType.Utility,
 };
 
 export const lootChest: BaseActionConfig = {
   name: 'Sound the alarm',
+  interactive: true,
   description: "STR 2+, Success = Roll a D6 and receive the following item: \
       1 = nothing \
       2 = Stim pack \
@@ -50,6 +61,7 @@ export const lootChest: BaseActionConfig = {
         4AP, Range = 10, AOE = 3, ACC = 2, DMG = 5, DMG Type = P \
       Failure = nothing happens",
   baseAP: 3,
+  type: GameActionType.Utility,
 };
 
 /**
@@ -61,10 +73,14 @@ export const lootChest: BaseActionConfig = {
  */
 export const placeCharacter: BaseActionConfig = {
   name: 'Place Character',
+  interactive: true,
   baseAP: 0,
+  type: GameActionType.Environment,
 };
 
 export const displaceCharacter: BaseActionConfig = {
   name: 'Displace Character',
+  interactive: true,
   baseAP: 0,
+  type: GameActionType.Environment,
 };

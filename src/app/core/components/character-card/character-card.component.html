@@ -32,20 +32,6 @@
       </mat-chip>
     </div>
 
-
-    <!-- <mat-card-subtitle>
-      <mat-chip matTooltip="STR"
-                class="ap-counter"
-                highlighted>
-        <mat-icon [fontSet]="fontSet"
-                  matChipAvatar>
-          play_circle
-        </mat-icon>
-
-        4
-      </mat-chip>
-    </mat-card-subtitle> -->
-
     <div class="health-indicator-container"
          matTooltip="HP">
       <mat-progress-spinner class="health-indicator"
@@ -63,109 +49,147 @@
     <mat-list>
       <mat-list-item>
         <div class="list-item-container">
-          <mat-icon [fontSet]="fontSet"
-                    aria-hidden="false"
-                    class="buff-value"
-                    matTooltip="Bolstered"
-                    matBadge="2"
-                    [matBadgeOverlap]="false"
-                    [matBadgePosition]="'below'">
-            add_reaction
-          </mat-icon>
+          @let bolsterCounter = character.$bolsterCounter();
+          <button mat-icon-button
+                  [disabled]="!bolsterCounter">
+            <mat-icon [fontSet]="fontSet"
+                      aria-hidden="false"
+                      class="buff-value"
+                      matTooltip="Bolstered"
+                      [matBadge]="bolsterCounter"
+                      [matBadgeDisabled]="!bolsterCounter"
+                      [matBadgeOverlap]="false"
+                      [matBadgePosition]="'below'">
+              add_reaction
+            </mat-icon>
+          </button>
 
-          <mat-icon [fontSet]="fontSet"
-                    aria-hidden="false"
-                    matTooltip="Crouching"
-                    class="state-value"
-                    matBadge="0"
-                    matBadgeDisabled
-                    matBadgeSize="small"
-                    [matBadgeOverlap]="false"
-                    [matBadgePosition]="'below'">
-            self_improvement
-          </mat-icon>
+          @let isCrouching = character.$isCrouching();
+          <button mat-icon-button
+                  [disabled]="!isCrouching">
+            <mat-icon [fontSet]="fontSet"
+                      aria-hidden="false"
+                      matTooltip="Crouching"
+                      class="state-value"
+                      [matBadge]="isCrouching ? 'Y' : 'N'"
+                      [matBadgeDisabled]="!isCrouching"
+                      [matBadgeOverlap]="false"
+                      [matBadgePosition]="'below'">
+              self_improvement
+            </mat-icon>
+          </button>
 
-          <mat-icon aria-hidden="false"
-                    matTooltip="Mounted"
-                    class="state-value"
-                    matBadge="0"
-                    matBadgeDisabled
-                    matBadgeSize="small"
-                    [matBadgeOverlap]="false"
-                    [matBadgePosition]="'below'">
-            sports_esports
-          </mat-icon>
-
-          <mat-icon aria-hidden="false"
-                    matTooltip="Dead"
-                    class="state-value"
-                    matBadge="0"
-                    matBadgeDisabled
-                    matBadgeSize="small"
-                    [matBadgeOverlap]="false"
-                    [matBadgePosition]="'below'">
-            person_off
-          </mat-icon>
+          @let isMounted = character.$isMounted();
+          <button mat-icon-button
+                  [disabled]="!isMounted">
+            <mat-icon aria-hidden="false"
+                      matTooltip="Mounted"
+                      class="state-value"
+                      matBadge="0"
+                      [matBadge]="isMounted ? 'Y' : 'N'"
+                      [matBadgeDisabled]="!isMounted"
+                      [matBadgeOverlap]="false"
+                      [matBadgePosition]="'below'">
+              sports_esports
+            </mat-icon>
+          </button>
         </div>
       </mat-list-item>
 
       <mat-list-item>
-        <div class="list-item-container">
-          <mat-icon [fontSet]="fontSet"
-                    aria-hidden="false"
-                    class="debuff-value"
-                    matTooltip="Concussed"
-                    matBadge="0"
-                    matBadgeDisabled
-                    [matBadgeOverlap]="false"
-                    [matBadgePosition]="'below'">
-            sentiment_very_dissatisfied
-          </mat-icon>
+        <div class="list-item-container
+        ">
+          @let concussionCounter = character.$concussionCounter();
+          <button mat-icon-button
+                  [disabled]="!concussionCounter">
+            <mat-icon [fontSet]="fontSet"
+                      aria-hidden="false"
+                      class="debuff-value"
+                      matTooltip="Concussed"
+                      [matBadge]="concussionCounter"
+                      [matBadgeDisabled]="!concussionCounter"
+                      [matBadgeOverlap]="false"
+                      [matBadgePosition]="'below'">
+              sentiment_very_dissatisfied
+            </mat-icon>
+          </button>
 
-          <mat-icon [fontSet]="fontSet"
-                    aria-hidden="false"
-                    class="debuff-value"
-                    matTooltip="Bleeding"
-                    matBadge="0"
-                    matBadgeDisabled
-                    [matBadgeOverlap]="false"
-                    [matBadgePosition]="'below'">
-            invert_colors
-          </mat-icon>
+          @let bleedCounter = character.$bleedCounter();
+          <button mat-icon-button
+                  [disabled]="!bleedCounter">
+            <mat-icon [fontSet]="fontSet"
+                      aria-hidden="false"
+                      class="debuff-value"
+                      matTooltip="Bleeding"
+                      [matBadge]="bleedCounter"
+                      [matBadgeDisabled]="!bleedCounter"
+                      [matBadgeOverlap]="false"
+                      [matBadgePosition]="'below'">
+              invert_colors
+            </mat-icon>
+          </button>
 
-          <mat-icon [fontSet]="fontSet"
-                    aria-hidden="false"
-                    class="debuff-value"
-                    matTooltip="Poisoned"
-                    matBadge="0"
-                    matBadgeDisabled
-                    [matBadgeOverlap]="false"
-                    [matBadgePosition]="'below'">
-            coronavirus
-          </mat-icon>
+          @let poisonCounter = character.$poisonCounter();
+          <button mat-icon-button
+                  [disabled]="!poisonCounter">
+            <mat-icon [fontSet]="fontSet"
+                      aria-hidden="false"
+                      class="debuff-value"
+                      matTooltip="Poisoned"
+                      [matBadge]="poisonCounter"
+                      [matBadgeDisabled]="!poisonCounter"
+                      [matBadgeOverlap]="false"
+                      [matBadgePosition]="'below'">
+              coronavirus
+            </mat-icon>
+          </button>
 
-          <mat-icon [fontSet]="fontSet"
-                    aria-hidden="false"
-                    aria-hidden="false"
-                    class="debuff-value"
-                    matTooltip="Hindered"
-                    matBadge="0"
-                    matBadgeDisabled
-                    [matBadgeOverlap]="false"
-                    [matBadgePosition]="'below'">
-            do_not_touch
-          </mat-icon>
+          @let hinderCounter = character.$hinderCounter();
+          <button mat-icon-button
+                  [disabled]="!hinderCounter">
+            <mat-icon [fontSet]="fontSet"
+                      aria-hidden="false"
+                      aria-hidden="false"
+                      class="debuff-value"
+                      matTooltip="Hindered"
+                      [matBadge]="hinderCounter"
+                      [matBadgeDisabled]="!hinderCounter"
+                      [matBadgeOverlap]="false"
+                      [matBadgePosition]="'below'">
+              do_not_touch
+            </mat-icon>
+          </button>
 
-          <mat-icon [fontSet]="fontSet"
-                    aria-hidden="false"
-                    class="debuff-value"
-                    matTooltip="Immobilized"
-                    matBadge="0"
-                    matBadgeDisabled
-                    [matBadgeOverlap]="false"
-                    [matBadgePosition]="'below'">
-            do_not_step
-          </mat-icon>
+          @let immobilizeCounter = character.$immobilizeCounter();
+          <button mat-icon-button
+                  [disabled]="!immobilizeCounter">
+
+            <mat-icon [fontSet]="fontSet"
+                      aria-hidden="false"
+                      class="debuff-value"
+                      matTooltip="Immobilized"
+                      [matBadge]="immobilizeCounter"
+                      [matBadgeDisabled]="!immobilizeCounter"
+                      [matBadgeOverlap]="false"
+                      [matBadgePosition]="'below'">
+              do_not_step
+            </mat-icon>
+          </button>
+
+          @let isDead = character.$isDead();
+          <button mat-icon-button
+                  [disabled]="!isDead">
+            <mat-icon aria-hidden="false"
+                      matTooltip="Dead"
+                      class="debuff-value"
+                      matBadge="0"
+                      [matBadge]="isDead ? 'Y' : 'N'"
+                      [matBadgeDisabled]="!isDead"
+                      [matBadgeOverlap]="false"
+                      [matBadgePosition]="'below'">
+              person_off
+            </mat-icon>
+          </button>
         </div>
       </mat-list-item>
     </mat-list>
@@ -173,73 +197,62 @@
 
   <mat-card-actions>
     <!-- TODO disabled when hindered? -->
-    <!-- TODO move with drag/drop on map -->
-    <button class="offensive-action"
-            mat-stroked-button>
-      Action 1
+    @for(ability of character.abilities; track ability.id; let idx = $index) {
+    @let isOpen$ = $isOpen()[idx];
+    <button [ngClass]="getAbilityClass(ability)"
+            [matBadge]="ability.config.baseAP"
+            mat-stroked-button
+            cdkOverlayOrigin
+            #trigger="cdkOverlayOrigin"
+            (click)="triggerAbilityPanel(idx)">
+      {{ ability.name }}
 
+      @if(ability.config.interactive) {
       <mat-icon [fontSet]="fontSet"
                 matTooltip="Interactive">
         view_in_ar
       </mat-icon>
-    </button>
+      }
 
-    <button class="defensive-action"
-            matBadge="2"
-            mat-stroked-button>
-      Action 2
-
+      @if(ability.config.reactive) {
       <mat-icon [fontSet]="fontSet"
                 matTooltip="Reactive">
         sync
       </mat-icon>
-    </button>
-
-    <button mat-stroked-button
-            cdkOverlayOrigin
-            #trigger="cdkOverlayOrigin"
-            (click)="isOpen = !isOpen">
-      Action 3
+      }
     </button>
 
     <ng-template cdkConnectedOverlay
                  [cdkConnectedOverlayOrigin]="trigger"
-                 [cdkConnectedOverlayOpen]="isOpen"
+                 [cdkConnectedOverlayOpen]="isOpen$"
                  [cdkConnectedOverlayHasBackdrop]="true"
                  [cdkConnectedOverlayBackdropClass]="'transparent-backdrop'"
-                 (backdropClick)="test()">
-      <mat-card class="test">
+                 (backdropClick)="triggerAbilityPanel(idx)">
+      <mat-card class="ability-card-overlay">
         <mat-card-content>
           <mat-list>
             <mat-list-item>
               <div class="list-item-container">
                 <mat-chip-set>
-                  <mat-chip matTooltip="Damage"
-                            highlighted>
+                  <mat-chip [matTooltip]="getDamageLabel(ability)"
+                            [ngClass]="getDamageTypeClass(ability)"
+                            [highlighted]="!isTrueDamage(ability)"
+                            [disabled]="!ability.damage">
                     <mat-icon matChipAvatar>
                       gavel
                     </mat-icon>
 
-                    {{ character.resistance.nuclear }}
+                    {{ ability.damage }}
                   </mat-chip>
 
-                  <mat-chip matTooltip="Accuracy">
+                  <mat-chip matTooltip="Accuracy"
+                            [disabled]="!ability.accuracy">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
-                      <!-- games -->
                       crisis_alert
                     </mat-icon>
 
-                    {{ character.resistance.physical }}
-                  </mat-chip>
-
-                  <mat-chip matTooltip="Armor penetration">
-                    <mat-icon [fontSet]="fontSet"
-                              matChipAvatar>
-                      remove_moderator
-                    </mat-icon>
-
-                    {{ character.resistance.physical }}
+                    {{ ability.accuracy }}
                   </mat-chip>
                 </mat-chip-set>
               </div>
@@ -248,31 +261,24 @@
             <mat-list-item>
               <div class="list-item-container">
                 <mat-chip-set>
-                  <mat-chip matTooltip="Range">
+                  <mat-chip matTooltip="Range"
+                            [disabled]="!ability.range">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       open_in_full
                     </mat-icon>
 
-                    {{ character.resistance.physical }}
+                    {{ ability.range }}
                   </mat-chip>
 
-                  <mat-chip matTooltip="AoE">
-                    <mat-icon [fontSet]="fontSet"
-                              matChipAvatar>
-                      crisis_alert
-                    </mat-icon>
-
-                    {{ character.resistance.physical }}
-                  </mat-chip>
-
-                  <mat-chip matTooltip="Targets">
+                  <mat-chip matTooltip="Targets"
+                            [disabled]="!ability.targets">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       people
                     </mat-icon>
 
-                    {{ character.resistance.physical }}
+                    {{ ability.targets }}
                   </mat-chip>
                 </mat-chip-set>
               </div>
@@ -281,22 +287,24 @@
             <mat-list-item>
               <div class="list-item-container">
                 <mat-chip-set>
-                  <mat-chip matTooltip="Evasion">
+                  <mat-chip matTooltip="Evasion"
+                            [disabled]="!ability.evasion">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       sports_gymnastics
                     </mat-icon>
 
-                    {{ character.resistance.physical }}
+                    {{ ability.evasion }}
                   </mat-chip>
 
-                  <mat-chip matTooltip="Distance">
+                  <mat-chip matTooltip="Distance"
+                            [disabled]="!ability.distance">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       directions_walk
                     </mat-icon>
 
-                    {{ character.resistance.nuclear }}
+                    {{ ability.distance }}
                   </mat-chip>
                 </mat-chip-set>
               </div>
@@ -305,22 +313,24 @@
             <mat-list-item>
               <div class="list-item-container">
                 <mat-chip-set>
-                  <mat-chip matTooltip="Concussion">
+                  <mat-chip matTooltip="Concussion"
+                            [disabled]="!ability.concussive">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       sentiment_very_dissatisfied
                     </mat-icon>
 
-                    {{ character.resistance.physical }}
+                    {{ ability.concussive }}
                   </mat-chip>
 
-                  <mat-chip matTooltip="Bolster">
+                  <mat-chip matTooltip="Bolster"
+                            [disabled]="!ability.boosting">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       add_reaction
                     </mat-icon>
 
-                    {{ character.resistance.nuclear }}
+                    {{ ability.boosting }}
                   </mat-chip>
                 </mat-chip-set>
               </div>
@@ -329,32 +339,34 @@
             <mat-list-item>
               <div class="list-item-container">
                 <mat-chip-set>
-                  <mat-chip matTooltip="Bleed">
+                  <mat-chip matTooltip="Bleed"
+                            [disabled]="!ability.bleeding">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       invert_colors
                     </mat-icon>
 
-                    {{ character.resistance.nuclear }}
+                    {{ ability.bleeding }}
                   </mat-chip>
 
-                  <mat-chip matTooltip="Poison">
+                  <mat-chip matTooltip="Poison"
+                            [disabled]="!ability.poisonous">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       coronavirus
                     </mat-icon>
 
-                    {{ character.resistance.physical }}
+                    {{ ability.poisonous }}
                   </mat-chip>
 
                   <mat-chip matTooltip="Heal"
-                            disabled>
+                            [disabled]="!ability.healing">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       add_circle_outline
                     </mat-icon>
 
-                    {{ character.resistance.physical }}
+                    {{ ability.healing }}
                   </mat-chip>
                 </mat-chip-set>
               </div>
@@ -363,31 +375,34 @@
             <mat-list-item>
               <div class="list-item-container">
                 <mat-chip-set>
-                  <mat-chip matTooltip="Hinder">
+                  <mat-chip matTooltip="Hinder"
+                            [disabled]="!ability.hindering">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       do_not_touch
                     </mat-icon>
 
-                    {{ character.resistance.nuclear }}
+                    {{ ability.hindering }}
                   </mat-chip>
 
-                  <mat-chip matTooltip="Immobilize">
+                  <mat-chip matTooltip="Immobilize"
+                            [disabled]="!ability.immobilizing">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       do_not_step
                     </mat-icon>
 
-                    {{ character.resistance.physical }}
+                    {{ ability.immobilizing }}
                   </mat-chip>
 
-                  <mat-chip matTooltip="Free-up">
+                  <mat-chip matTooltip="Free-up"
+                            [disabled]="!ability.freeing">
                     <mat-icon [fontSet]="fontSet"
                               matChipAvatar>
                       accessibility_new
                     </mat-icon>
 
-                    {{ character.resistance.physical }}
+                    {{ ability.freeing }}
                   </mat-chip>
                 </mat-chip-set>
               </div>
@@ -396,6 +411,7 @@
         </mat-card-content>
       </mat-card>
     </ng-template>
+    }
   </mat-card-actions>
 
   <mat-card-footer>
@@ -403,8 +419,8 @@
       <mat-list-item>
         <div class="list-item-container">
           <mat-chip-set>
-            <mat-chip matTooltip="P-RES"
-                      class="p-res"
+            <mat-chip matTooltip="PHYSICAL resistance"
+                      class="physical-resistance"
                       highlighted>
               <mat-icon [fontSet]="fontSet"
                         matChipAvatar>
@@ -414,8 +430,8 @@
               {{ character.resistance.physical }}
             </mat-chip>
 
-            <mat-chip matTooltip="E-RES"
-                      class="e-res"
+            <mat-chip matTooltip="ELEMENTAL resistance"
+                      class="elemental-resistance"
                       highlighted>
               <mat-icon matChipAvatar>
                 local_fire_department
@@ -424,8 +440,8 @@
               {{ character.resistance.elemental }}
             </mat-chip>
 
-            <mat-chip matTooltip="N-RES"
-                      class="n-res"
+            <mat-chip matTooltip="NUCLEAR resistance"
+                      class="nuclear-resistance"
                       highlighted>
               <mat-icon [fontSet]="fontSet"
                         matChipAvatar>

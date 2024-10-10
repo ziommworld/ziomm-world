@@ -1,4 +1,4 @@
-import { patchState, signalState, SignalState } from "@ngrx/signals";
+import { signalState, SignalState } from "@ngrx/signals";
 import { DateTime } from 'luxon';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -63,24 +63,4 @@ export class Game {
       updatedOn: this.config.startedOn,
     }
   };
-
-  public beginGame() {
-    patchState(
-      this.$state,
-      {
-        phase: GamePhase.InGame,
-        updatedOn: DateTime.now().toMillis(),
-      }
-    );
-  }
-
-  public endGame() {
-    patchState(
-      this.$state,
-      {
-        phase: GamePhase.InGame,
-        updatedOn: DateTime.now().toMillis(),
-      }
-    );
-  }
 }

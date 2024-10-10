@@ -1,22 +1,18 @@
 <h1>
-  Round {{ round }}
+  Round {{ $currentRound() }}
 </h1>
-
-<button mat-raised-button
-        (click)="resetStepper()">
-  Next Round
-</button>
 
 <mat-stepper orientation="vertical"
              [linear]="true"
-             #stepper>
+             #stepper
+             [selectedIndex]="$currentTurn() - 1">
   <ng-template matStepperIcon="edit">
     <mat-icon>
       how_to_reg
     </mat-icon>
   </ng-template>
 
-  @for (char of characters; track char.id) {
+  @for (char of $activeCharacters(); track char.id) {
   <mat-step>
     <ng-template matStepLabel>
       <div class="character-label">
@@ -35,6 +31,19 @@
 
             {{ char.$currentAP() }}
           </mat-chip>
+
+          @let bonusAP = char.$bonusAP();
+          @if (bonusAP) {
+          <mat-chip matTooltip="Bonus AP next round"
+                    class="bonus-ap">
+            <mat-icon [fontSet]="fontSet"
+                      matChipAvatar>
+              pause_circle
+            </mat-icon>
+
+            {{ bonusAP }}
+          </mat-chip>
+          }
         </div>
       </div>
     </ng-template>

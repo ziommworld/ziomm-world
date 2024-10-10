@@ -1,4 +1,4 @@
-import { Component, computed, Input } from '@angular/core';
+import { Component, computed, Input, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
@@ -10,6 +10,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
 import { Overlay, OverlayModule } from '@angular/cdk/overlay';
+import { NgClass, NgFor } from '@angular/common';
+import { DamageType, GameAction, GameActionType } from 'src/app/$mechanics';
 
 
 @Component({
@@ -25,7 +27,9 @@ import { Overlay, OverlayModule } from '@angular/cdk/overlay';
     MatListModule,
     MatBadgeModule,
     MatMenuModule,
-    OverlayModule
+    OverlayModule,
+    NgFor,
+    NgClass,
   ],
   templateUrl: './character-card.component.html',
   styleUrl: './character-card.component.scss'
@@ -33,7 +37,7 @@ import { Overlay, OverlayModule } from '@angular/cdk/overlay';
 export class CharacterCardComponent {
   public readonly fontSet = 'material-icons-outlined';
 
-  isOpen = false;
+  public $isOpen = signal([false, false, false]);
 
   @Input()
   public character!: GameCharacter;
@@ -51,7 +55,64 @@ export class CharacterCardComponent {
     });
   }
 
-  test() {
-    this.isOpen = !this.isOpen;
+  public getAbilityClass(ability: GameAction) {
+    if (ability.type === GameActionType.Attack) {
+      return {
+        'attack-action': true,
+      }
+    }
+
+    if (ability.type === GameActionType.Defense) {
+      return {
+        'defense-action': true,
+      }
+    }
+
+    if (ability.type === GameActionType.Special) {
+      return {
+        'special-action': true,
+      }
+    }
+
+    return null;
+  }
+
+  public getDamageTypeClass(ability: GameAction) {
+    if (ability.damageType === DamageType.Physical) {
+      return {
+        'physical-damage': true,
+      }
+    }
+
+    if (ability.damageType === DamageType.Elemental) {
+      return {
+        'elemental-damage': true,
+      }
+    }
+
+    if (ability.damageType === DamageType.Nuclear) {
+      return {
+        'nuclear-damage': true,
+      }
+    }
+
+    return null;
+  }
+
+  public isTrueDamage(ability: GameAction) {
+    return ability.damageType === DamageType.True;
+  }
+
+  public getDamageLabel(ability: GameAction) {
+    return `${ability.damageType?.toUpperCase()} damage`;
+  }
+
+  public triggerAbilityPanel(idx: number) {
+    const isOpen$ = this.$isOpen();
+    this.$isOpen.set([
+      ...isOpen$.slice(0, idx),
+      !isOpen$[idx],
+      ...isOpen$.slice(idx + 1)
+    ]);
   }
 }

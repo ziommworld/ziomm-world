@@ -55,7 +55,7 @@ export class GameScenario {
     this.npcs = config.npcs.map(
       (config) => {
         const $state = computed(() => {
-          const stateMap = this.$state.characters();
+          const stateMap = this.$state.npcs();
           return stateMap[config.id];
         });
 
@@ -116,7 +116,7 @@ export class GameScenario {
       id: uuidv4(),
       key,
 
-      maxTurns: draft.settings.turns,
+      maxRounds: draft.settings.rounds,
       maxTime: draft.settings.time,
       difficulty: draft.settings.difficulty,
 
@@ -139,8 +139,8 @@ export class GameScenario {
     config: GameScenarioConfig
   ): GameScenarioState {
     return {
-      currentTurn: 0,
-      currentRound: 0,
+      currentTurn: 1,
+      currentRound: 1,
       activeMap: config.initialMap,
 
       characters: config.characters.reduce(
@@ -152,7 +152,7 @@ export class GameScenario {
         },
         {} as Record<string, GameCharacterState>
       ),
-      npcs: config.characters.reduce(
+      npcs: config.npcs.reduce(
         (rec, config) => {
           const state = GameCharacter.initState(config);
           rec[config.id] = state;

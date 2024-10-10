@@ -1,4 +1,40 @@
+@use "@angular/material" as mat;
+@use "styles.scss" as *;
+
 .list-item-container {
+  min-height: 50px;
   display: flex;
-  justify-content: end;
+  align-items: center;
+
+  &.list-item-end {
+    justify-content: end;
+
+    button {
+      @include mat.badge-color($theme, $color-variant: secondary);
+
+      margin-right: 8px;
+
+      &.end-turn {
+        @include mat.button-color($theme, $color-variant: error);
+      }
+    }
+  }
+
+  &.character-attributes {
+    mat-chip {
+      margin-left: 16px;
+
+      &.player-name {
+        @include mat.chips-color($theme, $color-variant: tertiary);
+      }
+
+      &.ap-counter {
+        @include mat.chips-color($theme, $color-variant: primary);
+      }
+
+      &.character-name {
+        @include mat.chips-color($theme, $color-variant: error);
+      }
+    }
+  }
 }
